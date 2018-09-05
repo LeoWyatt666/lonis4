@@ -13,12 +13,12 @@ class GeoIp2Service
         $this->geoip = new Reader($db);
     }
 
-    public function getCity($ip)
+    public function city($ip)
     {
         try {
             return $this->geoip->city($ip ?: '127.0.0.1');
         } catch (AddressNotFoundException $e) {
-            return [];
+            return false;
         }
     }
 }

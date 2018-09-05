@@ -43,7 +43,7 @@ class PlayersController extends AbstractController
             $player->url_player = "players/{$player->getId()}";
             $player->url_avatar = "images/avatars/{$player->getId()}.jpg";
             
-            $player->geoip = $geoip->getCity($player->getLastIp());
+            $player->geoip = $geoip->city($player->getLastIp());
         }
         
         // render
@@ -76,7 +76,7 @@ class PlayersController extends AbstractController
         $player->url_achievs_player = "achievs/players/{$player->getId()}";
         $player->img_player = "images/avatars/{$player->getId()}.jpg";
 
-        $player->geoip = $geoip->getCity($player->getLastIp());
+        $player->geoip = $geoip->city($player->getLastIp());
 
         $player->achievCompleted = '-';
         $player->mapCompleted = '-';
