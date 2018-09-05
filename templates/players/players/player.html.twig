@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
+<h1 class="ui header center aligned">
+	<p>Player</l></p>
+</h1>
+
+<div class="ui centered card">
+	<div class="image">
+		<img src="{{ player.img_player }}">
+	</div>
+	<div class="content">
+		<a class="header">{{ player.name }}</a>
+		<div class="meta">
+		<span class="date">
+            {% if player.geoip %}
+			<i class="flag {{ player.geoip.country.isoCode|lower }}"></i>
+            {{ player.geoip.country.name }}
+            {% endif %}
+		</span>
+		</div>
+		<div class="description">
+			<p>Steam ID</l>:
+				<a href="http://steamcommunity.com/profiles/{{ player.steamId64 }}" target="_blank">{{ player.steamId64 }}</a>
+			<p>ICQ</l>: {{ player.icq }}
+			<p>Our Last Time</l>: {{ player.lastTime }}
+			<p>Shared Online</l>: {{ player.onlineTimeElasped }}
+		</div>
+	</div>
+	<div class="extra content">
+		<p>
+			<a href="{{ player.url_achievs_player }}" title="View</l>">
+				Fulfilled achievements: {{ player.achievCompleted }}
+			</a>
+		</p>
+		<p>
+			<a href="{{ player.url_kreedz_player }}" title="View</l>">
+				Went KZ maps: {{ player.mapCompleted }}
+			</a>
+		</p>
+	</div>
+</div>
+
+{% endblock %}

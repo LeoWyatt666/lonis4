@@ -1,0 +1,14 @@
+@media screen and (max-width: 767px) {
+  table thead { 
+    display: none !important; 
+  }
+  table tbody td { 
+    display: block !important;
+  }
+  table tbody td:before { 
+    content: attr(data-th); 
+    font-weight: bold;
+    display: inline-block;
+    width: 5em;
+  }
+}

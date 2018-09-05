@@ -1,0 +1,9 @@
+.ljs {
+    background: url("images/ljs.png") no-repeat -97px -150px;
+    display: inline-block; width: 97px; height: 30px;
+}
+.ljs-lj  {background-position: 0px 0px;}
+.ljs-hj  {background-position: 0px -30px;}
+.ljs-cj  {background-position: 0px -60px;}
+.ljs-dcj {background-position: 0px -90px;}
+.ljs-bj  {background-position: 0px -120px;}

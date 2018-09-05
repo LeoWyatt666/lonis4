@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="no-js" lang="{language}" prefix="og: http://ogp.me/ns#" xmlns="http://www.w3.org/1999/xhtml">
+
+{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+<head>
+	<title>:: Lonis :: {% block title %}{% endblock %} ::</title>
+
+	<base href="/">
+
+	<meta name="description" content="Lonis"/>
+	<meta property="og:locale" content="en_EN" />
+	<meta property="og:type" content="statistics" />
+	<meta property="og:title" content="" />
+	<meta property="og:description" content="Lonis" />
+	<meta property="og:url" content="{{ currentPath }}" />
+	<meta property="og:site_name" content="Lonis" />
+	<meta property="article:section" content="" />
+	<meta property="article:published_time" content="" />
+	<meta property="article:modified_time" content="" />
+	<meta property="og:updated_time" content="" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:description" content="Lonis" />
+	<meta name="twitter:title" content="Lonis" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	{% block stylesheets %}
+		<link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {% endblock %}
+</head>
+
+<link rel="canonical" href="{{ currentPath }}" />
+<link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+
+<body>
+	{% include "nav.html.twig" %}
+
+	{% include "header.html.twig" %}
+
+	<main role="main" class="ui container ">
+		<section class="ui secondary segment">
+			<div id="cake"><i class="cake v{{ random(5) }}"></i></div>
+			{% block body %}{% endblock %}
+		</section>
+	</main>
+
+	{% include "footer.html.twig" %}
+
+	<div style="position: fixed; bottom: 10px; right: 10px;" onclick="window.scrollTo(0,0);return!1;">
+		<i class="icon icon-circle-up" style="font-size: 4em; color: rgba( 80, 80, 80, 0.5);"></i>
+	</div>
+
+    {% block javascripts %}
+		<script src="{{ asset('build/app.js') }}"></script>
+    {% endblock %}
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</body>
+
+</html>

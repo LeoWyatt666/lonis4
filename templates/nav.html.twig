@@ -1,0 +1,96 @@
+{# templates/nav.html.twig #}
+
+<nav class="navbar" role="menubar">
+  <div class="ui grid">
+    <div class="computer only row">
+      <div class="column">
+        
+        <div class="ui inverted fixed menu">
+          <div class="ui container">
+            <a id="hamburger-link" class="item">
+              <i class="icon bars"></i>
+            </a>
+            <a href="#" class="header item brand">
+              <img src="{{ asset('build/images/logo.png') }}" style="width: 3em; heiht: 3em;">
+            </a>
+
+            <div id="computer_menu_main" class="left menu">
+              <div class="ui simple dropdown item">
+                <i class='icon star'></i> CS
+                <div class="menu">
+                  <a class="item" href="players"><i class='icon users'></i> Players</a>
+                  <a class="item" href="servers"><i class='icon star'></i> Monitoring</a>
+                </div>
+              </div>
+              <div class="ui simple dropdown item">
+                <i class='icon briefcase'></i> Achievs
+                <div class="menu">
+                  <a class="item" href="achievs/players"><i class='icon rocket'></i> Players</a>
+                  <a class="item" href="achievs"><i class='icon briefcase'></i> Achievement</a>
+                </div>
+              </div>
+              <div class="ui simple dropdown item">
+                <i class='icon universal access'></i> Kreedz
+                <div class="menu">
+                  <a class="item" href="kreedz/last"><i class='icon universal access'></i> Last</a>
+                  <a class="item" href="kreedz/players"><i class='icon users'></i> Players</a>
+                  <a class="item" href="kreedz/maps"><i class='icon map'></i> Maps</a>
+                  <a class="item" href="kreedz/maps_norec"><i class='icon map outline'></i> New maps</a>
+                  <a class="item" href="kreedz/duels"><i class='icon sitemap'></i> Duels</a>
+                  <a class="item" href="kreedz/longjumps"><i class='icon road'></i> Longjumps</a>
+                </div>
+              </div>
+              <div class="ui simple dropdown item">
+                <i class='icon globe'></i> Records
+                <div class="menu">
+                  <a class="item" href="records/players"><i class='icon users'></i> Players</a>
+                  <a class="item" href="records/demos"><i class='icon delicious'></i> Demos</a>
+                  <a class="item" href="records/maps"><i class='icon map'></i> Maps</a>
+                  <a class="item" href="records/longjumps"><i class='icon road'></i> Longjumps</a>
+                  <a class="item" href="records/compare"><i class='icon server'></i> Compare</a>
+                </div>
+              </div>
+    
+            </div>
+
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div id="computer_menu_user" class="right menu">
+              <a class="item" href="auth/login"><i class='icon sign in alternate'></i> Sign In</a>
+            </div>
+            {% else %} 
+            {% endif %}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="tablet mobile only row">
+      <div class="column">
+      
+        <div class="ui inverted fixed menu">
+          <a id="hamburger-link" class="item"><i class="bars icon"></i></a>
+
+          <div id="tablet_menu_user" class="right menu">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="ui pushable">
+    
+    <div class="ui thin sidebar inverted vertical menu">
+      <a id="hamburger-link" class="item header">
+        MENU<i class="bars icon"></i>
+      </a>
+      <div id="sidebar_menu_main">
+      </div>
+      <div id="sidebar_menu_admin">
+        
+      </div>
+    </div>
+    <div class="pusher"></div>
+  </div>
+</nav>

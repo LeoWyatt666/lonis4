@@ -1,0 +1,41 @@
+body {
+    scrollbar-base-color: #171717;
+    scrollbar-face-color: #171717;
+    scrollbar-3dlight-color: #171717;
+    scrollbar-highlight-color: #171717;
+    scrollbar-track-color: #171717;
+    scrollbar-arrow-color: #171717;
+    scrollbar-shadow-color: #171717;
+}
+::-webkit-scrollbar-button {
+    /* background-image:url(''); */
+    background-repeat:no-repeat;
+    width:6px;
+    height:0px
+}
+::-moz-scrollbar-track {
+    background-color: #171717;
+}
+::-webkit-scrollbar-track {
+    background-color: #171717;
+    -webkit-box-shadow:0px 0px 3px #000 inset;
+            box-shadow:0px 0px 3px #000 inset;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #171717;
+    -webkit-box-shadow:0px 1px 1px #fff inset;
+            box-shadow:0px 1px 1px #fff inset;
+    /* background-image:url(''); */
+    background-position:center;
+    background-repeat:no-repeat;
+}
+::-webkit-resizer {
+    /* background-image:url(''); */
+    background-repeat:no-repeat;
+    width:7px;
+    height:0px
+}
+::-webkit-scrollbar {
+    width: 11px;
+}

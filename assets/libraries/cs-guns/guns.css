@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'Guns';
+    src: url('fonts/guns.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.wpn {
+    font-family: 'Guns' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    font-size: 3em;
+}
+
+.wpn {background-repeat: no-repeat; background-size: 3em;}
+.wpn.wpn-1:before {content: 'Y'} /* p228 */
+.wpn.wpn-2:before {content: 'b'} /* shield */
+.wpn.wpn-3:before {content: 'N'} /* scout */
+.wpn.wpn-4:before {content: 'H'} /* hegrenade */
+.wpn.wpn-5:before {content: ']'} /* xm1014 */
+.wpn.wpn-6:before {content: '\005C'} /* c4 */
+.wpn.wpn-7:before {content: 'L'} /* mac10 */
+.wpn.wpn-8:before {content: 'E'} /* aug  */
+.wpn.wpn-9:before {content: 'P'} /* smokegrenade */
+.wpn.wpn-10:before {content: 'S'} /* elite */
+.wpn.wpn-11:before {content: 'U'} /* fiveseven */
+.wpn.wpn-12:before {content: 'Q'} /* ump45 */
+.wpn.wpn-13:before {content: 'O'} /* sg550 */
+.wpn.wpn-14:before {content: 'V'} /* galil */
+.wpn.wpn-15:before {content: 'T'} /* famas */
+.wpn.wpn-16:before {content: 'A'} /* usp */
+.wpn.wpn-17:before {content: 'C'} /* glock18 */
+.wpn.wpn-18:before {content: 'R'} /* awp */
+.wpn.wpn-19:before {content: 'X'} /* mp5navy */
+.wpn.wpn-20:before {content: 'Z'} /* m429 */
+.wpn.wpn-21:before {content: 'K'} /* m3 */
+.wpn.wpn-22:before {content: 'W'} /* m4a1 */
+.wpn.wpn-23:before {content: 'D'} /* tmp */
+.wpn.wpn-24:before {content: 'I'} /* g3sg1 */
+.wpn.wpn-25:before {content: 'G'} /* flashbang */
+.wpn.wpn-26:before {content: 'F'} /* deagle */
+.wpn.wpn-27:before {content: '['} /* sg552 */
+.wpn.wpn-28:before {content: 'B'} /* ak47 */
+.wpn.wpn-29:before {content: 'J'} /* knife */
+.wpn.wpn-30:before {content: 'M'} /* p90 */
+
+
