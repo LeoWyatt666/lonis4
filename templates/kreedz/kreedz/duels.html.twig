@@ -1,3 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
 <h1 class="ui header">
 	<p><l>Duels</l> <span class="ui label">{total}</span></p>
 </h1>
@@ -32,3 +38,5 @@
 </table>
 
 {PAGINATION_LINKS}
+
+{% endblock %}

@@ -8,12 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecordsController extends AbstractController
 {
     /**
-     * @Route("/records/records", name="records_records")
+     * @Route("/records/demos", name="records_demos")
      */
-    public function index()
+    public function demos()
     {
-        return $this->render('records/records/index.html.twig', [
-            'controller_name' => 'RecordsController',
+        return $this->render('records/records/demos.html.twig', [
+            'title' => 'RecordsController',
         ]);
     }
 }

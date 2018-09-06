@@ -8,42 +8,42 @@ use Symfony\Component\Routing\Annotation\Route;
 class AchievsController extends AbstractController
 {
     /**
-     * @Route("/cstrike/achievs", name="cstrike_achievs")
+     * @Route("/achievs", name="achievs")
      */
-    public function index()
+    public function achievs()
     {
-        return $this->render('cstrike/achievs/index.html.twig', [
-            'controller_name' => 'AchievsController',
+        return $this->render('achievs/achievs/achievs.html.twig', [
+            'title' => 'AchievsController',
         ]);
     }
 
     /**
-     * @Route("/cstrike/achievs/{id}", name="cstrike_achiev")
+     * @Route("/achievs/{id}", name="achiev", requirements={"id"="\d+"})
      */
     public function achiev()
     {
-        return $this->render('cstrike/achievs/achiev.html.twig', [
-            'controller_name' => 'AchievsController-Achiev',
+        return $this->render('achievs/achievs/achiev.html.twig', [
+            'title' => 'AchievsController-Achiev',
         ]);
     }
 
      /**
-     * @Route("/cstrike/achievs/players", name="cstrike_achievs_players")
+     * @Route("/achievs/players", name="achievs_players")
      */
     public function players()
     {
-        return $this->render('cstrike/achievs/players.html.twig', [
-            'controller_name' => 'AchievsController-Players',
+        return $this->render('achievs/achievs/players.html.twig', [
+            'title' => 'AchievsController-Players',
         ]);
     }
 
      /**
-     * @Route("/cstrike/achievs/players/{id}", name="cstrike_achievs_player")
+     * @Route("/achievs/players/{id}", name="achievs_player", requirements={"id"="\d+"})
      */
     public function player()
     {
-        return $this->render('cstrike/achievs/player.html.twig', [
-            'controller_name' => 'AchievsController-Player',
+        return $this->render('achievs/achievs/player.html.twig', [
+            'title' => 'AchievsController-Player',
         ]);
     }
 }

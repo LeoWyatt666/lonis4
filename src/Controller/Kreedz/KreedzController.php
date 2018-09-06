@@ -8,12 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class KreedzController extends AbstractController
 {
     /**
-     * @Route("/kreedz/kreedz", name="kreedz_kreedz")
+     * @Route("/kreedz/last", name="kreedz_last")
      */
-    public function index()
+    public function last()
     {
-        return $this->render('kreedz/kreedz/index.html.twig', [
-            'controller_name' => 'KreedzController',
+        return $this->render('kreedz/kreedz/last.html.twig', [
+            'title' => 'KreedzController',
         ]);
     }
 }

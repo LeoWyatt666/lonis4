@@ -1,5 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block body %}
+
 <h1 class="ui header">
-	<l>Player</l> {player} {player} <i class="flag {country}" title="{country}"></i>{/player} ({total})
+	<p><l>Demos</l></p>
 </h1>
 
 <div class="ui top attached tabular menu">
@@ -16,6 +22,7 @@
 		<thead>
 			<tr>
 				<th><l>Map</l></th>
+				<th><l>player</l></th>
 				<th><l>Time</l></th>
 			</tr>
 		</thead>
@@ -23,6 +30,7 @@
 			{demos}
 			<tr class="pagination-item">
 				<td><a href="{url_map}">{map}{mappath}</a></td>
+				<td><a href="{url_player}">{player} <span class="flag-icon flag-icon-{country}" title="{country}">&nbsp;</span></a></td>
 				<td>{timed}</td>
 			</tr>
 			{/demos}
@@ -31,3 +39,6 @@
 </div>
 
 {PAGINATION_LINKS}
+
+
+{% endblock %}

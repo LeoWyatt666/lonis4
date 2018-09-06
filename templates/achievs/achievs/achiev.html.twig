@@ -1,20 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h1 class="ui header center aligned">
+	<p><l>Achiev</l> ({total})</p>
+</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'src/Controller/Cstrike/AchievsController.php'|file_link(0) }}">src/Controller/Cstrike/AchievsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'templates/cstrike/achievs/index.html.twig'|file_link(0) }}">templates/cstrike/achievs/index.html.twig</a></code></li>
-    </ul>
+<div class="ui divided items">
+	{achiev}
+	<div class="link item">
+		<div class="ui tiny image">
+			<img src="{img_achiev}">
+		</div>
+		<div class="content">
+			<div class="header">{name}</div>
+			<div class="description">
+				{desc}
+			</div>		
+		</div>
+	</div>
+	{/achiev}
 </div>
+
+<div class="ui divider"></div>
+
+<div class="ui link five doubling cards pagination-feed">
+	{players}
+	<a class="card pagination-item" href="{url_player}" >
+		<div class="image">
+			<img class="" src="{img_player}" title="{plname}" oncontextmenu="return false;">
+		</div>
+		<div class="content">
+			<span class="description">
+				{plname}
+				<p><l>Total:</l> {achiev_total}
+			</span>
+		</div>
+	</a>
+	{/players}
+</div>
+
+{PAGINATION_LINKS}
+
+
 {% endblock %}
