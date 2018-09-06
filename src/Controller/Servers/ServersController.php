@@ -71,6 +71,11 @@ class ServersController extends AbstractController
     )
     {
         $server = $ServersModel->find($id);
+
+        if(!$server) { 
+            throw $this->createNotFoundException(); 
+        }
+
         $server += $hlds->getServerInfo($server['addres'], true);
 
         $server += [
@@ -97,6 +102,10 @@ class ServersController extends AbstractController
 
         // get result
         $server = $hlds->getServerInfo($ip, true);
+
+        if(!$server) { 
+            throw $this->createNotFoundException(); 
+        }
 
         // set vars
         if ($server) {
