@@ -21,5 +21,10 @@ class MigrationVersions
      */
     private $version;
 
+    public function getVersion(): ?string
+    {
+        return $this->version;
+    }
+
 
 }

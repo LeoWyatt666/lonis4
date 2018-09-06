@@ -56,5 +56,70 @@ class KzDiff
      */
     private $icon;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDname(): ?string
+    {
+        return $this->dname;
+    }
+
+    public function setDname(string $dname): self
+    {
+        $this->dname = $dname;
+
+        return $this;
+    }
+
+    public function getDpname(): ?string
+    {
+        return $this->dpname;
+    }
+
+    public function setDpname(string $dpname): self
+    {
+        $this->dpname = $dpname;
+
+        return $this;
+    }
+
+    public function getDdot(): ?int
+    {
+        return $this->ddot;
+    }
+
+    public function setDdot(int $ddot): self
+    {
+        $this->ddot = $ddot;
+
+        return $this;
+    }
+
+    public function getDcolor(): ?string
+    {
+        return $this->dcolor;
+    }
+
+    public function setDcolor(string $dcolor): self
+    {
+        $this->dcolor = $dcolor;
+
+        return $this;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(string $icon): self
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
 
 }

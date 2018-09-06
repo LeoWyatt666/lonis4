@@ -28,5 +28,22 @@ class CsServersMod
      */
     private $modname;
 
+    public function getMid(): ?int
+    {
+        return $this->mid;
+    }
+
+    public function getModname(): ?string
+    {
+        return $this->modname;
+    }
+
+    public function setModname(string $modname): self
+    {
+        $this->modname = $modname;
+
+        return $this;
+    }
+
 
 }

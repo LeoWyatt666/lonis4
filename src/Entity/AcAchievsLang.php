@@ -49,5 +49,58 @@ class AcAchievsLang
      */
     private $desc;
 
+    public function getLid(): ?int
+    {
+        return $this->lid;
+    }
+
+    public function getAchievid(): ?int
+    {
+        return $this->achievid;
+    }
+
+    public function setAchievid(int $achievid): self
+    {
+        $this->achievid = $achievid;
+
+        return $this;
+    }
+
+    public function getLang(): ?string
+    {
+        return $this->lang;
+    }
+
+    public function setLang(?string $lang): self
+    {
+        $this->lang = $lang;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDesc(): ?string
+    {
+        return $this->desc;
+    }
+
+    public function setDesc(?string $desc): self
+    {
+        $this->desc = $desc;
+
+        return $this;
+    }
+
 
 }

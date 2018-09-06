@@ -58,16 +58,11 @@ class PlayersController extends AbstractController
      * @Route("/players/{id}", name="player")
      */
     public function player(
-        $id,
+        CsPlayers $player,
         GeoIp2Service $geoip,
         TimesService $times
     )
     {
-        // get result
-        $player = $this->getDoctrine()
-            ->getRepository(CsPlayers::class)
-            ->find($id);
-
         // set result
         $player->lastTime = date('d.m.Y G:i:s', $player->getLastTime());
         $player->mapCompleted = 0;

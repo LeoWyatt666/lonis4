@@ -77,5 +77,106 @@ class CsServers
      */
     private $update = 'CURRENT_TIMESTAMP';
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getMod(): ?int
+    {
+        return $this->mod;
+    }
+
+    public function setMod(int $mod): self
+    {
+        $this->mod = $mod;
+
+        return $this;
+    }
+
+    public function getAddres(): ?string
+    {
+        return $this->addres;
+    }
+
+    public function setAddres(string $addres): self
+    {
+        $this->addres = $addres;
+
+        return $this;
+    }
+
+    public function getVip(): ?bool
+    {
+        return $this->vip;
+    }
+
+    public function setVip(bool $vip): self
+    {
+        $this->vip = $vip;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getMap(): ?string
+    {
+        return $this->map;
+    }
+
+    public function setMap(?string $map): self
+    {
+        $this->map = $map;
+
+        return $this;
+    }
+
+    public function getPlayers(): ?int
+    {
+        return $this->players;
+    }
+
+    public function setPlayers(?int $players): self
+    {
+        $this->players = $players;
+
+        return $this;
+    }
+
+    public function getMaxPlayers(): ?int
+    {
+        return $this->maxPlayers;
+    }
+
+    public function setMaxPlayers(?int $maxPlayers): self
+    {
+        $this->maxPlayers = $maxPlayers;
+
+        return $this;
+    }
+
+    public function getUpdate(): ?\DateTimeInterface
+    {
+        return $this->update;
+    }
+
+    public function setUpdate(\DateTimeInterface $update): self
+    {
+        $this->update = $update;
+
+        return $this;
+    }
+
 
 }

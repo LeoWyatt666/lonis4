@@ -118,6 +118,13 @@ class CsPlayers implements UserInterface, \Serializable
      */
     private $steamId64;
 
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="role", type="string", nullable=true, columnDefinition="ENUM('ROLE_USER', 'ROLE_ADMIN')")
+     */
+    private $role;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -175,7 +182,8 @@ class CsPlayers implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        //return array('ROLE_USER');
+        return [$this->role ?? 'ROLE_USER'];
     }
 
     public function eraseCredentials()
@@ -324,6 +332,30 @@ class CsPlayers implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): self
+    {
+        $this->role = $role;
+
+        return $this;
     }
 
 }

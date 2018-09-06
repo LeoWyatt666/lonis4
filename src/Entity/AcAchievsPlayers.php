@@ -44,5 +44,39 @@ class AcAchievsPlayers
      */
     private $unlocked;
 
+    public function getPlayerid(): ?int
+    {
+        return $this->playerid;
+    }
+
+    public function getAchievid(): ?int
+    {
+        return $this->achievid;
+    }
+
+    public function getProgress(): ?int
+    {
+        return $this->progress;
+    }
+
+    public function setProgress(int $progress): self
+    {
+        $this->progress = $progress;
+
+        return $this;
+    }
+
+    public function getUnlocked(): ?int
+    {
+        return $this->unlocked;
+    }
+
+    public function setUnlocked(int $unlocked): self
+    {
+        $this->unlocked = $unlocked;
+
+        return $this;
+    }
+
 
 }
