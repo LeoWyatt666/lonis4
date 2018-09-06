@@ -3,14 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * CsPlayers
  *
- * @ORM\Table(name="cs_players", uniqueConstraints={@ORM\UniqueConstraint(name="name", columns={"name"}), @ORM\UniqueConstraint(name="name_steam_id", columns={"name", "steam_id"})}, indexes={@ORM\Index(name="country", columns={"country"})})
+ * @ORM\Table(name="cs_players", uniqueConstraints={@ORM\UniqueConstraint(name="username", columns={"username"}), @ORM\UniqueConstraint(name="name_steam_id", columns={"username", "steam_id"})}, indexes={@ORM\Index(name="country", columns={"country"})})
  * @ORM\Entity(repositoryClass="App\Repository\CsPlayersRepository")
  */
-class CsPlayers
+class CsPlayers implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -24,9 +25,9 @@ class CsPlayers
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=32, nullable=false)
+     * @ORM\Column(name="username", type="string", length=32, nullable=false)
      */
-    private $name;
+    private $username;
 
     /**
      * @var string|null
@@ -34,6 +35,18 @@ class CsPlayers
      * @ORM\Column(name="password", type="string", length=50, nullable=true)
      */
     private $password = '';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=254, nullable=false)
+     */
+    private $email = '';
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
 
     /**
      * @var string|null
@@ -92,13 +105,6 @@ class CsPlayers
     private $flags = '0';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=100, nullable=false)
-     */
-    private $email = '';
-
-    /**
      * @var int|null
      *
      * @ORM\Column(name="icq", type="integer", nullable=true)
@@ -112,19 +118,26 @@ class CsPlayers
      */
     private $steamId64;
 
+    public function __construct()
+    {
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid('', true));
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getUsername(): ?string
     {
-        return $this->name;
+        return $this->username;
     }
 
-    public function setName(string $name): self
+    public function setUsername(string $username): self
     {
-        $this->name = $name;
+        $this->username = $username;
 
         return $this;
     }
@@ -141,6 +154,34 @@ class CsPlayers
         return $this;
     }
 
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+    
     public function getIp(): ?string
     {
         return $this->ip;
@@ -237,18 +278,6 @@ class CsPlayers
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
     public function getIcq(): ?int
     {
         return $this->icq;
@@ -273,5 +302,28 @@ class CsPlayers
         return $this;
     }
 
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, array('allowed_classes' => false));
+    }
 
 }

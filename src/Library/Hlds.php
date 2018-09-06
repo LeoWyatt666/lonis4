@@ -1,5 +1,5 @@
 <?
-namespace App\Libraries;
+namespace App\Library;
 
 class Hlds
 {

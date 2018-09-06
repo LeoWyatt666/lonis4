@@ -53,12 +53,33 @@
     
             </div>
 
-            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
             <div id="computer_menu_user" class="right menu">
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
               <a class="item" href="auth/login"><i class='icon sign in alternate'></i> Sign In</a>
-            </div>
             {% else %} 
-            {% endif %}
+
+              {% if is_granted('ROLE_ADMIN') %}
+              <div class="ui simple dropdown item">
+                <i class='icon user secret'></i> 
+                <div class="menu">
+                <a class="item" href="auth/users"><i class='icon users'></i> Users</a>
+                <a class="item" href="crud/menu">Menu</a>
+                <a class="item" href="crud/players">Players</a>
+                </div>
+              </div>
+              {% endif %}
+
+              <div class="ui simple dropdown item">
+                <i class='icon user outline'></i> Jero
+                <div class="menu">
+                <a class="item" href="cstrike/profile"><i class='icon user'></i> Profile</a>
+                <a class="item" href="auth/setting"><i class='icon user'></i> Setting</a>
+                <a class="item" href="auth/logout"><i class='icon sign out alternate'></i> Logout</a>
+                </div>
+              </div>
+
+	        {% endif %}
+          </div>
 
           </div>
         </div>

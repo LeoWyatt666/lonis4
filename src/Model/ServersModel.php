@@ -1,9 +1,9 @@
 <?
-namespace App\DBAL;
+namespace App\Model;
 
 use Doctrine\DBAL\Driver\Connection;
 
-class ServersDB
+class ServersModel
 {
     private $conn;
 

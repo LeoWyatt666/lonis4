@@ -1,7 +1,7 @@
 <?
 namespace App\Service;
 
-use App\Libraries\Hlds;
+use App\Library\Hlds;
 
 class HldsService
 {

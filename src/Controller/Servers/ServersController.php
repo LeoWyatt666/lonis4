@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\CsServers;
 use App\Service\InfiniteScrollService;
 use App\Service\HldsService;
-use App\DBAL\ServersDB;
+use App\Model\ServersModel;
 use Knp\Component\Pager\PaginatorInterface;
 
 class ServersController extends AbstractController
@@ -20,7 +20,7 @@ class ServersController extends AbstractController
         Request $request,
         PaginatorInterface $paginator,
         InfiniteScrollService $infscr,
-        ServersDB $ServersDB
+        ServersModel $ServersModel
     )
     {
         // get request
@@ -28,7 +28,7 @@ class ServersController extends AbstractController
         $page = $request->query->getInt('page', 1);
 
         // get result
-        $servers = $ServersDB->findAll();
+        $servers = $ServersModel->findAll();
         $pagination = $paginator->paginate($servers, $page, 20);
 
         // set infinite scroll
@@ -66,11 +66,11 @@ class ServersController extends AbstractController
      */
     public function server(
         $id,
-        ServersDB $serversDB,
+        ServersModel $ServersModel,
         HldsService $hlds
     )
     {
-        $server = $serversDB->find($id);
+        $server = $ServersModel->find($id);
         $server += $hlds->getServerInfo($server['addres'], true);
 
         $server += [
@@ -90,7 +90,6 @@ class ServersController extends AbstractController
      */
     public function find(
         Request $request,
-        ServersDB $serversDB,
         HldsService $hlds
     )
     {

@@ -42,46 +42,5 @@ class AcAchievs
      */
     private $icon;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getCount(): ?int
-    {
-        return $this->count;
-    }
-
-    public function setCount(int $count): self
-    {
-        $this->count = $count;
-
-        return $this;
-    }
-
-    public function getIcon(): ?string
-    {
-        return $this->icon;
-    }
-
-    public function setIcon(string $icon): self
-    {
-        $this->icon = $icon;
-
-        return $this;
-    }
-
 
 }

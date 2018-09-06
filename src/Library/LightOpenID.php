@@ -1,5 +1,5 @@
 <?php
-namespace App\Libraries;
+namespace App\Library;
 /**
  * This class provides a simple interface for OpenID 1.1/2.0 authentication.
  *

@@ -18,7 +18,6 @@ class CsServersMod
      * @ORM\Column(name="mid", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\OneToMany(targetEntity="CsServers", mappedBy="mod")
      */
     private $mid;
 
@@ -28,23 +27,6 @@ class CsServersMod
      * @ORM\Column(name="modname", type="string", length=16, nullable=false)
      */
     private $modname;
-
-    public function getMid(): ?int
-    {
-        return $this->mid;
-    }
-
-    public function getModname(): ?string
-    {
-        return $this->modname;
-    }
-
-    public function setModname(string $modname): self
-    {
-        $this->modname = $modname;
-
-        return $this;
-    }
 
 
 }

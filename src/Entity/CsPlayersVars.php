@@ -37,27 +37,5 @@ class CsPlayersVars
      */
     private $value;
 
-    public function getKey(): ?string
-    {
-        return $this->key;
-    }
-
-    public function getPlayerid(): ?int
-    {
-        return $this->playerid;
-    }
-
-    public function getValue(): ?string
-    {
-        return $this->value;
-    }
-
-    public function setValue(string $value): self
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
 
 }
