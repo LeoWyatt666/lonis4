@@ -68,7 +68,6 @@ class AchievsController extends AbstractController
         $locale = $request->getLocale();
 
         $achiev = $AchievsModel->getAchiev($locale, $id);
-
         if(!$achiev) { 
             throw $this->createNotFoundException(); 
         }

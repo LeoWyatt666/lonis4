@@ -1,0 +1,9 @@
+{% macro cup_num(cup_num) %}
+    {% set cup_color = {1:"gold", 2:"saddlebrown", 3:"silver"} %}
+
+    {% if cup_num < 4 %} 
+        <i class="icon trophy" style="color: {{ cup_color[cup_num] }}" title="{{ cup_num }}"></i>
+    {% else %}
+        {{ cup_num }}
+    {% endif %}
+{% endmacro %}

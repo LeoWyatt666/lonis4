@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% from '_layouts/cup_num.html.twig' import cup_num %}
+{% from '_layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
@@ -27,17 +30,11 @@
 			</tr>
 		</thead>
 
-		{% set cup_color = {1:"gold", 2:"saddlebrown", 3:"silver"} %}
-
 		<tbody class="pagination-feed">
 			{% for player in pagination %}
 			<tr class="pagination-item">
 				<td>
-					{% if player.cup_num < 4 %} 
-    					<i class="icon trophy" style="color: {{ cup_color[player.cup_num] }}" title="{{ player.cup_num }}"></i>
-					{% else %}
-						{{ player.cup_num }}
-					{% endif %}
+					{{ cup_num(player.cup_num) }}
 				</td>
 				<td><a href="{{ player.url_player }}">{{ player.player }}</a></td>
 				<td>{{ player.count }}</td>
@@ -51,6 +48,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{% include "_layouts/infinite_scroll.html.twig" %}
+{{ InfiniteScroll_render(pagination) }}
 
 {% endblock %}

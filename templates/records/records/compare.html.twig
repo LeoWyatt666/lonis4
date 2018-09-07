@@ -1,37 +1,40 @@
 {% extends 'base.html.twig' %}
 
+{% from '_layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
 
 <h1 class="ui header">
-	<p>
-		<l>Compare</l>
-		{if {total}}<span class="ui label">{total}</span>{/if}
-	</p>
+	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 </h1>
 
 <table class="ui selectable celled table">
 	<thead>
 		<tr>
-			<th><l>Map</l></th>
-			<th><l>World record</l></th>
-			<th><l>Russian record</l></th>
-			<th><l>Server Record</l></th>
+			<th>Map</th>
+			<th>World record</th>
+			<th>Russian record <i class="flag ru" title="ru"></i></th>
+			<th>Server Record</th>
 		</tr>
 	</thead>
 	<tbody class="pagination-feed">
-		{records}
+		{% for record in pagination %}
 		<tr class="pagination-item">
-			<td><a href="{url_map}">{map}{mappath}</a></td>
-			<td>{wr_timed} <i>{wr_player}</i></td>
-			<td>{comm_timed} <i>{comm_player}</i></td>
-			<td>{top_timed} <i>{top_player}</i></td>
+			<td><a href="{{ record.url_map }}">{{ record.map }}{{ record.mappath }}</a></td>
+			<td>{{ record.wr_timed }} <b>{{ record.wr_player }}</b> <i class="flag {{ record.wr_country }}" title="{{ record.wr_country }}"></i></td>
+			<td>{{ record.comm_timed }} <b>{{ record.comm_player }}</b></td>
+			<td>{{ record.top_timed }} <b>{{ record.top_player }}</b> </td>
 		</tr>
-		{/records}
+		{% endfor %}
 	</tbody>
 </table>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
 
 {% endblock %}

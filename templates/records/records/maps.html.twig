@@ -1,52 +1,58 @@
 {% extends 'base.html.twig' %}
 
+{% from '_layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
 
 <h1 class="ui header">
-	<p><l>Maps</l></p>
+	{{ title }}
 </h1>
 
 <div class="ui top attached tabular menu">
-	{comm_list}
-	<a href="{url_comm}" class="item {active}">
-		{fullname}
-		{if {totals}}<span class="ui label">{totals}</span>{/if}
+	{% for comm in comm_list %}
+	<a href="{{ comm.url_comm }}" class="item {{ comm.active }}">
+		{{ comm.fullname }}
+		{% if comm.totals %}<span class="ui label">{{ comm.totals }}</span>{% endif %}
 	</a>
-	{/comm_list}
+	{% endfor %}
 </div>
 
 <div class="ui bottom attached segment">
 	<table class="ui selectable celled table">
 		<thead>
 			<tr>
-			<th><l>Map</l></th>
-			<th><l>Difficulty</l></th>
-			<th><l>Type</l></th>
-			<th><l>Authors</l></th>
-			<th><l>Date</l></th>
+			<th>Map</th>
+			<th>Difficulty</th>
+			<th>Type</th>
+			<th>Authors</th>
+			<th>Date</th>
 			<th></th>
 			</tr>
 		</thead>
 		<tbody class="pagination-feed">
-			{maps}
+			{% for map in pagination %}
 			<tr class="pagination-item">
 				<td>
-					<i class="icon icon-{icon} diff-dot" style="color: {dcolor};" title="{dname}"></i>
-					<a href="{url_map}">{mapname}</a>
+					<i class="icon {{ map.icon }} diff-dot" style="color: {{ map.dcolor }};" title="{{ map.dname }}"></i>
+					<a href="{{ map.url_map }}">{{ map.mapname }}</a>
 				</td>
-				<td>{dname}</td>
-				<td>{type}</td>
-				<td>{authors}</td>
-				<td>{date_old}</td>
-				<td><a class="icon icon-download" href="{url_download}" alt="<l>Download</l> {mapname}"></a></td>
+				<td>{{ map.dname }}</td>
+				<td>{{ map.type }}</td>
+				<td>{{ map.authors }}</td>
+				<td>{{ map.date_old }}</td>
+				<td><a href="{{ map.url_download }}" title="Download {{ map.mapname }}"><i class="download icon"></i></a></td>
 			</tr>
-			{/maps}
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
 
 {% endblock %}

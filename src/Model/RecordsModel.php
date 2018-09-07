@@ -36,13 +36,13 @@ class RecordsModel
     }
 
     // Compare
-    public function getRecords($comm)
+    public function getCompare($comm)
     {
         return $this->conn->executeQuery(
                 "SELECT `r1`.`map` `map`, `r1`.`mappath`,
                 `r1`.`time` `wr_time`, `r1`.`player` `wr_player`, `r1`.`country` `wr_country`,
                 `r2`.`time` `comm_time`, `r2`.`player` `comm_player`, `r2`.`country` `comm_country`,
-                `t`.`time` `top_time`, `t`.`name` `top_player`
+                `t`.`time` `top_time`, `t`.`username` `top_player`
                 FROM `kz_records` `r1`
                     LEFT JOIN (SELECT * FROM `kz_records` WHERE comm = ?) `r2` ON r1.map=r2.map AND r1.mappath=r2.mappath
                     LEFT JOIN `kz_view_map_top1` `t` ON r1.map=t.map AND `go_cp` = 0
@@ -93,39 +93,16 @@ class RecordsModel
     }    
 
     // Player
-    public function getPlayer($id)
+    public function getPlayer($player)
     {
         return $this->conn->executeQuery(
-                "SELECT * FROM kz_records WHERE `id` = ? LIMIT 1",
-                [$id]
+                "SELECT * FROM kz_records WHERE `player` = ? LIMIT 1",
+                [$player]
             )
             ->fetch();
     } 
     
-    public function getPlayerByName($name)
-    {
-        return $this->conn->executeQuery(
-                "SELECT * FROM kz_records WHERE `player` = ? LIMIT 1",
-                [$name]
-            )
-            ->fetch();
-    }
-
-    // Player Community
-    public function getPlayerComm($id)
-    {
-        return $this->conn->executeQuery(
-                "SELECT `name`, `fullname` FROM `kz_comm` `c`
-                JOIN (SELECT `comm` FROM `kz_records`
-                        WHERE `id`= ? GROUP BY `comm`) `cc`
-                ON `c`.`name`=`cc`.`comm`
-                ORDER BY `sort`",
-                [$id]
-            )
-            ->fetchAll();
-    } 
-
-    public function getPlayerCommByName($name)
+    public function getPlayerComm($name)
     {
         return $this->conn->executeQuery(
                 "SELECT `name`, `fullname` FROM `kz_comm` `c`
@@ -139,16 +116,7 @@ class RecordsModel
     } 
 
     // Player demos
-    public function getPlayerDemos($id, $comm)
-    {
-        return $this->conn->executeQuery(
-                "SELECT * FROM kz_records WHERE `id`=? AND `comm`=?",
-                [$id, $comm]
-            )
-            ->fetchAll();
-    } 
-
-    public function getPlayerDemosByName($name, $comm)
+    public function getPlayerDemos($name, $comm)
     {
         return $this->conn->executeQuery(
                 "SELECT * FROM kz_records WHERE `player`=? AND `comm`=?",
