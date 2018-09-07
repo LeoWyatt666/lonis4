@@ -5,16 +5,16 @@
 {% block body %}
 
 <h1 class="ui header">
-	<p><l>Records - Players</l></p>
+	{{ title }}
 </h1>
 
 <div class="ui top attached tabular menu">
-	{comm_list}
-	<a href="{url_comm}" class="item {active}">
-		{fullname}
-		{if {totals}}<span class="ui label">{totals}</span>{/if}
+	{% for comm in comm_list %}
+	<a href="{{ comm.url_comm }}" class="item {{ comm.active }}">
+		{{ comm.fullname }}
+		{% if comm.totals %}<span class="ui label">{{ comm.totals }}</span>{% endif %}
 	</a>
-	{/comm_list}
+	{% endfor %}
 </div>
 
 <div class="ui bottom attached segment">
@@ -22,22 +22,35 @@
 		<thead>
 			<tr>
 				<th width="15px">№</th>
-				<th><l>player</l></th>
-				<th><l>All</l></th>
+				<th>player</th>
+				<th>All</th>
 			</tr>
 		</thead>
+
+		{% set cup_color = {1:"gold", 2:"saddlebrown", 3:"silver"} %}
+
 		<tbody class="pagination-feed">
-			{players}
+			{% for player in pagination %}
 			<tr class="pagination-item">
-				<td>{cup_num}</td>
-				<td><a href="{url_player}">{player}</a></td>
-				<td>{count}</td>
+				<td>
+					{% if player.cup_num < 4 %} 
+    					<i class="icon trophy" style="color: {{ cup_color[player.cup_num] }}" title="{{ player.cup_num }}"></i>
+					{% else %}
+						{{ player.cup_num }}
+					{% endif %}
+				</td>
+				<td><a href="{{ player.url_player }}">{{ player.player }}</a></td>
+				<td>{{ player.count }}</td>
 			</tr>
-			{/players}
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{% include "_layouts/infinite_scroll.html.twig" %}
 
 {% endblock %}

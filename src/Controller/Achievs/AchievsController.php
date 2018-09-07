@@ -20,7 +20,8 @@ class AchievsController extends AbstractController
         Request $request,
         PaginatorInterface $paginator,
         InfiniteScrollService $infscr,
-        AchievsModel $AchievsModel    )
+        AchievsModel $AchievsModel
+    )
     {
         // GravatarApi !! create d=identicon
         //$gravatar = new GravatarApi;
