@@ -151,7 +151,7 @@ class RecordsController extends AbstractController
         $demos = $pagination->getItems();
         foreach ($demos as &$demo) {
             $demo += [
-                'url_map' => "records/maps/{$demo['map']}",
+                'url_map' => "records/maps/{$comm}/{$demo['map']}",
                 'timed' => $times->timed($demo['time'], 2),
             ];
         }
