@@ -67,7 +67,7 @@ class AchievsModel
             ->fetch();
     }
 
-    public function getAchievsPlayer($id)
+    public function getAchievsPlayer($locale, $id)
     {
         return $this->conn->executeQuery(
                 'SELECT `icon`, `a`.`id`, `a`.`name`, `a`.`desc`, `count`,

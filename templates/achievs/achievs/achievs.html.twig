@@ -5,30 +5,34 @@
 {% block body %}
 
 <h1 class="ui header center aligned">
-	<l>Achievs</l> ({total})
+	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 </h1>
 
 <div class="ui divided items pagination-feed">
-	{achievs}
+	{% for achiev in pagination %}
 	<div class="link item pagination-item">
 		<div class="ui tiny image">
-			<img src="{img_achiev}">
+			<img src="{{ achiev.img_achiev }}">
 		</div>
 		<div class="content">
-			<a class="header" href="{url_achiev}">{name}</a>
+			<a class="header" href="{{ achiev.url_achiev }}">{{ achiev.name }}</a>
 			<div class="description">
-				{desc}
+				{{ achiev.desc }}
 			</div>
 			<br>
-			<div class="ui indicating demo progress active" data-percent="{completer}">
-				<div class="bar" style="transition-duration: 300ms; width: {completer}%;"></div>
-				<div class="label">{completer}% Done</div>
+			<div class="ui indicating demo progress active" data-percent="{{ achiev.completer }}">
+				<div class="bar" style="transition-duration: 300ms; width: {{ achiev.completer }}%;"></div>
+				<div class="label">{{ achiev.completer }}% Done</div>
 			</div>
 		</div>
 	</div>
-	{/achievs}
+	{% endfor %}
 </div>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{% include "_layouts/infinite_scroll.html.twig" %}
 
 {% endblock %}

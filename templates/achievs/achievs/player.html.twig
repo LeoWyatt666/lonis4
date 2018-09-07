@@ -5,37 +5,41 @@
 {% block body %}
 
 <h1 class="ui header">
-	<p><l>Player achievs</l> :: <i>{plname}</i></p>
+	{{ title }} :: {{ pagination.items.0.plname }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 </h1>
 
 <div class="ui divided items pagination-feed">
-	{achievs}
+	{% for achiev in pagination %}
 	<div class="link item pagination-item">
 		<div class="ui tiny image">
-			<img src="{img_achiev}">
+			<img src="{{ achiev.img_achiev }}">
 		</div>
 		<div class="content">
-			<a class="header" href="{url_achiev}">{name}</a>
+			<a class="header" href="{{ achiev.url_achiev }}">{{ achiev.name }}</a>
 			<div class="description">
-				{desc}
+				{{ achiev.desc }}
 			</div>
 			<br>
-			{if {width}}
-			<div class="ui indicating demo progress active" data-percent="{width}">
-				<div class="bar" style="transition-duration: 300ms; width: {width}%;"></div>
-				<div class="label">{progress}/{count} Done</div>
+			{% if achiev.width %}
+			<div class="ui indicating demo progress active" data-percent="{{ achiev.width }}">
+				<div class="bar" style="transition-duration: 300ms; width: {{ achiev.width }}%;"></div>
+				<div class="label">{{ achiev.progress }}/{{ achiev.count }} Done</div>
 			</div>
-			{/if}
-			{if {unlocked}}
+			{% endif %}
+			{% if achiev.unlocked %}
 			<div class="unlocked_time">
-				<l>Unlocked</l>{unlocked}
+				<l>Unlocked</l>{{ achiev.unlocked }}
 			</div>
-			{/if}			
+			{% endif %}			
 		</div>
 	</div>
-	{/achievs}
+	{% endfor %}
 </div>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{% include "_layouts/infinite_scroll.html.twig" %}
 
 {% endblock %}
