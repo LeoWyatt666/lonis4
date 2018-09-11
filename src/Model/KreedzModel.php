@@ -16,7 +16,7 @@ class KreedzModel
     public function getDuels($id)
     {
         return $this->conn->executeQuery(
-                'SELECT `d`.*, `pl1`.`name` `name1`, `pl2`.`name` `name2` FROM `kz_duel` `d`
+                'SELECT `d`.*, `pl1`.`username` `name1`, `pl2`.`username` `name2` FROM `kz_duel` `d`
 				LEFT JOIN `cs_players` `pl1` ON `pl1`.`id` = `player1`
 				LEFT JOIN `cs_players` `pl2` ON `pl2`.`id` = `player2`'
             )
@@ -90,7 +90,7 @@ class KreedzModel
     {
         return $this->conn->executeQuery(
                 "SELECT *, `type` `mtype` FROM `kz_map`
-                    LEFT JOIN `kz_comm` ON `comm`=`name`
+                    LEFT JOIN `kz_comm` ON `comm`=`username`
                     LEFT JOIN `kz_diff` `d` ON `d`.`id`=`diff`
                 WHERE `mapname` = ? ORDER BY `mapname` LIMIT 1",
                 [$map]
@@ -103,7 +103,7 @@ class KreedzModel
     {
         return $this->conn->executeQuery(
                 "SELECT * FROM `kz_records` `r`, `kz_comm` `c`
-				WHERE `map` = ? AND `name` = `comm`
+				WHERE `map` = ? AND `username` = `comm`
 				ORDER BY `sort`, `mappath`",
                 [$map]
             )
@@ -134,7 +134,7 @@ class KreedzModel
     public function getPlayer($id)
     {
         return $this->conn->executeQuery(
-                "SELECT `id`, `name`, `steam_id`, `steam_id_64`, `email` FROM `cs_players` WHERE `id` = ? LIMIT 1",
+                "SELECT `id`, `username`, `steam_id`, `steam_id_64`, `email` FROM `cs_players` WHERE `id` = ? LIMIT 1",
                 [$id]
             )
             ->fetch();
@@ -174,7 +174,7 @@ class KreedzModel
         $where = $this->getTypes($type);
 
         return $this->conn->executeQuery(
-                "SELECT `m`.`mapname`, `m`.`type`, `t1`.`player`, `t1`.`name`, `t1`.`time`,
+                "SELECT `m`.`mapname`, `m`.`type`, `t1`.`player`, `t1`.`username`, `t1`.`time`,
                         `t1`.`cp`, `t1`.`go_cp`, `t1`.`weapon`, `t1`.`wname`,
                         `t1`.`dname`, `t1`.`dcolor`, `t1`.`icon`
                 FROM `kz_map` `m`

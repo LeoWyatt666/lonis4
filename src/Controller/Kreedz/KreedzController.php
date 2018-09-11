@@ -83,15 +83,14 @@ class KreedzController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/kreedz/players", name="kreedz_last")
      */
     public function players(
         Request $request,
         PaginatorInterface $paginator,
         InfiniteScrollService $infscr,
-        KreedzModel $KreedzModel,
-        TimesService $times
+        KreedzModel $KreedzModel
     )
     {
         // get request
@@ -141,6 +140,58 @@ class KreedzController extends AbstractController
             'pagination' => $pagination,
             'rtypes' => $rtypes,
             'search' => $search
+        ]);
+    }
+
+    /**
+     * @Route("/kreedz/players/{id}/norec", name="kreedz_last", requirements={"id"="\d+"})
+     */
+    public function player_norec(
+        $id,
+        Request $request,
+        PaginatorInterface $paginator,
+        InfiniteScrollService $infscr,
+        KreedzModel $KreedzModel,
+        TimesService $times
+    )
+    {
+        // get request
+        $search = $request->query->get('search');
+        $page = $request->query->getInt('page', 1);
+
+        $player = $KreedzModel->getPlayer($id);
+
+        if(empty($player)) {
+            throw $this->createNotFoundException();
+        }
+
+        // get last
+        $maps = $KreedzModel->getMapsNorec($id);
+        $pagination = $paginator->paginate($maps, $page, 20);
+
+        // set vars
+        $maps = $pagination->getItems();
+        foreach ($maps as &$map) {
+            $map += [
+                'url_map' => "kreedz/map/{$map['mapname']}",
+                'url_player' => "kreedz/player/{$map['player']}",
+                'timed' => $times->timed($map['time'], 5),
+                'color_nogc' => !$map['go_cp'] ? 'green' : 'grey',
+                'color_wpn' => ($map['wname']!='USP' && $map['wname']!='KNIFE') ? 'green' : 'grey',
+                'map_admin' => 0,
+            ];
+        }
+        $pagination->setItems($maps);
+
+        // set infinite scroll
+        $pagination = $infscr->setPaginationNext($pagination, $request);
+
+        // render
+        return $this->render('kreedz/kreedz/player_norec.html.twig', [
+            'title' => 'Kreedz :: Players',
+            'pagination' => $pagination,
+            'search' => $search,
+            'player' => $player
         ]);
     }
 }

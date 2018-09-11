@@ -4,24 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Kreedz extends MY_Controller
 {
     //---------------------------------------------------------------------------------------------
-    public function players($type = 'all', $sort = 'all', $page = 1)
-    {
-
-        // Render
-        $this->render([
-            'total' => $total,
-            'players' => $players,
-            'search' => $search,
-            'type' => $type,
-            'sort' => $sort,
-            'query' => $query,
-            'url_all' => "kreedz/players/{$type}/all{$search}",
-            'url_top1' => "kreedz/players/{$type}/top1{$search}",
-            'types' => $rtypes,
-        ] + $pag);
-    }
-
-    //---------------------------------------------------------------------------------------------
     public function player($id = 0, $type = 'all', $sort = 'all', $page = 1)
     {
         $types = ['all', 'pro', 'noob'];
@@ -99,23 +81,6 @@ class Kreedz extends MY_Controller
     //---------------------------------------------------------------------------------------------
     public function player_norec($id = null, $page = 1)
     {
-        if(!is_numeric($id) && !is_numeric($page))
-            show_404();
-
-        // Check player
-        $player = $this->kreedz->get_player($id);
-        empty($player) && show_404();
-
-        // Get total rows
-        $total = $this->kreedz->count_player_norec($id);
-
-        // Generate pagination
-        $pag = $this->pagination->init([
-            'base_url' => "kreedz/player_norec/{$id}",
-            'total_rows' => $total,
-            'uri_segment' => 5,
-            'page' => $page,
-        ]);
 
         // Get all rows and sets
         $maps = $this->kreedz->get_player_norec($id, $pag);
