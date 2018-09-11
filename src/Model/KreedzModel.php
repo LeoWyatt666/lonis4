@@ -111,21 +111,21 @@ class KreedzModel
     }
 
     // Players
-    public function getPlayers($type, $sort, $name)
+    public function getPlayers($type, $search)
     {
         $where = $this->getTypes($type);
-        $where2 = $name ? " AND `name` LIKE :name ESCAPE '!'" : '';
+        $where2 = $search ? " AND `username` LIKE :search ESCAPE '!'" : '';
 
         return $this->conn->executeQuery(
-                "SELECT `id`, `name`, `all`, `top1` FROM `cs_players` `p`
+                "SELECT `p`.`id`, `p`.`username`, `t`.`all`, `t1`.`top` FROM `cs_players` `p`
 				JOIN (
 					SELECT COUNT(DISTINCT `map`) as `all`, `player` FROM kz_view_map_top
 					WHERE 1 {$where} GROUP BY `player`) as `t` ON `id` = `t`.`player`
 				LEFT JOIN (
-					SELECT COUNT(DISTINCT `map`) as `top1`, `player` FROM kz_view_map_top1
+					SELECT COUNT(DISTINCT `map`) as `top`, `player` FROM kz_view_map_top1
 					WHERE 1 {$where} GROUP BY `player`) as `t1` ON `id` = `t1`.`player`
-				WHERE 1 {$where2} AND `all`>50 ORDER BY `{$sort}` DESC, `name`",
-                ['name' => "%{$name}%"]
+				WHERE 1 {$where2} AND `all`>50 ORDER BY `all` DESC, `username`",
+                ['search' => "%{$search}%"]
             )
             ->fetchAll();
     }   

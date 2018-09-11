@@ -6,50 +6,6 @@ class Kreedz extends MY_Controller
     //---------------------------------------------------------------------------------------------
     public function players($type = 'all', $sort = 'all', $page = 1)
     {
-        $types = ['all', 'pro', 'noob'];
-        $sortes = ['all', 'top1'];
-        
-        if(!is_numeric($page) || !in_array($type, $types) || !in_array($sort, $sortes))
-            show_404();
-
-        // Get search query
-        $query = $this->input->get_post('q');
-        // XSS
-        $query = $this->security->xss_clean($query);
-
-        // Get total rows
-        $total = $this->kreedz->count_players($type, $sort, $query);
-
-        // Generate type menu
-        foreach ($types as $ctype) {
-            $rtypes[] = [
-                'type' => $ctype,
-                'caption' => ucfirst($ctype),
-                'url' => "kreedz/players/{$ctype}/{sort}{search}",
-                'active' => $ctype==$type ? 'active' : '',
-                'totals' => $ctype==$type ? $total : 0,
-            ];
-        }
-
-        // Generate pagination
-        $pag = $this->pagination->init([
-            'base_url' => "kreedz/players/{$type}/{$sort}",
-            'total_rows' => $total,
-            'uri_segment' => 5,
-            'page' => $page,
-        ]);
-
-        // Get all rows and sets
-        $players = $this->kreedz->get_players($type, $sort, $query, $pag);
-        foreach ($players as &$player) {
-            $player += [
-                'url_player' => "kreedz/player/{$player['id']}",
-                'cup_num' => $this->cup_num(++$pag['offset']),
-            ];
-        }
-
-        // Search query url
-        $search = $query ? '?'.http_build_query(['q'=>$query]) : '';
 
         // Render
         $this->render([

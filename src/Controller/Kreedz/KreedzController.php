@@ -12,13 +12,12 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class KreedzController extends AbstractController
 {
-    private $types = ['all', 'pro', 'noob'];
+    private $types = ['all', 'pro', 'nub'];
 
     /**
-     * @Route("/kreedz/last/{type}", name="kreedz_last")
+     * @Route("/kreedz/last", name="kreedz_last")
      */
     public function last(
-        $type = "all",
         Request $request,
         PaginatorInterface $paginator,
         InfiniteScrollService $infscr,
@@ -26,12 +25,13 @@ class KreedzController extends AbstractController
         TimesService $times
     )
     {
+        // get request
+        $type = $request->query->get('type', 'all');
+        $page = $request->query->getInt('page', 1);
+
         if(!in_array($type, $this->types)) {
             throw $this->createNotFoundException();
         }
-
-        // get request
-        $page = $request->query->getInt('page', 1);
 
         // get last
         $maps = $KreedzModel->getMapLast($type);
@@ -69,7 +69,7 @@ class KreedzController extends AbstractController
             $rtypes[] = [
                 'type' => $ctype,
                 'caption' => ucfirst($ctype),
-                'url' => "kreedz/last/{$ctype}",
+                'url' => "kreedz/last/?type={$ctype}",
                 'active' => $ctype==$type ? 'active' : '',
                 'totals' => $ctype==$type ? $pagination->getTotalItemCount() : 0,
             ];
@@ -80,6 +80,67 @@ class KreedzController extends AbstractController
             'title' => 'Kreedz :: Last',
             'pagination' => $pagination,
             'rtypes' => $rtypes,
+        ]);
+    }
+
+        /**
+     * @Route("/kreedz/players", name="kreedz_last")
+     */
+    public function players(
+        Request $request,
+        PaginatorInterface $paginator,
+        InfiniteScrollService $infscr,
+        KreedzModel $KreedzModel,
+        TimesService $times
+    )
+    {
+        // get request
+        $type = $request->query->get('type', 'all');
+        $search = $request->query->get('search');
+        $page = $request->query->getInt('page', 1);
+
+        if(!in_array($type, $this->types)) {
+            throw $this->createNotFoundException();
+        }
+
+        // get last
+        $players = $KreedzModel->getPlayers($type, $search);
+        $pagination = $paginator->paginate($players, $page, 20);
+
+        // set cup nums
+        $cup_num = ($page-1)*$pagination->getItemNumberPerPage();
+
+        // set vars
+        $players = $pagination->getItems();
+        foreach ($players as &$player) {
+            $player += [
+                'url_player' => "kreedz/players/{$player['id']}",
+                'cup_num' => ++$cup_num,
+            ];
+        }
+        $pagination->setItems($players);
+
+        // set infinite scroll
+        $pagination = $infscr->setPaginationNext($pagination, $request);
+
+        // Generate type menu
+        $types = $this->types;
+        foreach ($types as $ctype) {
+            $rtypes[] = [
+                'type' => $ctype,
+                'caption' => ucfirst($ctype),
+                'url' => "kreedz/players/?".http_build_query(['type'=>$ctype, 'search'=>$search]), // 'sort'=>$sort, 
+                'active' => $ctype==$type ? 'active' : '',
+                'totals' => $ctype==$type ? $pagination->getTotalItemCount() : 0,
+            ];
+        }
+
+        // render
+        return $this->render('kreedz/kreedz/players.html.twig', [
+            'title' => 'Kreedz :: Players',
+            'pagination' => $pagination,
+            'rtypes' => $rtypes,
+            'search' => $search
         ]);
     }
 }

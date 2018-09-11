@@ -1,30 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% from '_layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 
 <h1 class="ui header">
-	<p><l>Players</l></p>
+	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 </h1>
 
 <div class="ui top attached tabular menu">
-	{types}
-	<a href="{url}" class="item {active}">
-		<l>{caption}</l> {if {totals}}<span class="ui label">{totals}</span>{/if}
-	</a>
-	{/types}
+	{% for rtype in rtypes %}
+	<a href="{{ rtype.url }}" class="item {{ rtype.active }}">{{ rtype.caption }}</a>
+	{% endfor %}
+
 	<div class="right menu">
 		<div class="item">
-			{form_open(kreedz/players,'class="ui form" method="get"')}
-			<div class="ui search">
-				<div class="ui left icon input">
-					<i class="search icon"></i>
-					<input type="search" class="prompt" placeholder="Search..." 
-						name="q" value="{set_value(q)}" autocomplete="off">
-				</div>
-			</div>
-			{form_close()}
+			{% include "_layouts/search.html.twig" %}
 		</div>
 	</div>
 </div>
@@ -34,26 +27,30 @@
 		<thead>
 			<tr>
 				<th style="width: 30px; text-align: center">№</th>
-				<th><l>{Player}</l></th>
-				<th><a href="{url_all}"><l>Total</l></a></th>
-				<th><a href="{url_top1}"><l>First</l></a></th>
+				<th>Player</th>
+				<th>Total</th>
+				<th>First</th>
 			</tr>
 		</thead>
 		<tbody class="pagination-feed">
-			{players}
+			{% for player in pagination %}
 			<tr class="pagination-item">
 				<td scope="row" style="text-align: center">
-					{cup_num}
+					{{ player.cup_num }}
 				</td>
-				<td><a href="{url_player}">{name}</a></td>
-				<td>{all}</td>
-				<td>{top1}</td>
+				<td><a href="{{ player.url_player }}">{{ player.username }}</a></td>
+				<td>{{ player.all }}</td>
+				<td>{{ player.top }}</td>
 			</tr>
-			{/players}
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
 
 {% endblock %}
