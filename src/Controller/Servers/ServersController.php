@@ -31,6 +31,10 @@ class ServersController extends AbstractController
         $servers = $ServersModel->findAll();
         $pagination = $paginator->paginate($servers, $page, 20);
 
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
+
         // set infinite scroll
         $pagination = $infscr->setPaginationNext($pagination, $request);
 

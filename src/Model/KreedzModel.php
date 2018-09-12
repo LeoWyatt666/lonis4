@@ -13,7 +13,7 @@ class KreedzModel
     }
 
     // Duels
-    public function getDuels($id)
+    public function getDuels()
     {
         return $this->conn->executeQuery(
                 'SELECT `d`.*, `pl1`.`username` `name1`, `pl2`.`username` `name2` FROM `kz_duel` `d`
@@ -37,7 +37,7 @@ class KreedzModel
     }
 
     // Maps Norec
-    public function getMapsNorec($id)
+    public function getMapsNorec()
     {
         return $this->conn->executeQuery(
                 'SELECT t.*, m.mapname, m.type mtype FROM `kz_map` `m` 
@@ -58,7 +58,7 @@ class KreedzModel
     }
 
     // Map players
-    public function getMapPlayers($type, $map)
+    public function getMapPlayers($map, $type)
     {
         $where = $this->getTypes($type);
 
@@ -90,7 +90,7 @@ class KreedzModel
     {
         return $this->conn->executeQuery(
                 "SELECT *, `type` `mtype` FROM `kz_map`
-                    LEFT JOIN `kz_comm` ON `comm`=`username`
+                    LEFT JOIN `kz_comm` ON `comm`=`name`
                     LEFT JOIN `kz_diff` `d` ON `d`.`id`=`diff`
                 WHERE `mapname` = ? ORDER BY `mapname` LIMIT 1",
                 [$map]
@@ -103,7 +103,7 @@ class KreedzModel
     {
         return $this->conn->executeQuery(
                 "SELECT * FROM `kz_records` `r`, `kz_comm` `c`
-				WHERE `map` = ? AND `username` = `comm`
+				WHERE `map` = ? AND `name` = `comm`
 				ORDER BY `sort`, `mappath`",
                 [$map]
             )
@@ -141,17 +141,18 @@ class KreedzModel
     }
 
     // Player Maps
-    public function getPlayerMaps($id, $type)
+    public function getPlayerMaps($id, $type, $search)
     {
         $where = $this->getTypes($type);
+        $where .= $search ? " AND `mts`.`map` LIKE :search ESCAPE '!'" : '';
 
         return $this->conn->executeQuery(
                 "SELECT `mts`.* FROM `kz_view_map_top` `mts`
                     JOIN (SELECT `map`, min(`time`) `mtime` FROM `kz_view_map_top`
-                            WHERE `player` = ? GROUP BY `map` ORDER BY `map`) `mt`
+                            WHERE `player` = :id GROUP BY `map` ORDER BY `map`) `mt`
                         ON `mts`.`map`=`mt`.`map` AND `mts`.`time`=`mt`.`mtime`
                     WHERE 1 {$where} ORDER BY `map`",
-                [$id]
+                ['id'=>$id, 'search'=>"%{$search}%"]
             )
             ->fetchAll();
     }
@@ -191,7 +192,7 @@ class KreedzModel
     {
         $types = array(
             'pro' => 'AND (`go_cp` = 0 AND `pspeed` = 250 )',
-            'noob' => 'AND (`go_cp` != 0 OR NOT `pspeed` = 250)',
+            'nub' => 'AND (`go_cp` != 0 OR NOT `pspeed` = 250)',
             'all' => ''
         );
         return isset($types[$type]) ? $types[$type] : '';

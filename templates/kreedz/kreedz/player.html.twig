@@ -1,27 +1,26 @@
 {% extends 'base.html.twig' %}
 
+{% from '_layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 
 <h1 class="ui header">
-	<p><l>Player</l> :: <i>{player_name}</i></p>
+	{{ title }}
 </h1>
 
 <div class="ui top attached tabular menu">
-	{types}
-	<a href="{url}" class="item {active}">
-		<l>{caption}</l> {if {totals}}<span class="ui label">{totals}</span>{/if}
-	</a>
-	{/types}
+	{% for rtype in rtypes %}
+	<a href="{{ rtype.url }}" class="item {{ rtype.active }}">{{ rtype.caption }}</a>
+	{% endfor %}
+
 	<div class="right menu">
-		{sortes}
-		<div class="item {active}">
-			<a href="{url}" class=""><l>{caption}</l></a>
-		</div>
-		{/sortes}
 		<div class="item">
-			<a href="{url_norec}"><l>Not jumped</l></a>
+			<a class="ui button" href="{{ url_norec }}">Not jumped</a>
+		</div>
+		<div class="item">
+			{% include "_layouts/search.html.twig" %}
 		</div>
 	</div>
 </div>
@@ -30,30 +29,34 @@
 	<table class="ui selectable celled table">
 		<thead>
 			<tr>
-				<th><l>Map</l></th>
-				<th><l>Time</l></th>
-				<th><l>Checkpoints</l></th>
-				<th><l>Teleports</l></th>
-				<th><l>Weapon</l></th>
+				<th>Map</th>
+				<th>Time</th>
+				<th>Checkpoints</th>
+				<th>Teleports</th>
+				<th>Weapon</th>
 			</tr>
 		</thead>
 		<tbody class="pagination-feed">
-			{maps}
+			{% for map in pagination %}
 			<tr class="pagination-item">
 				<td>
-					<i class="icon {icon} diff-dot" style="color: {dcolor}" title="{dname}"></i>
-					<a href="{url_map}">{map}</a>
+					<i class="icon {{ map.icon }} diff-dot" style="color: {{ map.dcolor }}" title="{{ map.dname }}"></i>
+					<a href="{{ map.url_map }}">{{ map.map }}</a>
 				</td>
-				<td>{timed}</td>
-				<td><div class="ui {color_nogc} horizontal label">{cp}</div></td>
-				<td><div class="ui {color_nogc} horizontal label">{go_cp}</div></td>
-				<td class="{color_wpn}"><div class="wpn wpn-{weapon}">&nbsp;</div></td>
+				<td>{{ map.timed }}</td>
+				<td><div class="ui {{ map.color_nogc }} horizontal label">{{ map.cp }}</div></td>
+				<td><div class="ui {{ map.color_nogc }} horizontal label">{{ map.go_cp }}</div></td>
+				<td class="{{ map.color_wpn }}"><div class="wpn wpn-{{ map.weapon }}">&nbsp;</div></td>
 			</tr>
-			{/maps}
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
 
 {% endblock %}

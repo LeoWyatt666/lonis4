@@ -7,7 +7,7 @@
 {% block content %}
 
 <h1 class="ui header">
-	<p>Player :: <i>{{ player.username }}</i></p>
+	{{ title }}
 </h1>
 
 <div class="ui top attached tabular menu">
@@ -15,7 +15,7 @@
 		Not jumped <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 	</div>
 	<div class="item">
-		<a href="kreedz/players/{{ player.id }}?type=all">Jumped</a>
+		<a href="{{ url_jumped }}">Jumped</a>
 	</div>
 </div>
 

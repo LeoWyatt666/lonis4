@@ -1,47 +1,47 @@
 {% extends 'base.html.twig' %}
 
+{% from '_layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 
 <h1 class="ui header">
-	<p><l>Map</l> :: {map}</p>
+	{{ title }}
 </h1>
 
 <div class="ui stackable three column grid">
 	<div class="column">
-		{maprec}
-		<div>
-			{if {part}}
-			<b><a href="{url}" target="_blank">{uname}</a></b>:
-			{/if}
-			<b>{mappath}</b> {timed} <i>{player}</i>&nbsp;
-			<span class="flag-icon flag-icon-{country}" title="{country}">&nbsp;</span>
+		{% for rec in maprec %}
+		<p><div>
+			{% if rec.part %}
+			<b><a href="{{ rec.url }}" target="_blank">{{ rec.fullname }}</a></b>:
+			{% endif %}
+			<b>{{ rec.mappath }}</b> {{ rec.timed }} <b>{{ rec.player }}</b>&nbsp;
+			<i class="flag {{ rec.country }}" title="{{ rec.country }}"></i>
 		</div>
-		{/maprec}
+		{% endfor %}
 	</div>
 	<div class="column">
-		{mapinfo}
-		<div>
-			<b><l>Challenge</l></b>: <span class="mapinfo">{dname}</span>
-			<i class="icon icon-{icon}" style="color: {dcolor};"></i>
+		<p><div>
+			<b>Challenge</b>: <span class="mapinfo">{{ mapinfo.dname }}</span>
+			<p><i class="icon icon-{{ mapinfo.icon }}" style="color: {{ mapinfo.dcolor }};"></i>
 		</div>
 		<div>
-			<b><l>Type</l></b>: {mtype}
+			<b>Type</b>: {{ mapinfo.mtype }}
 		</div>
-		{/mapinfo}
 	</div>
 	<div class="column right aligned">
-		<img  class="map_image" src="{img_map}">
+		<img  class="map_image" src="{{ mapinfo.img_map }}">
 	</div>
 </div>
 
 <div class="ui top attached tabular menu">
-	{types}
-	<a href="{url}" class="item {active}">
-		<l>{caption}</l> {if {totals}}<span class="ui label">{totals}</span>{/if}
+	{% for type in rtypes %}
+	<a href="{{ type.url }}" class="item {{ type.active }}">
+		{{ type.caption }} {% if type.totals %}<span class="ui label">{{ type.totals }}</span>{% endif %}
 	</a>
-	{/types}
+	{% endfor %}
 </div>
 
 <div class="ui bottom attached segment">
@@ -49,28 +49,32 @@
 		<thead>
 			<tr>
 				<th width="30" align="center">№</th>
-				<th><l>Player</l></th>
-				<th><l>Time</l></th>
-				<th><l>Checkpoints</l></th>
-				<th><l>Teleports</l></th>
-				<th><l>Weapon</l></th>
+				<th>Player</th>
+				<th>Time</th>
+				<th>Checkpoints</th>
+				<th>Teleports</th>
+				<th>Weapon</th>
 			</tr>
 		</thead>
 		<tbody class="pagination-feed">
-			{players}
+			{% for player in pagination %}
 			<tr class="pagination-item">
-				<td>{cup_num}</td>
-				<td><a href="{url_player}">{name}</a></td>
-				<td>{timed}</td>
-				<td><div class="ui {color_nogc} horizontal label">{cp}</div></td>
-				<td><div class="ui {color_nogc} horizontal label">{go_cp}</div></td>
-				<td class="{color_wpn}"><div class="wpn wpn-{weapon}">&nbsp;</div></td>
+				<td>{{ player.cup_num }}</td>
+				<td><a href="{{ player.url_player }}">{{ player.username }}</a></td>
+				<td>{{ player.timed }}</td>
+				<td><div class="ui {{ player.color_nogc }} horizontal label">{{ player.cp }}</div></td>
+				<td><div class="ui {{ player.color_nogc }} horizontal label">{{ player.go_cp }}</div></td>
+				<td class="{{ player.color_wpn }}"><div class="wpn wpn-{{ player.weapon }}">&nbsp;</div></td>
 			</tr>
-			{/players}
+			{% endfor %}
 		</tbody>
 	</table>
 </div>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
 
 {% endblock %}

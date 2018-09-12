@@ -33,6 +33,10 @@ class AchievsController extends AbstractController
         $achievs = $AchievsModel->getAchievs($locale);
         $pagination = $paginator->paginate($achievs, $page, 20);
 
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
+
         // set infinite scroll
         $pagination = $infscr->setPaginationNext($pagination, $request);
 
@@ -79,6 +83,10 @@ class AchievsController extends AbstractController
         $players = $AchievsModel->getAchievPlayers($id);
         $pagination = $paginator->paginate($players, $page, 20);
 
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
+
         // set infinite scroll
         $pagination = $infscr->setPaginationNext($pagination, $request);
 
@@ -112,6 +120,10 @@ class AchievsController extends AbstractController
 
         $players = $AchievsModel->getAchievsPlayers();
         $pagination = $paginator->paginate($players, $page, 20);
+
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
 
         // set infinite scroll
         $pagination = $infscr->setPaginationNext($pagination, $request);
@@ -152,6 +164,10 @@ class AchievsController extends AbstractController
         }
 
         $pagination = $paginator->paginate($achievs, $page, 20);
+
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
 
         // set infinite scroll
         $pagination = $infscr->setPaginationNext($pagination, $request);

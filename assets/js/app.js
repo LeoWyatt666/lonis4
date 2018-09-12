@@ -59,7 +59,7 @@ $(document).ready(function () {
         append: '.pagination-item',
         status: '.scroller-status',
         hideNav: '.pagination',
-        checkLastPage: true,
+        checkLastPage: '.pagination__next',
         debug: true,
     });
 

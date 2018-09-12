@@ -1,42 +1,48 @@
 {% extends 'base.html.twig' %}
 
+{% from '_layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
 
 <h1 class="ui header">
-	<p><l>Duels</l> <span class="ui label">{total}</span></p>
+	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 </h1>
 
 <table class="ui selectable celled table">
 	<thead>
 		<tr>
-			<th><l>Map</l></th>
-			<th><l>Winner</l></th>
-			<th><l>Looser</l></th>
-			<th><l>Winner Point</l></th>
-			<th><l>Looser Point</l></th>
+			<th>Map</th>
+			<th>Winner</th>
+			<th>Looser</th>
+			<th>Winner Point</th>
+			<th>Looser Point</th>
 		</tr>
 	</thead>
 	<tbody class="pagination-feed">
-	{duels}
+		{% for duel in pagination %}
 		<tr class="pagination-item">
 			<td scope="row">
-				<a href="{url_map}">{map}</a>
+				<a href="{{ duel.url_map }}">{{ duel.map }}</a>
 			</td>
 			<td>
-				<a href="{url_winner}">{winnerName}</a>
+				<a href="{{ duel.url_winner }}">{{ duel.winnerName }}</a>
 			</td>
 			<td>
-				<a href="{url_looser}">{looserName}</a>
+				<a href="{{ duel.url_looser }}">{{ duel.looserName }}</a>
 			</td>
-			<td>{winnerPoints}</td>
-			<td>{looserPoints}</td>
+			<td>{{ duel.winnerPoints }}</td>
+			<td>{{ duel.looserPoints }}</td>
 		</tr>
-		{/duels}
+		{% endfor %}
 	</tbody>
 </table>
 
-{PAGINATION_LINKS}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
 
 {% endblock %}

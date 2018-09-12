@@ -35,6 +35,10 @@ class PlayersController extends AbstractController
         // get result
         $pagination = $paginator->paginate($query, $page, 20);
 
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
+
         // set infinite scroll
         $pagination = $infscr->setPaginationNext($pagination, $request);
 

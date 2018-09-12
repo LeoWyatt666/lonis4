@@ -32,6 +32,10 @@ class RecordsController extends AbstractController
         $demos = $RecordsModel->getDemos($comm);
         $pagination = $paginator->paginate($demos, $page, 20);
 
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
+
         // set vars
         $demos = $pagination->getItems();
         foreach ($demos as &$demo) {
@@ -83,6 +87,10 @@ class RecordsController extends AbstractController
         // get players
         $players = $RecordsModel->getPlayers($comm);
         $pagination = $paginator->paginate($players, $page, 20);
+
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
 
         // set infinite scroll
         $pagination = $infscr->setPaginationNext($pagination, $request);
@@ -147,6 +155,10 @@ class RecordsController extends AbstractController
         $demos = $RecordsModel->getPlayerDemos($name, $comm);
         $pagination = $paginator->paginate($demos, $page, 20);
 
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
+
         // set demos vars
         $demos = $pagination->getItems();
         foreach ($demos as &$demo) {
@@ -200,6 +212,10 @@ class RecordsController extends AbstractController
         // get maps
         $maps = $RecordsModel->getMaps($comm);
         $pagination = $paginator->paginate($maps, $page, 20);
+
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
 
         // set vars
         $maps = $pagination->getItems();
@@ -316,6 +332,10 @@ class RecordsController extends AbstractController
         // get maps
         $records = $RecordsModel->getCompare($comm);
         $pagination = $paginator->paginate($records, $page, 20);
+
+        if($pagination->getPage() > $pagination->getPageCount()) {
+            throw $this->createNotFoundException();
+        }
 
         // set vars
         $records = $pagination->getItems();
