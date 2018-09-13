@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CsPlayers{% endblock %}
+
+{% block body %}
+    <h1>CsPlayers</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cs_player.id }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ cs_player.username }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ cs_player.password }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ cs_player.email }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ cs_player.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Ip</th>
+                <td>{{ cs_player.ip }}</td>
+            </tr>
+            <tr>
+                <th>Lastip</th>
+                <td>{{ cs_player.lastip }}</td>
+            </tr>
+            <tr>
+                <th>Lasttime</th>
+                <td>{{ cs_player.lasttime }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ cs_player.country }}</td>
+            </tr>
+            <tr>
+                <th>Onlinetime</th>
+                <td>{{ cs_player.onlinetime }}</td>
+            </tr>
+            <tr>
+                <th>SteamId</th>
+                <td>{{ cs_player.steamId }}</td>
+            </tr>
+            <tr>
+                <th>AmxxFlags</th>
+                <td>{{ cs_player.amxxFlags }}</td>
+            </tr>
+            <tr>
+                <th>Flags</th>
+                <td>{{ cs_player.flags }}</td>
+            </tr>
+            <tr>
+                <th>Icq</th>
+                <td>{{ cs_player.icq }}</td>
+            </tr>
+            <tr>
+                <th>SteamId64</th>
+                <td>{{ cs_player.steamId64 }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ cs_player.role }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('cs_players_index') }}">back to list</a>
+
+    <a href="{{ path('cs_players_edit', {'id': cs_player.id}) }}">edit</a>
+
+    {{ include('cs_players/_delete_form.html.twig') }}
+{% endblock %}

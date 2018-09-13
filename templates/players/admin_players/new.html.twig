@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CsPlayers{% endblock %}
+
+{% block body %}
+    <h1>Create new CsPlayers</h1>
+
+    {{ include('cs_players/_form.html.twig') }}
+
+    <a href="{{ path('cs_players_index') }}">back to list</a>
+{% endblock %}

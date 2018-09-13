@@ -62,19 +62,24 @@
               <div class="ui simple dropdown item">
                 <i class='icon user secret'></i> 
                 <div class="menu">
-                <a class="item" href="auth/users"><i class='icon users'></i> Users</a>
-                <a class="item" href="crud/menu">Menu</a>
-                <a class="item" href="crud/players">Players</a>
+                  <a class="item" href="auth/users"><i class='icon users'></i> Users</a>
+                  <a class="item" href="crud/menu">Menu</a>
+                  <a class="item" href="crud/players">Players</a>
                 </div>
               </div>
               {% endif %}
 
               <div class="ui simple dropdown item">
-                <i class='icon user outline'></i> Jero
+                <i class='icon user outline'></i> 
+                  {% if app.getUser.getProfileName is defined %} 
+                    {{ app.getUser.getProfileName }}
+                  {% else %}
+                    {{ app.getUser.getUsername }}
+                  {% endif %}
                 <div class="menu">
-                <a class="item" href="cstrike/profile"><i class='icon user'></i> Profile</a>
-                <a class="item" href="auth/setting"><i class='icon user'></i> Setting</a>
-                <a class="item" href="auth/logout"><i class='icon sign out alternate'></i> Logout</a>
+                  <a class="item" href="cstrike/profile"><i class='icon user'></i> Profile</a>
+                  <a class="item" href="auth/setting"><i class='icon user'></i> Setting</a>
+                  <a class="item" href="auth/logout"><i class='icon sign out alternate'></i> Logout</a>
                 </div>
               </div>
 

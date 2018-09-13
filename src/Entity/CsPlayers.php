@@ -121,7 +121,7 @@ class CsPlayers implements UserInterface, \Serializable
     /**
      * @var int|null
      *
-     * @ORM\Column(name="role", type="string", nullable=true, columnDefinition="ENUM('ROLE_USER', 'ROLE_ADMIN')")
+     * @ORM\Column(name="role", type="string", nullable=true)
      */
     private $role;
 

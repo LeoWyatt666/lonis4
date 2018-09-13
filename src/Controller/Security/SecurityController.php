@@ -24,4 +24,5 @@ class SecurityController extends AbstractController
             'error'         => $error,
         ));
     }
+    
 }

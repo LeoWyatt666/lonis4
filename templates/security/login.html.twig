@@ -8,31 +8,94 @@
     {{ title }}
 </h1>
 
-<center>
+<div class="ui grid">
+    <div class="four wide column"></div>
+    <div class="eight wide column">
+        <div class="ui text segments">
+            <div class="ui segment">
+                <form action="{{ path('login') }}" method="post" class="ui form">
+                    <div class="required field">
+                        <!-- <label>Email</label> -->
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                        </div>
+                    </div>
+                    <div class="required field">
+                        <!-- <label>Password</label> -->
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" id="password" name="_password" />
+                        </div>
+                    </div>
+                    <div class="inline required field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="remember" value="1" checked>
+                            <label>Remember</label>
+                        </div>
+                    </div>
+                    {#
+                        If you want to control the URL the user
+                        is redirected to on success (more details below)
+                        <input type="hidden" name="_target_path" value="/account" />
+                    #}
+                    <button class="ui blue submit fluid button">Sign In</button>
+                    <div class="ui error message"></div>
+                    {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                </form>
+                <div class="ui horizontal divider">Or</div>
+                <center>
+                    {% include '@KnojectorSteamAuthentication/login.html.twig' %}
+                </center>
+            </div>
+        </div>
+	</div>
+</div>
 
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<script>
+$(document).ready(function() {
+    $.ajax({
+    url: $('#hauth').data('url'),
+    success: function($data){
+        $('#hauth').html($data);
+    }
+    });
 
-    <form action="{{ path('login') }}" method="post">
-        <p>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" />
-        </p>
-        <p>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" />
-        </p>
-
-        {#
-            If you want to control the URL the user
-            is redirected to on success (more details below)
-            <input type="hidden" name="_target_path" value="/account" />
-        #}
-
-        <button type="submit">login</button>
-    </form>
-
-</center>
+    $('.ui.form').form({
+        on: 'blur',
+        inline: true,
+        fields: {
+            identity: {
+                identifier: 'identity',
+                rules: [
+                {
+                    type: 'empty',
+                    prompt: 'Please enter your email'
+                },
+                {
+                    type: 'email',
+                    prompt: 'Please enter valid email'
+                }
+                ]
+            },
+            password: {
+                identifier: 'password',
+                rules: [
+                {
+                    type: 'empty',
+                    prompt: 'Please enter a password'
+                },
+                {
+                    type: 'minLength[6]',
+                    prompt: 'Your password must be at least {ruleValue} characters'
+                }
+                ]
+            }
+        },
+    });
+} );
+</script>
 
 {% endblock %}
