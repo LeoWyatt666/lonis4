@@ -266,7 +266,7 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/records/longjumps", name="records_longjumps")
+     * @Route("/records/longjumps/{comm}", name="records_longjumps")
      */
     public function longjumps(
         $comm = 'xj',

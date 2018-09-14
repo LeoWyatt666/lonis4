@@ -1,0 +1,13 @@
+.cake {
+    position: absolute;
+    right: -50px;
+    background: url("images/cakes.png") no-repeat -300px -200px;
+    width: 100px; height: 100px;
+    z-index: 10;
+}
+.cake.v0 {background-position: 0px 0px;}
+.cake.v1 {background-position: -100px 0px;}
+.cake.v2 {background-position: -200px 0px;}
+.cake.v3 {background-position: 0px -100px;}
+.cake.v4 {background-position: -100px -100px;}
+.cake.v5 {background-position: -200px -100px;}

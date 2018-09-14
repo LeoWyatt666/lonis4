@@ -7,12 +7,6 @@
 
 // any CSS you require will output into a single css file (app.css in this case)
 require('../css/app.css');
-require('../css/placeholder.css');
-require('../css/scrollbar.black.css');
-require('semantic-ui-css/semantic.lonis.css');
-require('../css/semantic-magic.css');
-require('../libraries/records/records.css');
-require('../libraries/cs-guns/guns.css');
 
 const imagesContext = require.context('../images', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
