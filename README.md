@@ -14,7 +14,11 @@ apt-get install curl
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 ```
-3. Install `yarn` here https://yarnpkg.com/en/docs/install
+3. Install `node.js` here https://nodejs.org/en/download/
+```bash
+pkg install nodejs
+```
+4. Install `yarn` here https://yarnpkg.com/en/docs/install
 ```
 sudo apt-get update && sudo apt-get install yarn
 ```
