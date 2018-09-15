@@ -27,11 +27,10 @@ sudo apt-get update && sudo apt-get install yarn
 ```bash
 git clone https://github.com/LeoWyatt666/lonis4.git
 ```
-2. Edit `.env`. Steam API get here: https://steamcommunity.com/dev/apikey
+2. Edit `.env`. MySql and SteamAPI(here https://steamcommunity.com/dev/apikey)
 ```bash
-APP_ENV=dev
 DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
-STEAM_API_KEY=
+STEAM_API_KEY= 
 ```
 3. Add `packages`
 ```bash
@@ -57,4 +56,8 @@ php bin/console geoip2:update
 8. Load `fixtures`.
 ```bash
 php bin/console doctrine:fixtures:load
+```
+9. Set production in `.env`
+```bash
+APP_ENV=prod
 ```
