@@ -19,4 +19,22 @@ class SteamUsers extends AbstractSteamUser
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    public function __construct()
+    {
+        $this->roles = [];
+    }
+    
+    /**
+     * @return array
+     */
+    public function getRoles(): array
+    {
+        $roles = [];
+        foreach ($this->roles as $role) {
+            $roles[] = new Role($role);
+        }
+
+        return $roles;
+    }
 }

@@ -63,7 +63,7 @@ class RecordsController extends AbstractController
             ];
         }
 
-        return $this->render('records/records/demos.html.twig', [
+        return $this->render('controller/records/records/demos.html.twig', [
             'title' => 'Demos',
             'pagination' => $pagination,
             'comm_list' => $comm_list,
@@ -122,7 +122,7 @@ class RecordsController extends AbstractController
         }
 
         // render
-        return $this->render('records/records/players.html.twig', [
+        return $this->render('controller/records/records/players.html.twig', [
             'title' => 'Records :: Players',
             'pagination' => $pagination,
             'comm_list' => $comm_list,
@@ -187,7 +187,7 @@ class RecordsController extends AbstractController
         }
 
         // render
-        return $this->render('records/records/player.html.twig', [
+        return $this->render('controller/records/records/player.html.twig', [
             'title' => 'Records :: Player',
             'player' => $player,
             'pagination' => $pagination,
@@ -244,7 +244,7 @@ class RecordsController extends AbstractController
         }
 
         // render
-        return $this->render('records/records/maps.html.twig', [
+        return $this->render('controller/records/records/maps.html.twig', [
             'title' => 'Records :: Maps',
             'pagination' => $pagination,
             'comm_list' => $comm_list,
@@ -259,7 +259,7 @@ class RecordsController extends AbstractController
         $map
     )
     {
-        return $this->render('records/records/map.html.twig', [
+        return $this->render('controller/records/records/map.html.twig', [
             'title' => 'Records :: Map',
             'map' => $map,
         ]);
@@ -307,7 +307,7 @@ class RecordsController extends AbstractController
         }
         
 
-        return $this->render('records/records/longjumps.html.twig', [
+        return $this->render('controller/records/records/longjumps.html.twig', [
             'title' => 'Records :: Longjumps',
             'pages' => $pages,
             'jumps'  => $jumps,
@@ -352,7 +352,7 @@ class RecordsController extends AbstractController
         // set infinite scroll
         $pagination = $infscr->setPaginationNext($pagination, $request);
 
-        return $this->render('records/records/compare.html.twig', [
+        return $this->render('controller/records/records/compare.html.twig', [
             'title' => 'Records :: Compare',
             'pagination' => $pagination,
         ]);

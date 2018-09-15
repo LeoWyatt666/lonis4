@@ -55,8 +55,8 @@ class KreedzController extends AbstractController
             $map += [
                 'head' => $head,
                 'date_add' => $date_add,
-                'url_map' => "kreedz/map/{$map['map']}",
-                'url_player' => "kreedz/player/{$map['player']}",
+                'url_map' => "kreedz/maps/{$map['map']}",
+                'url_player' => "kreedz/players/{$map['player']}",
                 'timed' => $times->timed($map['time'], 5),
                 'color_nogc' => !$map['go_cp'] ? 'green' : 'grey',
                 'color_wpn' => ($map['wname']!='USP' && $map['wname']!='KNIFE') ? 'green' : 'grey',
@@ -81,7 +81,7 @@ class KreedzController extends AbstractController
         }
 
         // render
-        return $this->render('kreedz/kreedz/last.html.twig', [
+        return $this->render('controller/kreedz/kreedz/last.html.twig', [
             'title' => 'Kreedz :: Last',
             'pagination' => $pagination,
             'rtypes' => $rtypes,
@@ -144,7 +144,7 @@ class KreedzController extends AbstractController
         }
 
         // render
-        return $this->render('kreedz/kreedz/players.html.twig', [
+        return $this->render('controller/kreedz/kreedz/players.html.twig', [
             'title' => 'Kreedz :: Players',
             'pagination' => $pagination,
             'rtypes' => $rtypes,
@@ -212,7 +212,7 @@ class KreedzController extends AbstractController
         }
 
         // render
-        return $this->render('kreedz/kreedz/player.html.twig', [
+        return $this->render('controller/kreedz/kreedz/player.html.twig', [
             'title' => 'Kreedz :: Player :: '.$player['username'],
             'pagination' => $pagination,
             'rtypes' => $rtypes,
@@ -269,7 +269,7 @@ class KreedzController extends AbstractController
         $pagination = $infscr->setPaginationNext($pagination, $request);
 
         // render
-        return $this->render('kreedz/kreedz/player_norec.html.twig', [
+        return $this->render('controller/kreedz/kreedz/player_norec.html.twig', [
             'title' => 'Kreedz :: Player :: '.$player['username'],
             'pagination' => $pagination,
             'search' => $search,
@@ -335,7 +335,7 @@ class KreedzController extends AbstractController
         }
 
         // render
-        return $this->render('kreedz/kreedz/maps.html.twig', [
+        return $this->render('controller/kreedz/kreedz/maps.html.twig', [
             'title' => 'Kreedz :: Maps',
             'pagination' => $pagination,
             'rtypes' => $rtypes,
@@ -378,7 +378,7 @@ class KreedzController extends AbstractController
         $pagination = $infscr->setPaginationNext($pagination, $request);
 
         // render
-        return $this->render('kreedz/kreedz/maps_norec.html.twig', [
+        return $this->render('controller/kreedz/kreedz/maps_norec.html.twig', [
             'title' => 'Kreedz :: Maps :: Not Jumped',
             'pagination' => $pagination,
         ]);
@@ -464,7 +464,7 @@ class KreedzController extends AbstractController
         }
 
         // render
-        return $this->render('kreedz/kreedz/map.html.twig', [
+        return $this->render('controller/kreedz/kreedz/map.html.twig', [
             'title' => 'Kreedz :: Map :: '.$map,
             'pagination' => $pagination,
             'mapinfo' => $mapinfo,
@@ -522,7 +522,7 @@ class KreedzController extends AbstractController
         $pagination = $infscr->setPaginationNext($pagination, $request);
 
         // render
-        return $this->render('kreedz/kreedz/duels.html.twig', [
+        return $this->render('controller/kreedz/kreedz/duels.html.twig', [
             'title' => 'Kreedz :: Duels',
             'pagination' => $pagination,
         ]);
@@ -534,7 +534,7 @@ class KreedzController extends AbstractController
     public function longjumps()
     {
         // render
-        return $this->render('kreedz/kreedz/longjumps.html.twig', [
+        return $this->render('controller/kreedz/kreedz/longjumps.html.twig', [
             'title' => 'Kreedz :: Longjumps',
             'url_ljstats' => "common/ljstats/index.php",
             'admin' => '', //".($admin ? '?form_admin=1'

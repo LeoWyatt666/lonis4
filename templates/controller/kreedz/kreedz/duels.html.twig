@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="ui header">
+	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
+</h1>
+
+<table class="ui selectable celled table">
+	<thead>
+		<tr>
+			<th>Map</th>
+			<th>Winner</th>
+			<th>Looser</th>
+			<th>Winner Point</th>
+			<th>Looser Point</th>
+		</tr>
+	</thead>
+	<tbody class="pagination-feed">
+		{% for duel in pagination %}
+		<tr class="pagination-item">
+			<td scope="row">
+				<a href="{{ duel.url_map }}">{{ duel.map }}</a>
+			</td>
+			<td>
+				<a href="{{ duel.url_winner }}">{{ duel.winnerName }}</a>
+			</td>
+			<td>
+				<a href="{{ duel.url_looser }}">{{ duel.looserName }}</a>
+			</td>
+			<td>{{ duel.winnerPoints }}</td>
+			<td>{{ duel.looserPoints }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
+
+{% endblock %}

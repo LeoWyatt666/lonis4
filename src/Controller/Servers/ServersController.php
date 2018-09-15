@@ -58,7 +58,7 @@ class ServersController extends AbstractController
         }
         $pagination->setItems($servers);
 
-        return $this->render('servers/servers/servers.html.twig', [
+        return $this->render('controller/servers/servers/servers.html.twig', [
             'title' => 'Servers',
             'pagination' => $pagination,
             'search' => $search,
@@ -87,7 +87,7 @@ class ServersController extends AbstractController
             'ip' => $server['addres'],
         ];
 
-        return $this->render('servers/servers/server.html.twig', [
+        return $this->render('controller/servers/servers/server.html.twig', [
             'title' => 'Server',
             'server' => $server,
             'search' => '',
@@ -120,7 +120,7 @@ class ServersController extends AbstractController
             ];
         }
 
-        return $this->render('servers/servers/server.html.twig', [
+        return $this->render('controller/servers/servers/server.html.twig', [
             'title' => 'Server',
             'server' => $server,
             'search' => $ip,

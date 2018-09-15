@@ -51,7 +51,7 @@ class AchievsController extends AbstractController
         }
         $pagination->setItems($achievs);
 
-        return $this->render('achievs/achievs/achievs.html.twig', [
+        return $this->render('controller/achievs/achievs/achievs.html.twig', [
             'title'         => 'Achievs',
             'pagination'    => $pagination,
         ]);
@@ -99,7 +99,7 @@ class AchievsController extends AbstractController
         }
         $pagination->setItems($players);
 
-        return $this->render('achievs/achievs/achiev.html.twig', [
+        return $this->render('controller/achievs/achievs/achiev.html.twig', [
             'title'          => 'Achiev Players',
             'achiev'        => $achiev,
             'pagination'    => $pagination,
@@ -137,7 +137,7 @@ class AchievsController extends AbstractController
         }
         $pagination->setItems($players);
 
-        return $this->render('achievs/achievs/players.html.twig', [
+        return $this->render('controller/achievs/achievs/players.html.twig', [
             'title' => 'Achievs Players',
             'pagination'    => $pagination,
         ]);
@@ -194,7 +194,7 @@ class AchievsController extends AbstractController
         }
         $pagination->setItems($achievs);
 
-        return $this->render('achievs/achievs/player.html.twig', [
+        return $this->render('controller/achievs/achievs/player.html.twig', [
             'title' => 'Achives Player',
             'pagination'    => $pagination,
         ]);

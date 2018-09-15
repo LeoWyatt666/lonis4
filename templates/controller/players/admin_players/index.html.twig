@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="ui two column grid">
+        <div class="left floated column">
+            <h1 class="ui header">
+                {{ title }}
+            </h1>
+        </div>
+        <div class="right floated right aligned column">
+            {% include "layouts/search.html.twig" %}
+        </div>
+    </div>
+
+    {# <a href="{{ path('admin_players_new') }}">Create new</a> #}
+
+    <table class="ui selectable celled table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for player in pagination %}
+            <tr>
+                <td>{{ player.id }}</td>
+                <td>{{ player.username }}</td>
+                <td>{{ player.email }}</td>
+                <td>
+                    <a href="{{ path('admin_players_show', {'id': player.id}) }}">show</a>
+                    | <a href="{{ path('admin_players_edit', {'id': player.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

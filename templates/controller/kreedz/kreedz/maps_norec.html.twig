@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="ui header">
+	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
+</h1>
+
+<div class="ui link five doubling cards pagination-feed">
+	{% for map in pagination %}
+	<span class="card pagination-item">
+		<div class="image">
+			<img class="" src="{{ map.img_map }}" title="{{ map.mapname }}" oncontextmenu="return false;">
+		</div>
+		<div class="content">
+			<a class="description">{{ map.mapname }}</a>
+		</div>
+	</span>
+	{% endfor %}
+</div>
+
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
+
+{% endblock %}

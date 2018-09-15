@@ -23,6 +23,10 @@ h1 {
     font: 24pt Counter-Strike !important;
 }
 
+button {
+    cursor: pointer;
+}
+
 .header.brand {
     font: 12pt Counter-Strike !important;
 }

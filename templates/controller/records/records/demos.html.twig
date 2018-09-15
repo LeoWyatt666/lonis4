@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="ui header">
+	{{ title }}
+</h1>
+
+<div class="ui top attached tabular menu">
+	{% for comm in comm_list %}
+	<a href="{{ comm.url_comm }}" class="item {{ comm.active }}">
+		{{ comm.fullname }}
+		{% if comm.totals %}<span class="ui label">{{ comm.totals }}</span>{% endif %}
+	</a>
+	{% endfor %}
+</div>
+
+<div class="ui bottom attached segment">
+	<table class="ui selectable celled table">
+		<thead>
+			<tr>
+				<th>Map</th>
+				<th>player</th>
+				<th>Time</th>
+			</tr>
+		</thead>
+		<tbody class="pagination-feed">
+			{% for demo in pagination %}
+			<tr class="pagination-item">
+				<td><a href="{{ demo.url_map }}">{{ demo.map }}{{ demo.mappath }}</a></td>
+				<td><a href="{{ demo.url_player }}">{{ demo.player }} <span class="flag {{ demo.country }}" title="{{ demo.country }}">&nbsp;</span></a></td>
+				<td>{{ demo.timed }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
+
+{% endblock %}

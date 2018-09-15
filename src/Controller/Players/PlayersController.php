@@ -11,10 +11,13 @@ use App\Service\InfiniteScrollService;
 use App\Service\GeoIp2Service;
 use App\Service\TimesService;
 
+/**
+ * @Route("/players")
+ */
 class PlayersController extends AbstractController
 {
     /**
-     * @Route("/players", name="players")
+     * @Route("/", name="players")
      */
     public function players(
         Request $request, 
@@ -51,7 +54,7 @@ class PlayersController extends AbstractController
         }
         
         // render
-        return $this->render('players/players/players.html.twig', [
+        return $this->render('controller/players/players/players.html.twig', [
             'title' => 'Players',
             'pagination' => $pagination,
             'search' => $search,
@@ -59,7 +62,7 @@ class PlayersController extends AbstractController
     }
 
     /**
-     * @Route("/players/{id}", name="player")
+     * @Route("/{id}", name="player")
      */
     public function player(
         CsPlayers $player,
@@ -81,7 +84,7 @@ class PlayersController extends AbstractController
         $player->mapCompleted = '-';
 
         // render
-        return $this->render('players/players/player.html.twig', [
+        return $this->render('controller/players/players/player.html.twig', [
             'title' => 'Player',
             'player' => $player,
         ]);

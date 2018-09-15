@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="ui header center aligned">
+	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
+</h1>
+
+<div class="ui divider"></div>
+
+<div class="ui divided items">
+	<div class="link item">
+		<div class="ui tiny image">
+			<img src="{{ achiev.img_achiev }}">
+		</div>
+		<div class="content">
+			<div class="header">{{ achiev.name }}</div>
+			<div class="description">
+				{{ achiev.desc }}
+			</div>		
+		</div>
+	</div>
+</div>
+
+<div class="ui divider"></div>
+
+<div class="ui link five doubling cards pagination-feed">
+	{% for player in pagination %}
+	<a class="card pagination-item" href="{{ player.url_player }}" >
+		<div class="image">
+			<img class="" src="{{ player.img_player }}" title="{{ player.plname }}" oncontextmenu="return false;">
+		</div>
+		<div class="content">
+			<span class="description">
+				{{ player.plname }}
+				<p>Total: {{ player.achiev_total }}
+			</span>
+		</div>
+	</a>
+	{% endfor %}
+</div>
+
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
+
+{% endblock %}

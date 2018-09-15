@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="ui two column grid">
+	<div class="left floated column">
+		<h1 class="ui header">
+			{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
+		</h1>
+	</div>
+	<div class="right floated right aligned column">
+		{% include "layouts/search.html.twig" %}
+	</div>
+</div>
+
+<div class="ui top attached tabular menu">
+	{% for rtype in rtypes %}
+	<a href="{{ rtype.url }}" class="item {{ rtype.active }}">{{ rtype.caption }}</a>
+	{% endfor %}
+</div>
+
+<div class="ui bottom attached segment">
+	<table class="ui selectable celled table">
+		<thead>
+			<tr>
+				<th style="width: 30px; text-align: center">№</th>
+				<th>Player</th>
+				<th>Total</th>
+				<th>First</th>
+			</tr>
+		</thead>
+		<tbody class="pagination-feed">
+			{% for player in pagination %}
+			<tr class="pagination-item">
+				<td scope="row" style="text-align: center">
+					{{ player.cup_num }}
+				</td>
+				<td><a href="{{ player.url_player }}">{{ player.username }}</a></td>
+				<td>{{ player.all }}</td>
+				<td>{{ player.top }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{{ InfiniteScroll_render(pagination) }}
+
+{% endblock %}
