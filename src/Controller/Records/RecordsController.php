@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\KzRecords;
 use App\Service\InfiniteScrollService;
 use App\Service\TimesService;
+use App\Service\ImagesService;
 use App\Model\RecordsModel;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -40,7 +41,7 @@ class RecordsController extends AbstractController
         $demos = $pagination->getItems();
         foreach ($demos as &$demo) {
             $demo += [
-                'url_map' => "records/maps/{$comm}/{$demo['map']}",
+                'url_map' => "records/map/{$demo['map']}",
                 'timed' => $times->timed($demo['time'], 2),
                 'url_player' => "records/player/{$demo['player']}",
             ];
@@ -163,7 +164,7 @@ class RecordsController extends AbstractController
         $demos = $pagination->getItems();
         foreach ($demos as &$demo) {
             $demo += [
-                'url_map' => "records/maps/{$comm}/{$demo['map']}",
+                'url_map' => "records/map/{$demo['map']}",
                 'timed' => $times->timed($demo['time'], 2),
             ];
         }
@@ -222,7 +223,7 @@ class RecordsController extends AbstractController
         foreach ($maps as &$map) {
             $map += [
                 "url_download" => str_replace('%map%', $map["mapname"], $map["download"]),
-                'url_map' => "records/maps/{$comm}/{$map['mapname']}",
+                'url_map' => "records/map/{$map['mapname']}",
             ];
         }
         $pagination->setItems($maps);
@@ -252,16 +253,34 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/records/maps/{comm}/{map}", name="records_map")
+     * @Route("/records/map/{map}", name="records_map")
      */
     public function map(
-        $comm = 'xj',
-        $map
+        $map,
+        RecordsModel $RecordsModel,
+        ImagesService $images,
+        TimesService $times
     )
     {
+        // Get Mapinfo
+        $mapinfo = $RecordsModel->getMapInfo($map);
+        $mapinfo += [
+            'img_map' => $images->image("maps/{$map}.jpg"),
+        ];
+
+        // Map Records
+        $maprec = $RecordsModel->getRecords($map);
+        foreach ($maprec as &$rec) {
+            $rec += [
+                'url_player' => "records/players/xj/{$rec['player']}",
+                'timed' => $times->timed($rec["time"], 2),
+            ];
+        }
+
         return $this->render('controller/records/records/map.html.twig', [
-            'title' => 'Records :: Map',
-            'map' => $map,
+            'title' => 'Records :: Map :: '.$map,
+            'mapinfo' => $mapinfo,
+            'maprec' => $maprec,
         ]);
     }
 
@@ -341,7 +360,7 @@ class RecordsController extends AbstractController
         $records = $pagination->getItems();
         foreach ($records as &$record) {
             $record += [
-                'url_map' => "records/maps/{$record['map']}",
+                'url_map' => "records/map/{$record['map']}",
                 'wr_timed' => $times->timed($record["wr_time"], 2),
                 'comm_timed' => $times->timed($record["comm_time"], 2),
                 'top_timed' => $times->timed($record["top_time"], 2),

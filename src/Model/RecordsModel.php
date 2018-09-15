@@ -143,4 +143,29 @@ class RecordsModel
         }
     } 
 
+    // Map info
+    public function getMapInfo($map)
+    {
+        return $this->conn->executeQuery(
+                "SELECT *, `type` `mtype` FROM `kz_map`
+                    LEFT JOIN `kz_comm` ON `comm`=`name`
+                    LEFT JOIN `kz_diff` `d` ON `d`.`id`=`diff`
+                WHERE `mapname` = ? ORDER BY `mapname` LIMIT 1",
+                [$map]
+            )
+            ->fetch();
+    }
+
+    // Map Last
+    public function getRecords($map)
+    {
+        return $this->conn->executeQuery(
+                "SELECT * FROM `kz_records` `r`, `kz_comm` `c`
+                WHERE `map` = ? AND `name` = `comm`
+                ORDER BY `sort`, `mappath`",
+                [$map]
+            )
+            ->fetchAll();
+    }
+
 }

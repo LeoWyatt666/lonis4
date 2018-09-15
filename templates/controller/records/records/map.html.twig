@@ -5,7 +5,48 @@
 {% block content %}
 
 <h1 class="ui header">
-	{{ title }} :: {{ map }}
+	{{ title }}
 </h1>
+
+<div class="ui grid">
+	<div class="ten wide column">
+
+		<table class="ui selectable celled table">
+			<thead>
+				<tr>
+					<th width="30" align="center">Comm</th>
+					<th>Route</th>
+					<th>Player</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody class="pagination-feed">
+				{% for rec in maprec %}
+				<tr class="pagination-item">
+					<td>{{ rec.name }}</td>
+					<td>{{ rec.mappath }}</td>
+					<td>
+						<a href="{{ rec.url_player }}">{{ rec.player }}</a>
+						<i class="flag {{ rec.country }}" title="{{ rec.country }}"></i>
+					</td>
+					<td>{{ rec.timed }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+	<div class="six wide column center aligned">
+	
+		<img  class="map_image" src="{{ mapinfo.img_map }}">
+		<p><div>
+			<b>Challenge</b>: <span class="mapinfo">{{ mapinfo.dname }}</span>
+			<p><i class="icon icon-{{ mapinfo.icon }}" style="color: {{ mapinfo.dcolor }};"></i>
+		</div>
+		<div>
+			<b>Type</b>: {{ mapinfo.mtype }}
+		</div>
+	</div>
+</div>
 
 {% endblock %}
