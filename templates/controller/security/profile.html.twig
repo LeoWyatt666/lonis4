@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="ui dividing header" align="center">
+  {{ title }}
+</h1>
+
+<div class="ui grid">
+  <div class="four wide column" align="center">
+    <img src="{{ player.avatar }}" width="160" height="160">
+  </div>
+  <div class="eight wide column">
+    <form class="ui form" method="post">
+      <input type="hidden" name="player[avatar]" value="{{ player.avatar }}" />
+
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="player[username]" value="{{ player.username }}" placeholder="">
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="player[password]" placeholder="">
+      </div>
+
+      <div class="field">
+        <label>IP</label>
+        <input type="text" name="player[ip]" value="{{ player.ip }}" placeholder="">
+      </div>
+
+      <div class="field">
+        <label>SteamId32</label>
+        <input type="text" name="player[steamid]" value="{{ player.steamId }}" placeholder=" STEAM_#:#:######">
+      </div>
+
+      {% if player.steamId64 %}
+      <div class="field">
+        <label>SteamId64</label>
+        <input type="text" value="{{ player.steamId64 }}" readonly="" placeholder="">
+      </div>
+      {% endif %}
+
+      <div class="field">
+        <label>ICQ</label>
+        <input type="text" name="player[icq]" value="{{ player.icq }}" placeholder="">
+      </div>
+
+      <div class="fields">
+        <div class="twelve wide field">
+          <button class="ui button">Update</button>
+        </div>
+      </div>
+
+      {# <input type="hidden" name="token" value="{{ csrf_token('profile') }}" /> #}
+
+      </form>
+  </div>
+</div>
+
+{% endblock %}

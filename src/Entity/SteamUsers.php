@@ -37,4 +37,9 @@ class SteamUsers extends AbstractSteamUser
 
         return $roles;
     }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 }

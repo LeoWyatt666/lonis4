@@ -119,7 +119,14 @@ class CsPlayers implements UserInterface, \Serializable
     private $steamId64;
 
     /**
-     * @var int|null
+     * @var string|null
+     *
+     * @ORM\Column(name="avatar", type="string", nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @var string|null
      *
      * @ORM\Column(name="role", type="string", nullable=true)
      */
@@ -354,6 +361,18 @@ class CsPlayers implements UserInterface, \Serializable
     public function setRole(?string $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

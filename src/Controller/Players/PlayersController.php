@@ -10,6 +10,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use App\Service\InfiniteScrollService;
 use App\Service\GeoIp2Service;
 use App\Service\TimesService;
+use App\Service\ImagesService;
 
 /**
  * @Route("/players")
