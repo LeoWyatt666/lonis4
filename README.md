@@ -49,13 +49,13 @@ php bin/console doctrine:database:create
 ```bash
 php bin/console doctrine:schema:update --force
 ```
-7. Update `MaxMind GeoIP2`
-```bash
-php bin/console geoip2:update
-```
 8. Load `fixtures`.
 ```bash
 php bin/console doctrine:fixtures:load
+```
+7. Update `MaxMind GeoIP2` in dev and production!
+```bash
+php bin/console geoip2:update
 ```
 9. Set production in `.env`
 ```bash
