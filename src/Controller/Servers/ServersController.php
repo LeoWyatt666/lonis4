@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\CsServers;
-use App\Service\InfiniteScrollService;
 use App\Service\HldsService;
 use App\Model\ServersModel;
 use Knp\Component\Pager\PaginatorInterface;
@@ -19,7 +18,6 @@ class ServersController extends AbstractController
     public function servers(
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         ServersModel $ServersModel
     )
     {
@@ -29,14 +27,11 @@ class ServersController extends AbstractController
 
         // get result
         $servers = $ServersModel->findAll();
-        $pagination = $paginator->paginate($servers, $page, 20);
+        $pagination = $paginator->paginate($servers, $page, 5);
 
         if($pagination->getPage() > $pagination->getPageCount()) {
             throw $this->createNotFoundException();
         }
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         $servers = $pagination->getItems();
         foreach ($servers as &$server) {

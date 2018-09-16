@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html class="no-js" lang="{language}" prefix="og: http://ogp.me/ns#" xmlns="http://www.w3.org/1999/xhtml">
 
-{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+{% set currentPath = app.request.uri %}
 
 <head>
 	<title>Lonis :: {% block title %}{% endblock %}</title>
 
-	<base href="/">
+	<base href="{{ path('index') }}">
 
 	<meta name="description" content="Lonis"/>
 	<meta property="og:locale" content="en_EN" />

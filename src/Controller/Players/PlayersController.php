@@ -7,10 +7,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\CsPlayers;
 use Knp\Component\Pager\PaginatorInterface;
-use App\Service\InfiniteScrollService;
 use App\Service\GeoIp2Service;
 use App\Service\TimesService;
 use App\Service\ImagesService;
+use Ornicar\GravatarBundle\GravatarApi;
 
 /**
  * @Route("/players")
@@ -23,10 +23,12 @@ class PlayersController extends AbstractController
     public function players(
         Request $request, 
         PaginatorInterface $paginator, 
-        InfiniteScrollService $infscr, 
-        GeoIp2Service $geoip
+        GeoIp2Service $geoip,
+        ImagesService $img
     )
     {
+        $gravatar = new GravatarApi;
+
         // get request
         $search = $request->query->get('search');
         $page = $request->query->getInt('page', 1);
@@ -43,13 +45,11 @@ class PlayersController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // set data
         foreach ($pagination->getItems() as &$player) {
             $player->url_player = "players/{$player->getId()}";
-            $player->url_avatar = "images/avatars/{$player->getId()}.jpg";
+            //$player->url_avatar = $img->image("avatars/{$player->getId()}.jpg");
+            $player->url_avatar = $gravatar->getUrl($player->getId(), '160').'&d=robohash';
             
             $player->geoip = $geoip->city($player->getLastIp());
         }
@@ -68,16 +68,20 @@ class PlayersController extends AbstractController
     public function player(
         CsPlayers $player,
         GeoIp2Service $geoip,
-        TimesService $times
+        TimesService $times,
+        ImagesService $img
     )
     {
+        $gravatar = new GravatarApi;
+
         // set result
         $player->lastTime = date('d.m.Y G:i:s', $player->getLastTime());
         $player->mapCompleted = 0;
         $player->onlineTimeElasped = $times->time_elasped($player->getOnlineTime());
         $player->url_kreedz_player = "kreedz/players/{$player->getId()}";
         $player->url_achievs_player = "achievs/players/{$player->getId()}";
-        $player->img_player = "images/avatars/{$player->getId()}.jpg";
+        //$player->img_player = $img->image("avatars/{$player->getId()}.jpg");
+        $player->img_player = $gravatar->getUrl($player->getId(), '240').'&d=robohash';
 
         $player->geoip = $geoip->city($player->getLastIp());
 

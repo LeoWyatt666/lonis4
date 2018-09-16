@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\KzRecords;
-use App\Service\InfiniteScrollService;
 use App\Service\TimesService;
 use App\Service\ImagesService;
 use App\Model\RecordsModel;
@@ -21,7 +20,6 @@ class RecordsController extends AbstractController
         $comm = 'xj',
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         RecordsModel $RecordsModel,
         TimesService $times
     )
@@ -47,9 +45,6 @@ class RecordsController extends AbstractController
             ];
         }
         $pagination->setItems($demos);
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         // Get community data
         $comm_info = $RecordsModel->getComms($comm);
@@ -78,7 +73,6 @@ class RecordsController extends AbstractController
         $comm = "xj",
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         RecordsModel $RecordsModel
     )
     {
@@ -92,9 +86,6 @@ class RecordsController extends AbstractController
         if($pagination->getPage() > $pagination->getPageCount()) {
             throw $this->createNotFoundException();
         }
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         // set cup nums
         $cup_num = ($page-1)*$pagination->getItemNumberPerPage();
@@ -138,7 +129,6 @@ class RecordsController extends AbstractController
         $name,
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         RecordsModel $RecordsModel,
         TimesService $times
     )
@@ -170,9 +160,6 @@ class RecordsController extends AbstractController
         }
         $pagination->setItems($demos);
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // Community
         $comm_info = $RecordsModel->getComms($comm);
         $comm_list = $RecordsModel->getPlayerComm($name);
@@ -203,7 +190,6 @@ class RecordsController extends AbstractController
         $comm = 'xj',
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         RecordsModel $RecordsModel
     )
     {
@@ -227,9 +213,6 @@ class RecordsController extends AbstractController
             ];
         }
         $pagination->setItems($maps);
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         // Get community data
         $comm_info = $RecordsModel->getComms($comm);
@@ -340,7 +323,6 @@ class RecordsController extends AbstractController
         $comm = 'ru',
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         RecordsModel $RecordsModel,
         TimesService $times
     )
@@ -367,9 +349,6 @@ class RecordsController extends AbstractController
             ];
         }
         $pagination->setItems($records);
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         return $this->render('controller/records/records/compare.html.twig', [
             'title' => 'Records :: Compare',

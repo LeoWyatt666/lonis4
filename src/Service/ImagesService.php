@@ -15,13 +15,14 @@ class ImagesService
     public function image($file)
     {
         // set paths
-        $path_img_maps = $this->params->get('kernel.project_dir').'/public/images/'.$file;
+        $path_img = $this->params->get('images');
+        $path_img_file = $this->params->get('kernel.project_dir').$path_img.$file;
 
-        if(file_exists($path_img_maps)) {
-            return '/images/'.$file;
+        if(file_exists($path_img_file)) {
+            return $path_img.$file;
         }
         else {
-            return '/images/'.dirname($file).'/noimage.png';
+            return $path_img.dirname($file).'/noimage.png';
         }
 
     }

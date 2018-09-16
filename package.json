@@ -12,6 +12,7 @@
         "build": "encore production"
     },
     "dependencies": {
+        "dotenv": "^6.0.0",
         "gulp": "^3.9.1",
         "infinite-scroll": "^3.0.5",
         "jquery": "^3.3.1",

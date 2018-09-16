@@ -1,4 +1,4 @@
-{% macro InfiniteScroll_render(pagination) %}
+{% macro InfiniteScroll_render() %}
 	<center>
 		<div class="scroller-status">
 			<div class="infinite-scroll-request" align="center">
@@ -7,7 +7,12 @@
 
 			<p class="infinite-scroll-error" align="center"></p>
 		</div>
+
+		{% set page = app.request.get('page')|default(1) + 1 %}
+		{% set routeName = app.request.attributes.get('_route') %}
+		{% set routeParams = app.request.attributes.get('_route_params')|merge({'page': page}) %}
+		{% set nextPath = path(routeName, routeParams) %}
 		
-		<a class="pagination__next" href="{{ pagination.pagination_next }}"></a>
+		<a class="pagination__next" href="{{ nextPath }}"></a>
 	</center>
 {% endmacro %}

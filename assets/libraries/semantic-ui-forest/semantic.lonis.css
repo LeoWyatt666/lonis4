@@ -23904,6 +23904,8 @@ Floated Menu / Item
   display: -ms-inline-flexbox;
   display: inline-flex;
   vertical-align: middle;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(0, 0, 0, 0.95);
 }
 
 .ui.pagination.menu .item:last-child {
@@ -23921,6 +23923,8 @@ Floated Menu / Item
 .ui.pagination.menu .item {
   min-width: 3em;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(0, 0, 0, 0.95);
 }
 
 .ui.pagination.menu .icon.item i.icon {

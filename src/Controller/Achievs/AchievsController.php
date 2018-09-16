@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\AcAchievs;
-use App\Service\InfiniteScrollService;
 use App\Model\AchievsModel;
 use Knp\Component\Pager\PaginatorInterface;
 use Ornicar\GravatarBundle\GravatarApi;
@@ -19,13 +18,9 @@ class AchievsController extends AbstractController
     public function achievs(
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         AchievsModel $AchievsModel
     )
     {
-        // GravatarApi !! create d=identicon
-        //$gravatar = new GravatarApi;
-
         // get request
         $page = $request->query->getInt('page', 1);
         $locale = $request->getLocale();
@@ -36,9 +31,6 @@ class AchievsController extends AbstractController
         if($pagination->getPage() > $pagination->getPageCount()) {
             throw $this->createNotFoundException();
         }
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         $achievs = $pagination->getItems();
         foreach ($achievs as &$achiev) {
@@ -64,7 +56,6 @@ class AchievsController extends AbstractController
         $id,
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         AchievsModel $AchievsModel
     )
     {
@@ -86,9 +77,6 @@ class AchievsController extends AbstractController
         if($pagination->getPage() > $pagination->getPageCount()) {
             throw $this->createNotFoundException();
         }
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         $players = $pagination->getItems();
         foreach ($players as &$player) {
@@ -112,12 +100,15 @@ class AchievsController extends AbstractController
     public function players(
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         AchievsModel $AchievsModel
     )
     {
+        $gravatar = new GravatarApi;
+
+        // get request
         $page = $request->query->getInt('page', 1);
 
+        // get result
         $players = $AchievsModel->getAchievsPlayers();
         $pagination = $paginator->paginate($players, $page, 20);
 
@@ -125,18 +116,18 @@ class AchievsController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
+        // set vars
         $players = $pagination->getItems();
         foreach ($players as &$player) {
             $player += [
-                'url_image' => "images/avatars/{$player['id']}.jpg",
+                //'url_image' => "images/avatars/{$player['id']}.jpg",
+                'url_image' => $gravatar->getUrl($player['id'], '160').'&d=robohash',
                 'url_player' => "achievs/players/{$player['id']}",
             ];
         }
         $pagination->setItems($players);
 
+        // render
         return $this->render('controller/achievs/achievs/players.html.twig', [
             'title' => 'Achievs Players',
             'pagination'    => $pagination,
@@ -150,7 +141,6 @@ class AchievsController extends AbstractController
         $id,
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         AchievsModel $AchievsModel
     )
     {
@@ -168,9 +158,6 @@ class AchievsController extends AbstractController
         if($pagination->getPage() > $pagination->getPageCount()) {
             throw $this->createNotFoundException();
         }
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         //Get all rows and sets
         $achievs = $pagination->getItems();

@@ -5,7 +5,6 @@ namespace App\Controller\Kreedz;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use App\Service\InfiniteScrollService;
 use App\Service\TimesService;
 use App\Service\ImagesService;
 use App\Model\KreedzModel;
@@ -21,7 +20,6 @@ class KreedzController extends AbstractController
     public function last(
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         KreedzModel $KreedzModel,
         TimesService $times
     )
@@ -65,9 +63,6 @@ class KreedzController extends AbstractController
         }
         $pagination->setItems($maps);
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // Generate type menu
         $types = $this->types;
         foreach ($types as $ctype) {
@@ -94,7 +89,6 @@ class KreedzController extends AbstractController
     public function players(
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         KreedzModel $KreedzModel
     )
     {
@@ -128,9 +122,6 @@ class KreedzController extends AbstractController
         }
         $pagination->setItems($players);
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // Generate type menu
         $types = $this->types;
         foreach ($types as $ctype) {
@@ -159,7 +150,6 @@ class KreedzController extends AbstractController
         $id,
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         KreedzModel $KreedzModel,
         TimesService $times
     )
@@ -196,9 +186,6 @@ class KreedzController extends AbstractController
         }
         $pagination->setItems($maps);
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // Generate type menu
         $types = $this->types;
         foreach ($types as $ctype) {
@@ -229,7 +216,6 @@ class KreedzController extends AbstractController
         $id,
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         KreedzModel $KreedzModel,
         TimesService $times
     )
@@ -265,9 +251,6 @@ class KreedzController extends AbstractController
         }
         $pagination->setItems($maps);
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // render
         return $this->render('controller/kreedz/kreedz/player_norec.html.twig', [
             'title' => 'Kreedz :: Player :: '.$player['username'],
@@ -284,7 +267,6 @@ class KreedzController extends AbstractController
     public function maps(
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         KreedzModel $KreedzModel,
         TimesService $times
     )
@@ -319,9 +301,6 @@ class KreedzController extends AbstractController
         }
         $pagination->setItems($maps);
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // Generate type menu
         $types = $this->types;
         foreach ($types as $ctype) {
@@ -349,7 +328,6 @@ class KreedzController extends AbstractController
     public function maps_norec(
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         KreedzModel $KreedzModel,
         ImagesService $images
     )
@@ -374,9 +352,6 @@ class KreedzController extends AbstractController
         }
         $pagination->setItems($maps);
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // render
         return $this->render('controller/kreedz/kreedz/maps_norec.html.twig', [
             'title' => 'Kreedz :: Maps :: Not Jumped',
@@ -391,7 +366,6 @@ class KreedzController extends AbstractController
         $map,
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         KreedzModel $KreedzModel,
         ImagesService $images,
         TimesService $times
@@ -448,9 +422,6 @@ class KreedzController extends AbstractController
         }
         $pagination->setItems($players);
 
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
-
         // Generate type menu
         $types = $this->types;
         foreach ($types as $ctype) {
@@ -479,7 +450,6 @@ class KreedzController extends AbstractController
     public function duels(
         Request $request,
         PaginatorInterface $paginator,
-        InfiniteScrollService $infscr,
         KreedzModel $KreedzModel
     )
     {
@@ -517,9 +487,6 @@ class KreedzController extends AbstractController
             ];
         }
         $pagination->setItems($duels);
-
-        // set infinite scroll
-        $pagination = $infscr->setPaginationNext($pagination, $request);
 
         // render
         return $this->render('controller/kreedz/kreedz/duels.html.twig', [
