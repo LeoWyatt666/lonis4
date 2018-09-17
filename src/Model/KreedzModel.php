@@ -102,9 +102,10 @@ class KreedzModel
     public function getRecords($map)
     {
         return $this->conn->executeQuery(
-                "SELECT * FROM `kz_records` `r`, `kz_comm` `c`
-				WHERE `map` = ? AND `name` = `comm`
-				ORDER BY `sort`, `mappath`",
+                "SELECT * FROM `kz_records` `r` 
+                    LEFT JOIN `kz_comm` `c` ON `c`.`name` = `r`.`comm`
+                WHERE `map` = ? AND (`name` = 'cc' OR `name` = 'xj')
+                ORDER BY `sort`, `mappath` LIMIT 1",
                 [$map]
             )
             ->fetchAll();

@@ -388,6 +388,7 @@ class KreedzController extends AbstractController
         $mapinfo = $KreedzModel->getMapInfo($map);
         $mapinfo += [
             'img_map' => $img->getImage("maps/{$map}.jpg"),
+            'url_map' => "records/map/{$map}",
         ];
 
         // Map Records
@@ -395,12 +396,14 @@ class KreedzController extends AbstractController
         $lastcomm = "";
         foreach ($maprec as &$rec) {
             $rec += [
+                'url_player' => "records/players/xj/{$rec['player']}",
                 'uname' => strtoupper($rec['name']),
                 'part' => $rec["comm"]==$lastcomm ? 0 : 1,
                 'timed' => $times->timed($rec["time"], 2),
             ];
             $lastcomm = $rec["comm"];
         }
+        $mapwr = $maprec[0] ?? '';
 
         // Get Map Players
         $players = $KreedzModel->getMapPlayers($map, $type);
@@ -443,6 +446,7 @@ class KreedzController extends AbstractController
             'pagination' => $pagination,
             'mapinfo' => $mapinfo,
             'maprec' => $maprec,
+            'mapwr' => $mapwr,
             'rtypes' => $rtypes,
         ]);
     }

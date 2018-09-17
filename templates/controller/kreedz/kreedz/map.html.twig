@@ -7,34 +7,8 @@
 {% block content %}
 
 <h1 class="ui header">
-	{{ title }}
+	{{ title }} <a class="ui button" href="{{ mapinfo.url_map }}">Info</a>
 </h1>
-
-<div class="ui stackable three column grid">
-	<div class="column">
-		{% for rec in maprec %}
-		<p><div>
-			{% if rec.part %}
-			<b><a href="{{ rec.url }}" target="_blank">{{ rec.fullname }}</a></b>:
-			{% endif %}
-			<b>{{ rec.mappath }}</b> {{ rec.timed }} <b>{{ rec.player }}</b>&nbsp;
-			<i class="flag {{ rec.country }}" title="{{ rec.country }}"></i>
-		</div>
-		{% endfor %}
-	</div>
-	<div class="column">
-		<p><div>
-			<b>Challenge</b>: <span class="mapinfo">{{ mapinfo.dname }}</span>
-			<p><i class="icon icon-{{ mapinfo.icon }}" style="color: {{ mapinfo.dcolor }};"></i>
-		</div>
-		<div>
-			<b>Type</b>: {{ mapinfo.mtype }}
-		</div>
-	</div>
-	<div class="column right aligned">
-		<img  class="map_image" src="{{ mapinfo.img_map }}">
-	</div>
-</div>
 
 <div class="ui top attached tabular menu">
 	{% for type in rtypes %}
@@ -42,6 +16,14 @@
 		{{ type.caption }} {% if type.totals %}<span class="ui label">{{ type.totals }}</span>{% endif %}
 	</a>
 	{% endfor %}
+	<div class="right menu">
+		<div class="item">
+			<b>Challenge</b>: {{ mapinfo.dname }}
+		</div>
+		<div class="item">
+			<b>Type</b>: {{ mapinfo.mtype }}
+		</div>
+	</div>
 </div>
 
 <div class="ui bottom attached segment">
@@ -57,6 +39,24 @@
 			</tr>
 		</thead>
 		<tbody class="pagination-feed">
+
+			{% if maprec %}
+			<tr class="pagination-item">
+				{% for rec in maprec %}
+					{% if rec.part %}
+					<td><b><a href="{{ rec.url }}" target="_blank">{{ rec.name|upper }}</a></b></td>
+					{% endif %}
+					<td>
+						<a href="{{ rec.url_player }}">{{ rec.player }}</a> 
+						<i class="flag {{ rec.country }}" title="{{ rec.country }}"></i></td>
+					<td>{{ rec.timed }}</td>
+					<td colspan="2">{{ rec.mappath }}</td>
+					<td><div class="wpn wpn-29">&nbsp;</div></td>
+				{% endfor %}
+				
+			</tr>
+			{% endif %}
+
 			{% for player in pagination %}
 			<tr class="pagination-item">
 				<td>{{ player.cup_num }}</td>
@@ -67,6 +67,7 @@
 				<td class="{{ player.color_wpn }}"><div class="wpn wpn-{{ player.weapon }}">&nbsp;</div></td>
 			</tr>
 			{% endfor %}
+
 		</tbody>
 	</table>
 </div>

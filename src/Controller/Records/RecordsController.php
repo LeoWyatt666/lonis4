@@ -44,7 +44,7 @@ class RecordsController extends AbstractController
             $demo += [
                 'url_map' => "records/map/{$demo['map']}",
                 'timed' => $times->timed($demo['time'], 2),
-                'url_player' => "records/player/{$demo['player']}",
+                'url_player' => "records/players/xj/{$demo['player']}",
             ];
         }
         $pagination->setItems($demos);
@@ -244,14 +244,14 @@ class RecordsController extends AbstractController
     public function map(
         $map,
         RecordsModel $RecordsModel,
-        ImagesService $images,
+        ImagesService $img,
         TimesService $times
     )
     {
         // Get Mapinfo
         $mapinfo = $RecordsModel->getMapInfo($map);
         $mapinfo += [
-            'img_map' => $images->image("maps/{$map}.jpg"),
+            'img_map' => $img->getImage("maps/{$map}.jpg"),
         ];
 
         // Map Records
