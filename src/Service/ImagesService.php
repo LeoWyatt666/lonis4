@@ -12,11 +12,13 @@ class ImagesService
         $this->params = $params;
     }
     
-    public function image($file)
+    public function getImage($file)
     {
         // set paths
         $path_img = $this->params->get('images');
-        $path_img_file = $this->params->get('kernel.project_dir').$path_img.$file;
+        $path_img_file = $this->params->get('kernel.project_dir').'/'.$path_img.$file;
+
+        dump($path_img_file);
 
         if(file_exists($path_img_file)) {
             return $path_img.$file;

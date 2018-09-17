@@ -332,7 +332,7 @@ class KreedzController extends AbstractController
         Request $request,
         PaginatorInterface $paginator,
         KreedzModel $KreedzModel,
-        ImagesService $images
+        ImagesService $img
     )
     {
         // get request
@@ -350,7 +350,7 @@ class KreedzController extends AbstractController
         $maps = $pagination->getItems();
         foreach ($maps as &$map) {
             $map += [
-                'img_map' => $images->image("/maps/{$map['mapname']}.jpg"),
+                'img_map' => $img->image("/maps/{$map['mapname']}.jpg"),
             ];
         }
         $pagination->setItems($maps);
@@ -370,7 +370,7 @@ class KreedzController extends AbstractController
         Request $request,
         PaginatorInterface $paginator,
         KreedzModel $KreedzModel,
-        ImagesService $images,
+        ImagesService $img,
         TimesService $times
     )
     {
@@ -387,7 +387,7 @@ class KreedzController extends AbstractController
         // Get Mapinfo
         $mapinfo = $KreedzModel->getMapInfo($map);
         $mapinfo += [
-            'img_map' => $images->image("maps/{$map}.jpg"),
+            'img_map' => $img->getImage("maps/{$map}.jpg"),
         ];
 
         // Map Records
