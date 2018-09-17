@@ -1,17 +1,11 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}{{ title }}{% endblock %}
-
-{% block content %}
-
 <center>
 	<h1 class="ui header">
+		<a href="{{ url('index') }}">K-lan</a> ::
 		{{ title }}
 	</h1>
 	
 	<div class="ui text container segment">
-		<iframe src="{{ url_ljstats }}" style="position: realtive; width: 100%; min-height: 520px; border: 0;"></iframe>
+		{# <iframe src="{{ url_ljstats }}" style="position: realtive; width: 100%; min-height: 520px; border: 0;"></iframe> #}
+		{{ html|raw }}
 	</div>
 </center>
-
-{% endblock %}

@@ -1,10 +1,10 @@
 <?php
 $mysql['persistent'] = false; // use persistent connect? works with mysql or mysqli+php 5.3, DOESN'T WORKS WITH mysqli & php < 5.3
-$mysql['host'] = 'localhost'; // mysql db host
-$mysql['user'] = 'lonis'; // mysql db user
-$mysql['pass'] = 'lonis'; // mysql db user pass
-$mysql['port'] = 3306; // mysql port; default - 3306
-$mysql['db'] = 'lonis'; // mysql database name
+$mysql['host'] = $mysql['host'] ?? 'localhost'; // mysql db host
+$mysql['user'] = $mysql['user'] ?? 'ljstats'; // mysql db user
+$mysql['pass'] = $mysql['pass'] ?? 'ljstats'; // mysql db user pass
+$mysql['port'] = $mysql['port'] ?? 3306; // mysql port; default - 3306
+$mysql['db'] = $mysql['db'] ?? 'ljstats'; // mysql database name
 $mysql['players_table'] = 'uq_players'; // mysql players table name
 $mysql['jumps_table'] = 'uq_jumps'; // mysql jumps table name
 $mysql['blocks_table'] = 'uq_block_tops'; // mysql block tops table name

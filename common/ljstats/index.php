@@ -1,5 +1,4 @@
 <?php
-ob_start();
 define("START_TIME", microtime(true));
 ini_set('display_errors',0);
 error_reporting(0);
@@ -11,11 +10,8 @@ $lang = $lang[$config['default_lang']];
 session_start();
 $admin = false;
 
-$prototype = "http" . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "s" : "") . "://";
-$server = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
-$self = str_replace(SELF, '', $_SERVER['SCRIPT_NAME']);
-$base_url = $prototype.$server.$self;
-			
+$base_url = $base_url ?? '';
+
 if(isset($_SESSION['login']) && isset($_SESSION['password'])) {
 	if(is_admin($_SESSION['login'],$_SESSION['password'])) $admin = true;
 	else {
@@ -85,6 +81,124 @@ if($jt_count_max >= 6)
 <title><?php echo format_title($_GET) ?></title>
 <link type="text/css" rel="stylesheet" href="style.css" />
 <?php echo $data ?>
+<style>
+body{
+	background:#ffffff;
+	color: black;
+}
+.tbl{
+	font-family:sans-serif;
+	font-size:12px;
+	margin:0 auto;
+	background-color:#ffffff;
+}
+a{
+	color: #0074CE;
+	text-decoration:none;
+}
+a:hover{
+	color:#0074CE;
+}
+a:visited{
+	color:#0074CE;
+}
+a:visited:hover{
+	color:#0074CE;
+}
+.orange{
+	color: #000;
+}
+.red{
+	color: red;
+	font-weight:bold;
+}
+.green_top{
+	color:#000;
+	font-weight:bold;
+}
+.orange_top{
+	color: orange;
+	font-weight:bold;
+}
+.red_top{
+	color: red;
+	font-weight:bold;
+}
+.selected_green{
+	background-color: #ffffff;
+}
+.tbl_navig {
+	background-color:#ffffff;
+	margin: 0 auto;
+	text-align: center;
+	font-family:sans-serif;
+	font-size:12px;
+}
+.tbl .row {
+	background:none repeat scroll 0 0 #ffffff;
+	border-bottom:1px #D5DDE5 dashed;
+	height: 20px;
+}
+.tbl .row:hover  {
+	background:#e3f1ff;
+}
+
+.nrow{
+	height: 20px;
+}
+
+.jt_class{
+	color: #000;
+	font-weight:bold;
+	width: 150px;
+}
+.center_bold{
+	text-align:center;
+	margin:0 auto;
+	font-weight:bold;
+}
+.center{
+	text-align:center;
+	margin:0 auto;
+}
+.tr_colored {
+	height: 20px;
+	background-color: #000;
+	font-weight: bold;
+	color: #fff;
+}
+.tr_colored a{
+	color: #fff;
+}
+
+.width_20{
+	width: 20px;
+}
+.width_200{
+	width: 200px;
+}
+.width_325{
+	width: 325px;
+}
+.width_350{
+	width: 350px;
+}
+.inline{
+	display: inline-block;
+}
+.jshintbox {
+	position:absolute;
+	display:none;
+	visibility:hidden;
+	width:240px;
+	border:1px solid #000000;
+	background-color:#FFFFDD;
+	color:#000000;
+	padding:2px;
+	font-family:verdana,arial, helvetica, sans-serif;
+	font-size:10px;
+}
+</style>
 <script type="text/javascript">
 function get_pos(e,type){var posx = 0;var posy = 0;if (!e) var e = window.event;if (e.pageX || e.pageY){posx = e.pageX;posy = e.pageY;}else if (e.clientX || e.clientY){posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;}if(type == 'x') return posx;else return posy;}
 function showHint(e,desc){var div = document.getElementById('hintdiv');var html = desc;div.style.left=get_pos(e,'x');div.style.top=get_pos(e,'y');div.style.display = 'inline';div.style.visibility= 'visible';div.innerHTML = html;}
@@ -98,10 +212,10 @@ function hideHint(){var div = document.getElementById('hintdiv');div.style.displ
 <?php
 if($jt_count_max >= 6) {
 	for($i = 0; $i<=$jt_count_half; $i++)
-		echo '<td><b><a href="index.php?type='.$navigation[$i].$from_game.'">'.$config['jt'][$navigation[$i]].'</a></b></td>';
+		echo '<td><b><a href="?type='.$navigation[$i].$from_game.'">'.$config['jt'][$navigation[$i]].'</a></b></td>';
 } else {
 	for($i=0;$i<$jt_count_max;$i++)
-		echo '<td><b><a href="index.php?type='.$navigation[$i].$from_game.'">'.$config['jt'][$navigation[$i]].'</a></b></td>';
+		echo '<td><b><a href="?type='.$navigation[$i].$from_game.'">'.$config['jt'][$navigation[$i]].'</a></b></td>';
 }
 ?>
 </tr>
@@ -191,11 +305,11 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 					<td class="width_20">#</td>
 					<td class="width_350"><?php echo $lang['name'] ?></td>
 					
-					<td align="center"><a href="index.php?type=<?php echo $type ?>&amp;sort=distance&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['distance'] ?></a></td>
-					<td align="center"><a href="index.php?type=<?php echo $type ?>&amp;sort=maxspeed&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['maxspeed'] ?></a></td>
-					<td align="center"><a href="index.php?type=<?php echo $type ?>&amp;sort=prestrafe&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['Prestrafe'] ?></a></td>
-					<td align="center"><a href="index.php?type=<?php echo $type ?>&amp;sort=strafes&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['Strafes'] ?></a></td>
-					<td align="right"><a href="index.php?type=<?php echo $type ?>&amp;sort=sync&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['Sync'] ?></a></td>
+					<td align="center"><a href="?type=<?php echo $type ?>&amp;sort=distance&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['distance'] ?></a></td>
+					<td align="center"><a href="?type=<?php echo $type ?>&amp;sort=maxspeed&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['maxspeed'] ?></a></td>
+					<td align="center"><a href="?type=<?php echo $type ?>&amp;sort=prestrafe&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['Prestrafe'] ?></a></td>
+					<td align="center"><a href="?type=<?php echo $type ?>&amp;sort=strafes&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['Strafes'] ?></a></td>
+					<td align="right"><a href="?type=<?php echo $type ?>&amp;sort=sync&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['Sync'] ?></a></td>
 			<?php
 			} else {
 			?>
@@ -204,9 +318,9 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 					
 					<td class="width_20">#</td>
 					<td class="width_350"><?php echo $lang['name'] ?></td>
-					<td align="center"><a href="index.php?type=<?php echo $type ?>&amp;sort=distance&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['distance'] ?></a></td>
-					<td align="center"><a href="index.php?type=<?php echo $type ?>&amp;sort=jumpoff&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['jumpoff'] ?></a></td>
-					<td align="right"><a href="index.php?type=<?php echo $type ?>&amp;sort=block&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['block'] ?></a></td>
+					<td align="center"><a href="?type=<?php echo $type ?>&amp;sort=distance&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['distance'] ?></a></td>
+					<td align="center"><a href="?type=<?php echo $type ?>&amp;sort=jumpoff&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['jumpoff'] ?></a></td>
+					<td align="right"><a href="?type=<?php echo $type ?>&amp;sort=block&amp;p=<?php echo $page ?>&amp;speed=<?php echo $speed ?>&amp;subtype=<?php echo $subtype.$from_game ?>"><?php echo $lang['block'] ?></a></td>
 			<?php
 			}
 			if(($subtype == 'regular') && ($type=="mcj" || $type=="dropmcj" || $type=="mscj" || $type=="dropmscj")) echo '<td align="right">Ducks</td>';
@@ -232,7 +346,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 					$prestrafe = ($row['prestrafe'] == $record_id['prestrafe']['max_prestrafe']) ? '<span class="red">'.sprintf('%01.2f',$row['prestrafe']/1000000).'</span>' : sprintf('%01.2f',$row['prestrafe']/1000000);
 					$sync = ($row['sync'] == $record_id['sync']['max_sync']) ? '<span class="red">'.$row['sync'].'</span>' : $row['sync'];
 					
-					echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td class="width_20">'.$p.'</td><td><b>'.($admin == true ? '[<a href="index.php?act=del_rec&pid='.$row['pid'].'&jt='.$type.'&speed='.$speed.'&type='.$subtype.'">x</a>] ' : '').'<a href="index.php?player='.$row['pid'].'&amp;type='.$subtype.$from_game.'">'.$names[$row['pid']].'</a></b></td><td align="center">'.$distance.$hint.'</td><td align="center">'.$maxspeed.'</td><td align="center">'.$prestrafe.'</td><td align="center">'.$row['strafes'].'</td><td align="right">'.$sync.'%</td>';
+					echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td class="width_20">'.$p.'</td><td><b>'.($admin == true ? '[<a href="?act=del_rec&pid='.$row['pid'].'&jt='.$type.'&speed='.$speed.'&type='.$subtype.'">x</a>] ' : '').'<a href="?player='.$row['pid'].'&amp;type='.$subtype.$from_game.'">'.$names[$row['pid']].'</a></b></td><td align="center">'.$distance.$hint.'</td><td align="center">'.$maxspeed.'</td><td align="center">'.$prestrafe.'</td><td align="center">'.$row['strafes'].'</td><td align="right">'.$sync.'%</td>';
 						switch($type) {
 							case 'mcj':
 							case 'dropmcj':
@@ -244,7 +358,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 						}
 					echo '</tr>';
 				} else {
-					echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td class="width_20">'.$p.'</td><td><b>'.($admin == true ? '[<a href="index.php?act=del_rec&pid='.$row['pid'].'&jt='.$type.'&speed='.$speed.'&type='.$subtype.'">x</a>] ' : '').'<a href="index.php?player='.$row['pid'].'&amp;type='.$subtype.$from_game.'">'.$names[$row['pid']].'</a></b></td><td align="center">'.$distance.$hint.'</td><td align="center">'.sprintf('%01.2f',$row['jumpoff']/1000000).'</td><td align="right">'.$row['block'].'</td></tr>';
+					echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td class="width_20">'.$p.'</td><td><b>'.($admin == true ? '[<a href="?act=del_rec&pid='.$row['pid'].'&jt='.$type.'&speed='.$speed.'&type='.$subtype.'">x</a>] ' : '').'<a href="?player='.$row['pid'].'&amp;type='.$subtype.$from_game.'">'.$names[$row['pid']].'</a></b></td><td align="center">'.$distance.$hint.'</td><td align="center">'.sprintf('%01.2f',$row['jumpoff']/1000000).'</td><td align="right">'.$row['block'].'</td></tr>';
 				}
 				
 				$i++;
@@ -258,15 +372,15 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 					<?php
 						$navig_speed = array();
 						foreach($speeds as $local_speed)
-							$navig_speed[] = $speed == $local_speed ? $speed : '<a href="index.php?type='.$type.'&amp;sort='.$sort.'&amp;p=0&amp;speed='.$local_speed.'&amp;subtype='.$subtype.$from_game.'">'.intval($local_speed).'</a>';
+							$navig_speed[] = $speed == $local_speed ? $speed : '<a href="?type='.$type.'&amp;sort='.$sort.'&amp;p=0&amp;speed='.$local_speed.'&amp;subtype='.$subtype.$from_game.'">'.intval($local_speed).'</a>';
 						
 						echo implode($config['speed_delemeter'], $navig_speed);
 					?>
 				</td>
 			</tr>
 			<tr>
-				<td class="width_350"><?php echo ((isset($_GET['subtype']) && $_GET['subtype'] == 'regular') || !isset($_GET['subtype'])) ? $lang['regulartop'] : '<a href="index.php?type='.$type.'&amp;sort='.$sort.'&amp;page=0&amp;subtype=regular&amp;speed='.$speed.$from_game.'">'.$lang['regulartop'].'</a>'; ?></td>
-				<td><?php echo (isset($_GET['subtype']) && $_GET['subtype'] == 'block') ? $lang['blocktop'] : '<a href="index.php?type='.$type.'&amp;sort='.$sort.'&amp;page=0&amp;subtype=block&amp;speed='.$speed.$from_game.'">'.$lang['blocktop'].'</a>'; ?></td>
+				<td class="width_350"><?php echo ((isset($_GET['subtype']) && $_GET['subtype'] == 'regular') || !isset($_GET['subtype'])) ? $lang['regulartop'] : '<a href="?type='.$type.'&amp;sort='.$sort.'&amp;page=0&amp;subtype=regular&amp;speed='.$speed.$from_game.'">'.$lang['regulartop'].'</a>'; ?></td>
+				<td><?php echo (isset($_GET['subtype']) && $_GET['subtype'] == 'block') ? $lang['blocktop'] : '<a href="?type='.$type.'&amp;sort='.$sort.'&amp;page=0&amp;subtype=block&amp;speed='.$speed.$from_game.'">'.$lang['blocktop'].'</a>'; ?></td>
 			</tr>
 			</table>
 			<?php
@@ -317,7 +431,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 							} else {
 								echo sprintf($lang['stats for'], htmlspecialchars($name), $authid);
 								if($admin)
-									echo '<div class="center">Steam: <span class="orange"><b>'.$authid.'</b></span><br/>IP: <span class="orange"><b>'.$ip.'</b></span><br/><a href="index.php?act=del_player&pid='.intval($_GET['player']).'">'.$lang['Delete player'].'</div>';
+									echo '<div class="center">Steam: <span class="orange"><b>'.$authid.'</b></span><br/>IP: <span class="orange"><b>'.$ip.'</b></span><br/><a href="?act=del_player&pid='.intval($_GET['player']).'">'.$lang['Delete player'].'</div>';
 								?>
 								<p></p>
 								<table border="0" cellspacing="0" cellpadding="0" class="tbl" width="80%">
@@ -358,7 +472,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 										}
 									}
 									
-									echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td class="jt_class">'.($admin == true ? '[<a href="index.php?act=del_rec&pid='.$row['pid'].'&jt='.$type.'&speed='.$speed.'&type='.$subtype.'">x</a>] ' : '').$config['jt'][$row['type']].'</td><td align="center">'.sprintf('%01.2f',$row['distance']/1000000).'</td><td align="center">'.sprintf('%01.2f',$row['maxspeed']/1000000).'</td><td align="center">'.sprintf('%01.2f',$row['prestrafe']/1000000).'</td><td align="center">'.$row['strafes'].'</td><td align="center">'.$row['sync'].'</td><td align="center">'.$place.'</td><td align="right">'.$row['wpn'].'</td></tr>';
+									echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td class="jt_class">'.($admin == true ? '[<a href="?act=del_rec&pid='.$row['pid'].'&jt='.$type.'&speed='.$speed.'&type='.$subtype.'">x</a>] ' : '').$config['jt'][$row['type']].'</td><td align="center">'.sprintf('%01.2f',$row['distance']/1000000).'</td><td align="center">'.sprintf('%01.2f',$row['maxspeed']/1000000).'</td><td align="center">'.sprintf('%01.2f',$row['prestrafe']/1000000).'</td><td align="center">'.$row['strafes'].'</td><td align="center">'.$row['sync'].'</td><td align="center">'.$place.'</td><td align="right">'.$row['wpn'].'</td></tr>';
 									$i++;
 								}
 								?>
@@ -387,7 +501,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 							} else {
 								echo sprintf($lang['block stats for'], htmlspecialchars($name));
 								if($admin)
-									echo '<div class="center">Steam: <span class="orange"><b>'.$authid.'</b></span><br/>IP: <span class="orange"><b>'.$ip.'</b></span><br/><a href="index.php?act=del_player&pid='.intval($_GET['player']).'">'.$lang['Delete player'].'</div>';
+									echo '<div class="center">Steam: <span class="orange"><b>'.$authid.'</b></span><br/>IP: <span class="orange"><b>'.$ip.'</b></span><br/><a href="?act=del_player&pid='.intval($_GET['player']).'">'.$lang['Delete player'].'</div>';
 								?>
 								<p></p>
 								<table border="0" cellspacing="0" cellpadding="0" class="tbl" width="80%">
@@ -428,7 +542,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 										break;
 									}
 									
-									echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td class="jt_class">'.($admin == true ? '[<a href="index.php?act=del_rec&pid='.$row['pid'].'&jt='.$type.'&speed='.$speed.'&type='.$_GET['type'].'">x</a>] ' : '').$config['jt'][$row['type']].'</td><td align="center">'.sprintf('%01.2f',$row['distance']/1000000).'</td><td align="center">'.sprintf('%01.2f',$row['jumpoff']/1000000).'</td><td align="center">'.$row['block'].'</td><td align="center">'.$place.'</td><td align="right">'.$row['wpn'].'</td></tr>';
+									echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td class="jt_class">'.($admin == true ? '[<a href="?act=del_rec&pid='.$row['pid'].'&jt='.$type.'&speed='.$speed.'&type='.$_GET['type'].'">x</a>] ' : '').$config['jt'][$row['type']].'</td><td align="center">'.sprintf('%01.2f',$row['distance']/1000000).'</td><td align="center">'.sprintf('%01.2f',$row['jumpoff']/1000000).'</td><td align="center">'.$row['block'].'</td><td align="center">'.$place.'</td><td align="right">'.$row['wpn'].'</td></tr>';
 									$i++;
 								}
 								?>
@@ -449,15 +563,15 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 		<?php
 			$navig_speed = array();
 			foreach($speeds as $local_speed)
-				$navig_speed[] = $speed == $local_speed ? $speed : '<a href="index.php?player='.intval($_GET['player']).'&amp;type='.$_GET['type'].'&amp;speed='.intval($local_speed).$from_game.'">'.intval($local_speed).'</a>';
+				$navig_speed[] = $speed == $local_speed ? $speed : '<a href="?player='.intval($_GET['player']).'&amp;type='.$_GET['type'].'&amp;speed='.intval($local_speed).$from_game.'">'.intval($local_speed).'</a>';
 			
 			echo implode($config['speed_delemeter'], $navig_speed);
 		?>
 	</td>
 </tr>
 <tr>
-	<td  class="width_325"><?php echo ((isset($_GET['type']) && $_GET['type'] == 'regular') || !isset($_GET['type'])) ? $lang['regulartop'] : '<a href="index.php?player='.intval($_GET['player']).'&amp;type=regular&amp;speed='.$speed.$from_game.'">'.$lang['regulartop'].'</a>'; ?></td>
-	<td><?php echo (isset($_GET['type']) && $_GET['type'] == 'block') ? $lang['blocktop'] : '<a href="index.php?player='.intval($_GET['player']).'&amp;type=block&amp;speed='.$speed.$from_game.'">'.$lang['blocktop'].'</a>'; ?></td>
+	<td  class="width_325"><?php echo ((isset($_GET['type']) && $_GET['type'] == 'regular') || !isset($_GET['type'])) ? $lang['regulartop'] : '<a href="?player='.intval($_GET['player']).'&amp;type=regular&amp;speed='.$speed.$from_game.'">'.$lang['regulartop'].'</a>'; ?></td>
+	<td><?php echo (isset($_GET['type']) && $_GET['type'] == 'block') ? $lang['blocktop'] : '<a href="?player='.intval($_GET['player']).'&amp;type=block&amp;speed='.$speed.$from_game.'">'.$lang['blocktop'].'</a>'; ?></td>
 </tr>
 </table>
 <?php
@@ -492,7 +606,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 					<?php
 					$i = 0;
 					while($row = $db->fetch_assoc($sql)) {
-						echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td><a href="index.php?player='.$row['id'].'">'.htmlspecialchars($row['name']).'</a></td><td align="right">'.date($config['date_format'],$row['lastseen']).'</td></tr>';
+						echo '<tr class="row '.($i % 2 ? '' : 'nrow').'"><td><a href="?player='.$row['id'].'">'.htmlspecialchars($row['name']).'</a></td><td align="right">'.date($config['date_format'],$row['lastseen']).'</td></tr>';
 						$i++;
 					}
 					?>
@@ -563,7 +677,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 <?php
 if($jt_count_max >= 6) {
 	for($i = $jt_count_half+1; $i<$jt_count_max; $i++)
-		echo '<td><b><a href="index.php?type='.$navigation[$i].'&amp;sort='.$sort.'&amp;page='.$page.$from_game.'">'.$config['jt'][$navigation[$i]].'</a></b></td>';
+		echo '<td><b><a href="?type='.$navigation[$i].'&amp;sort='.$sort.'&amp;page='.$page.$from_game.'">'.$config['jt'][$navigation[$i]].'</a></b></td>';
 }
 ?>
 </tr>
@@ -572,7 +686,7 @@ if($jt_count_max >= 6) {
 <table width="50%" border="0" class="tbl_navig">
 <tr>
 <td>
-<form action="index.php" method="get">
+<form action="" method="get">
 <div>
 <?php echo (isset($_GET['from_game']) && $_GET['from_game'] == 'true') ? '<input type="hidden" name="from_game" value="true" />' : ''; ?>
 <input type="hidden" name="sort" value="<?php echo (isset($_GET['sort']) && in_array($_GET['sort'], $valid_orders)) ? $_GET['sort'] : 'distance' ?>" />
@@ -597,7 +711,7 @@ foreach($jts as $jt) {
 if(!isset($_GET['from_game']) && !$admin && $form_admin) {
 ?>
 <p>
-<div class="center"><form action="index.php" method="post">
+<div class="center"><form action="" method="post">
 	<div class="inline width_200"><?php echo $lang['Login'] ?>: </div><div class="inline"><input type="text" name="login" /></div><br/>
 	<div class="inline width_200"><?php echo $lang['Password'] ?>: </div><div class="inline"><input type="password" name="password" /></div><br/>
 	<div><input type="submit" value="<?php echo $lang['submit'] ?>" /></div>
