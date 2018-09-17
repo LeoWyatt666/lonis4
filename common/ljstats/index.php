@@ -384,7 +384,7 @@ if(!isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
 			</tr>
 			</table>
 			<?php
-			echo '<div class="center">'.show_pages($entries['count'],$page,'index.php?type='.$type.'&amp;sort='.$sort.'&amp;subtype='.$subtype.'&amp;speed='.$speed.'&amp;p=',$config['per_page']).'</div>';
+			echo '<div class="center">'.show_pages($entries['count'],$page,'?type='.$type.'&amp;sort='.$sort.'&amp;subtype='.$subtype.'&amp;speed='.$speed.'&amp;p=',$config['per_page']).'</div>';
 		}
 	}
 } elseif(isset($_GET['player']) && !isset($_GET['search']) && !isset($_GET['act'])) {
