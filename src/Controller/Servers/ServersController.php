@@ -10,10 +10,13 @@ use App\Service\HldsService;
 use App\Model\ServersModel;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * @Route("/servers", name="servers")
+ */
 class ServersController extends AbstractController
 {
     /**
-     * @Route("/servers", name="servers")
+     * @Route("/", name="servers")
      */
     public function servers(
         Request $request,
@@ -27,7 +30,7 @@ class ServersController extends AbstractController
 
         // get result
         $servers = $ServersModel->findAll();
-        $pagination = $paginator->paginate($servers, $page, 5);
+        $pagination = $paginator->paginate($servers, $page, 20);
 
         if($pagination->getPage() > $pagination->getPageCount()) {
             throw $this->createNotFoundException();
@@ -61,7 +64,7 @@ class ServersController extends AbstractController
     }
 
     /**
-     * @Route("/servers/{id}", name="server", requirements={"id"="\d+"})
+     * @Route("/{id}", name="server", requirements={"id"="\d+"})
      */
     public function server(
         $id,

@@ -10,12 +10,15 @@ use App\Service\ImagesService;
 use App\Model\KreedzModel;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * @Route("/kreedz")
+ */
 class KreedzController extends AbstractController
 {
     private $types = ['all', 'pro', 'nub'];
 
     /**
-     * @Route("/kreedz/last", name="kreedz_last")
+     * @Route("/last", name="kreedz_last")
      */
     public function last(
         Request $request,
@@ -84,7 +87,7 @@ class KreedzController extends AbstractController
     }
 
     /**
-     * @Route("/kreedz/players", name="kreedz_players")
+     * @Route("/players", name="kreedz_players")
      */
     public function players(
         Request $request,
@@ -144,7 +147,7 @@ class KreedzController extends AbstractController
     }
 
     /**
-     * @Route("/kreedz/players/{id}", name="kreedz_player", requirements={"id"="\d+"})
+     * @Route("/players/{id}", name="kreedz_player", requirements={"id"="\d+"})
      */
     public function player(
         $id,
@@ -164,7 +167,7 @@ class KreedzController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        // get last
+        // get maps
         $maps = $KreedzModel->getPlayerMaps($id, $type, $search);
         $pagination = $paginator->paginate($maps, $page, 20);
 
@@ -176,7 +179,7 @@ class KreedzController extends AbstractController
         $maps = $pagination->getItems();
         foreach ($maps as &$map) {
             $map += [
-                'url_map' => "kreedz/map/{$map['map']}",
+                'url_map' => "kreedz/maps/{$map['map']}",
                 'url_player' => "kreedz/player/{$map['player']}",
                 'timed' => $times->timed($map['time'], 5),
                 'color_nogc' => !$map['go_cp'] ? 'green' : 'grey',
@@ -210,7 +213,7 @@ class KreedzController extends AbstractController
     }
 
     /**
-     * @Route("/kreedz/players/{id}/norec", name="kreedz_player_norec", requirements={"id"="\d+"})
+     * @Route("/players/{id}/norec", name="kreedz_player_norec", requirements={"id"="\d+"})
      */
     public function player_norec(
         $id,
@@ -262,7 +265,7 @@ class KreedzController extends AbstractController
     }
 
     /**
-     * @Route("/kreedz/maps", name="kreedz_maps")
+     * @Route("/maps", name="kreedz_maps")
      */
     public function maps(
         Request $request,
@@ -323,7 +326,7 @@ class KreedzController extends AbstractController
     }
 
     /**
-     * @Route("/kreedz/maps/norec", name="kreedz_maps_norec")
+     * @Route("/maps/norec", name="kreedz_maps_norec")
      */
     public function maps_norec(
         Request $request,
@@ -360,7 +363,7 @@ class KreedzController extends AbstractController
     }
 
     /**
-     * @Route("/kreedz/maps/{map}", name="kreedz_map")
+     * @Route("/maps/{map}", name="kreedz_map")
      */
     public function map(
         $map,
@@ -445,7 +448,7 @@ class KreedzController extends AbstractController
     }
 
     /**
-     * @Route("/kreedz/duels", name="kreedz_duels")
+     * @Route("/duels", name="kreedz_duels")
      */
     public function duels(
         Request $request,
@@ -496,7 +499,7 @@ class KreedzController extends AbstractController
     }
 
     /**
-     * @Route("/kreedz/longjumps", name="kreedz_longjumps")
+     * @Route("/longjumps", name="kreedz_longjumps")
      */
     public function longjumps()
     {

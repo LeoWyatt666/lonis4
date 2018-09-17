@@ -11,10 +11,13 @@ use App\Service\ImagesService;
 use App\Model\RecordsModel;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * @Route("/records")
+ */
 class RecordsController extends AbstractController
 {
     /**
-     * @Route("/records/demos/{comm}", name="records_demos")
+     * @Route("/demos/{comm}", name="records_demos")
      */
     public function demos(
         $comm = 'xj',
@@ -67,7 +70,7 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/records/players/{comm}", name="records_players")
+     * @Route("/players/{comm}", name="records_players")
      */
     public function players(
         $comm = "xj",
@@ -122,7 +125,7 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/records/players/{comm}/{name}", name="records_player")
+     * @Route("/players/{comm}/{name}", name="records_player")
      */
     public function player(
         $comm = "xj",
@@ -184,7 +187,7 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/records/maps/{comm}", name="records_maps")
+     * @Route("/maps/{comm}", name="records_maps")
      */
     public function maps(
         $comm = 'xj',
@@ -236,7 +239,7 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/records/map/{map}", name="records_map")
+     * @Route("/map/{map}", name="records_map")
      */
     public function map(
         $map,
@@ -268,7 +271,7 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/records/longjumps/{comm}", name="records_longjumps")
+     * @Route("/longjumps/{comm}", name="records_longjumps")
      */
     public function longjumps(
         $comm = 'xj',
@@ -317,7 +320,7 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/records/compare/{comm}", name="records_compare")
+     * @Route("/compare/{comm}", name="records_compare")
      */
     public function compare(
         $comm = 'ru',

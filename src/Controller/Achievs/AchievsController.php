@@ -10,10 +10,13 @@ use App\Model\AchievsModel;
 use Knp\Component\Pager\PaginatorInterface;
 use Ornicar\GravatarBundle\GravatarApi;
 
+/**
+ * @Route("/achievs")
+ */
 class AchievsController extends AbstractController
 {
     /**
-     * @Route("/achievs", name="achievs")
+     * @Route("/", name="achievs")
      */
     public function achievs(
         Request $request,
@@ -50,7 +53,7 @@ class AchievsController extends AbstractController
     }
 
     /**
-     * @Route("/achievs/{id}", name="achiev", requirements={"id"="\d+"})
+     * @Route("/{id}", name="achiev", requirements={"id"="\d+"})
      */
     public function achiev(
         $id,
@@ -95,7 +98,7 @@ class AchievsController extends AbstractController
     }
 
      /**
-     * @Route("/achievs/players", name="achievs_players")
+     * @Route("/players", name="achievs_players")
      */
     public function players(
         Request $request,
@@ -135,7 +138,7 @@ class AchievsController extends AbstractController
     }
 
      /**
-     * @Route("/achievs/players/{id}", name="achievs_player", requirements={"id"="\d+"})
+     * @Route("/players/{id}", name="achievs_player", requirements={"id"="\d+"})
      */
     public function player(
         $id,
