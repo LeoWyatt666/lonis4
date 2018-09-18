@@ -507,12 +507,9 @@ class KreedzController extends AbstractController
      */
     public function longjumps()
     {
-        include "common/ljstats.php";
-
         return $this->render('controller/kreedz/kreedz/longjumps.html.twig', [
             'title' => 'Kreedz :: Longjumps',
             'url_ljstats' => "/common/ljstats/index.php",
-            'html' => $ljstats, 
             'admin' => ''//".($admin ? '?form_admin=1'
         ]);
     }
