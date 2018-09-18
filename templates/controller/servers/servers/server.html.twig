@@ -4,17 +4,15 @@
 
 {% block content %}
 
-<div class="ui grid">
-  <div class="four column row">
-    <div class="left floated column">
+<div class="ui two column grid">
+  	<div class="column">
 		<h1 class="ui header">
 			{{ title }}</span>
 		</h1>
 	</div>
-  <div class="right floated column">
-		{% include "servers/layouts/search.html.twig" %}
-	</div>
-  </div>
+  	<div class="right aligned column">
+		{% include "controller/servers/layouts/search.html.twig" %}
+  	</div>
 </div>
 
 <hr>
@@ -23,77 +21,15 @@
 	<div class="column">
 		<div class="ui segment">
 			<div class="ui divided list">
+				{% for key, info in serverInfo %}
 				<div class="item">
 					<i class="icon tint"></i>
 					<div class="content">
-						<a class="header">IP</a>
-						<div class="description">{{ server.ip }}</div>
+						<a class="header">{{ key }}</a>
+						<div class="description">{{ info }}</div>
 					</div>
 				</div>
-
-				<div class="item">
-					<i class="icon tint"></i>
-					<div class="content">
-						<a class="header">Name</a>
-						<div class="description">{{ server.name }}</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<i class="icon tint"></i>
-					<div class="content">
-						<a class="header">Map</a>
-						<div class="description">{{ server.map }}</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<i class="icon tint"></i>
-					<div class="content">
-						<a class="header">Mod</a>
-						<div class="description">{{ server.modname }}</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<i class="icon tint"></i>
-					<div class="content">
-						<a class="header">Descriptor</a>
-						<div class="description">{{ server.descriptor }}</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<i class="icon tint"></i>
-					<div class="content">
-						<a class="header">Players</a>
-						<div class="description">{{ server.players }} / {{ server.max_players }}</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<i class="icon tint"></i>
-					<div class="content">
-						<a class="header">Type</a>
-						<div class="description">{{ server.type }}</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<i class="icon tint"></i>
-					<div class="content">
-						<a class="header">OS</a>
-						<div class="description">{{ server.os }}</div>
-					</div>
-				</div>
-
-				<div class="item">
-					<i class="icon tint"></i>
-					<div class="content">
-						<a class="header">Bots</a>
-						<div class="description">{{ server.bots }}</div>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
@@ -110,11 +46,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for player in server.players_list %}
+				{% for player in serverPlayers %}
 				<tr>
-					<td>{{ player.plr_name }}</td>
-					<td>{{ player.plr_frag }}</td>
-					<td>{{ player.plr_time }}</td>
+					<td>{{ player.Name }}</td>
+					<td>{{ player.Frags }}</td>
+					<td>{{ player.TimeF }}</td>
 				</tr>
 				{% endfor %}
 			</tbody>

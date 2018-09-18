@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\CsServers;
-use App\Service\HldsService;
+use App\Service\SourceQueryService;
+use App\Service\ImagesService;
 use App\Model\ServersModel;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -21,7 +22,8 @@ class ServersController extends AbstractController
     public function servers(
         Request $request,
         PaginatorInterface $paginator,
-        ServersModel $ServersModel
+        ServersModel $ServersModel,
+        SourceQueryService $sq
     )
     {
         // get request
@@ -50,8 +52,8 @@ class ServersController extends AbstractController
 
             // Autoupdate
             // if (time()-$update > 1800) {
-            //     $server = $this->servers->get_servers_info($server);
-            //     $this->servers->set_servers($server);
+            //     $sq->Connect($server['addres']);
+            //     $server += $sq->getInfo();
             // }
         }
         $pagination->setItems($servers);
@@ -69,7 +71,8 @@ class ServersController extends AbstractController
     public function server(
         $id,
         ServersModel $ServersModel,
-        HldsService $hlds
+        SourceQueryService $sq,
+        ImagesService $img
     )
     {
         $server = $ServersModel->find($id);
@@ -78,49 +81,49 @@ class ServersController extends AbstractController
             throw $this->createNotFoundException(); 
         }
 
-        $server += $hlds->getServerInfo($server['addres'], true);
+        $sq->Connect($server['addres']);
+        $serverInfo = $sq->getInfo();
+        $serverPlayers = $sq->getPlayers();
 
         $server += [
-            'img_map' => "images/maps/{$server['map']}.jpg",
-            'ip' => $server['addres'],
+            'img_map' => $img->getImage("maps/{$server['map']}.jpg"),
         ];
 
         return $this->render('controller/servers/servers/server.html.twig', [
-            'title' => 'Server',
+            'title' => 'Server :: '.$server['addres'],
             'server' => $server,
+            'serverInfo' => $serverInfo,
+            'serverPlayers' => $serverPlayers,
             'search' => '',
         ]);
     }
 
     /**
-     * @Route("/servers/find/", name="servers_find")
+     * @Route("/find/", name="servers_find")
      */
     public function find(
         Request $request,
-        HldsService $hlds
+        SourceQueryService $sq,
+        ImagesService $img
     )
     {
         $ip = $request->query->get('search');
 
         // get result
-        $server = $hlds->getServerInfo($ip, true);
-
-        if(!$server) { 
-            throw $this->createNotFoundException(); 
-        }
+        $sq->Connect($ip);
+        $serverInfo = $sq->getInfo();
+        $serverPlayers = $sq->getPlayers();
 
         // set vars
-        if ($server) {
-            $server += [
-                'img_map' => "images/maps/{$server['map']}.jpg",
-                'ip' => $ip,
-                'modname' => $server['mod'],
-            ];
-        }
+        $server = [
+            'img_map' => $img->getImage("maps/{$serverInfo['Map']}.jpg"),
+        ];
 
         return $this->render('controller/servers/servers/server.html.twig', [
-            'title' => 'Server',
+            'title' => 'Server :: '.$ip,
             'server' => $server,
+            'serverInfo' => $serverInfo,
+            'serverPlayers' => $serverPlayers,
             'search' => $ip,
         ]);
     }

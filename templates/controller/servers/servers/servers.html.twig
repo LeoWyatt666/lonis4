@@ -27,9 +27,9 @@
 			<th>{{ knp_pagination_sortable(pagination, 'Name', '[name]') }}</th>
 			<th>{{ knp_pagination_sortable(pagination, 'Type', '[modname]') }}</th>
 			<th>{{ knp_pagination_sortable(pagination, 'IP', '[ip]') }}</th>
-			<th>{{ knp_pagination_sortable(pagination, 'Map', '[map]') }}</th>
+			{# <th>{{ knp_pagination_sortable(pagination, 'Map', '[map]') }}</th>
 			<th>{{ knp_pagination_sortable(pagination, 'Players', '[players]') }}</th>
-			<th>Time</th>
+			<th>Time</th> #}
 		</tr>
 	</thead>
 	<tbody class="pagination-feed">
@@ -41,9 +41,9 @@
 			</td>
 			<td>{{ server.modname }}</td>
 			<td><a href="{{ server.url_addres }}"><b>{{ server.addres }}</b></a></td>
-			<td>{{ server.map }}</td>
+			{# <td>{{ server.map }}</td>
 			<td>{% if server.max_players %} {{ server.players }} / {{ server.max_players }} {% endif %}</td>
-			<td><i>{{ server.update }}</i></td>
+			<td><i>{{ server.update }}</i></td> #}
 		</tr>
 		{% endfor %}
 	</tbody>
