@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab2be0426e5e45051f9a3118846a3ff3",
+    "content-hash": "a3cab9a6462e4c4674373aa460b5ffa4",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1713,16 +1713,16 @@
         },
         {
             "name": "knojector/steam-authentication-bundle",
-            "version": "1.0.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knojector/SteamAuthenticationBundle.git",
-                "reference": "55e2af8492c765d6845b35e2122c81f1d2643853"
+                "reference": "bf84ac9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knojector/SteamAuthenticationBundle/zipball/55e2af8492c765d6845b35e2122c81f1d2643853",
-                "reference": "55e2af8492c765d6845b35e2122c81f1d2643853",
+                "url": "https://api.github.com/repos/knojector/SteamAuthenticationBundle/zipball/bf84ac9",
+                "reference": "bf84ac9",
                 "shasum": ""
             },
             "require": {
@@ -1751,7 +1751,7 @@
                 }
             ],
             "description": "Symfony Bundle to integrate Steam authentication",
-            "time": "2018-05-13T17:32:51+00:00"
+            "time": "2018-09-18T13:05:10+00:00"
         },
         {
             "name": "knplabs/knp-components",
@@ -5265,16 +5265,16 @@
     "packages-dev": [
         {
             "name": "nikic/php-parser",
-            "version": "v4.0.3",
+            "version": "v4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "bd088dc940a418f09cda079a9b5c7c478890fb8d"
+                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/bd088dc940a418f09cda079a9b5c7c478890fb8d",
-                "reference": "bd088dc940a418f09cda079a9b5c7c478890fb8d",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/fa6ee28600d21d49b2b4e1006b48426cec8e579c",
+                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c",
                 "shasum": ""
             },
             "require": {
@@ -5312,7 +5312,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-07-15T17:25:16+00:00"
+            "time": "2018-09-18T07:03:24+00:00"
         },
         {
             "name": "symfony/dotenv",
@@ -5440,7 +5440,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "knojector/steam-authentication-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
