@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3cab9a6462e4c4674373aa460b5ffa4",
+    "content-hash": "fcc30fecf4c5ddfdf2966ef4c38adb9e",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1717,12 +1717,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/knojector/SteamAuthenticationBundle.git",
-                "reference": "bf84ac9"
+                "reference": "bf84ac9164ac512384b37c8e73f6938af6cc3552"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knojector/SteamAuthenticationBundle/zipball/bf84ac9",
-                "reference": "bf84ac9",
+                "url": "https://api.github.com/repos/knojector/SteamAuthenticationBundle/zipball/bf84ac9164ac512384b37c8e73f6938af6cc3552",
+                "reference": "bf84ac9164ac512384b37c8e73f6938af6cc3552",
                 "shasum": ""
             },
             "require": {
