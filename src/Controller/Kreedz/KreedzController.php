@@ -350,7 +350,7 @@ class KreedzController extends AbstractController
         $maps = $pagination->getItems();
         foreach ($maps as &$map) {
             $map += [
-                'img_map' => $img->image("/maps/{$map['mapname']}.jpg"),
+                'img_map' => $img->getImage("maps/{$map['mapname']}.jpg"),
             ];
         }
         $pagination->setItems($maps);
