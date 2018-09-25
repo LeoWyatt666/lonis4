@@ -5,9 +5,9 @@
 {% block body %}
     <h1>{{ title }}</h1>
 
-    {{ include('players/admin_players/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('controller/players/admin_players/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('admin_players_index') }}">back to list</a>
 
-    {{ include('players/admin_players/_delete_form.html.twig') }}
+    {{ include('controller/players/admin_players/_delete_form.html.twig') }}
 {% endblock %}

@@ -76,7 +76,10 @@ class AdminPlayersController extends AbstractController
      */
     public function show(CsPlayers $csPlayer): Response
     {
-        return $this->render('controller/players/admin_players/show.html.twig', ['player' => $csPlayer]);
+        return $this->render('controller/players/admin_players/show.html.twig', [
+            'title' => 'Admin :: Players :: '.$csPlayer->getUsername(),
+            'player' => $csPlayer,
+        ]);
     }
 
     /**
@@ -94,7 +97,7 @@ class AdminPlayersController extends AbstractController
         }
 
         return $this->render('controller/players/admin_players/edit.html.twig', [
-            'title' => 'Admin :: Players :: Edit',
+            'title' => 'Admin :: Players :: '.$csPlayer->getUsername(),
             'player' => $csPlayer,
             'form' => $form->createView(),
         ]);
