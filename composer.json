@@ -27,8 +27,7 @@
         "symfony/twig-bundle": "*",
         "symfony/validator": "*",
         "symfony/webpack-encore-pack": "^1.0",
-        "symfony/yaml": "*",
-        "xpaw/php-source-query-class": "^1.0"
+        "symfony/yaml": "*"
     },
     "require-dev": {
         "symfony/dotenv": "*",

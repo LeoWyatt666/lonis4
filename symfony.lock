@@ -368,9 +368,6 @@
     "twig/twig": {
         "version": "v2.5.0"
     },
-    "xpaw/php-source-query-class": {
-        "version": "1.0.0"
-    },
     "zendframework/zend-code": {
         "version": "3.3.1"
     },

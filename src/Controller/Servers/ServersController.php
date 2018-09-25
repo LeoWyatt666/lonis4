@@ -6,10 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\CsServers;
-use App\Service\SourceQueryService;
 use App\Service\ImagesService;
 use App\Model\ServersModel;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Library\CSMonitoring;
 
 /**
  * @Route("/servers", name="servers")
@@ -23,7 +23,7 @@ class ServersController extends AbstractController
         Request $request,
         PaginatorInterface $paginator,
         ServersModel $ServersModel,
-        SourceQueryService $sq
+        CSMonitoring $csm
     )
     {
         // get request
@@ -40,21 +40,14 @@ class ServersController extends AbstractController
 
         $servers = $pagination->getItems();
         foreach ($servers as &$server) {
-            $update = strtotime($server['update']." ".date_default_timezone_get());
-            $server = array_replace($server, [
-                "update" => strftime("%d.%m %H:%M", $update),
+            // set vars
+            $server += [
                 'url_addres' => "servers/{$server['id']}",
-            ]);
+            ];
 
-            //$addr = explode(":",$server['addres']);
-            //$server["ip"] = gethostbyname($addrs[0]);
-            //$server['addr'] = gethostbyaddr($addr[0]);
-
-            // Autoupdate
-            // if (time()-$update > 1800) {
-            //     $sq->Connect($server['addres']);
-            //     $server += $sq->getInfo();
-            // }
+            // set server info
+            $serv = parse_url($server['addres']);
+            $server += $csm->getServerInfo($serv['host'], $serv['port'], $error);
         }
         $pagination->setItems($servers);
 
@@ -71,7 +64,7 @@ class ServersController extends AbstractController
     public function server(
         $id,
         ServersModel $ServersModel,
-        SourceQueryService $sq,
+        CSMonitoring $csm,
         ImagesService $img
     )
     {
@@ -81,10 +74,11 @@ class ServersController extends AbstractController
             throw $this->createNotFoundException(); 
         }
 
-        $sq->Connect($server['addres']);
-        $serverInfo = $sq->getInfo();
-        $serverPlayers = $sq->getPlayers();
+        // get result
+        $serv = parse_url($server['addres']);
+        $server += $csm->getServerInfo($serv['host'], $serv['port'], $error);
 
+        // set vars
         $server += [
             'img_map' => $img->getImage("maps/{$server['map']}.jpg"),
         ];
@@ -92,8 +86,6 @@ class ServersController extends AbstractController
         return $this->render('controller/servers/servers/server.html.twig', [
             'title' => 'Server :: '.$server['addres'],
             'server' => $server,
-            'serverInfo' => $serverInfo,
-            'serverPlayers' => $serverPlayers,
             'search' => '',
         ]);
     }
@@ -103,27 +95,35 @@ class ServersController extends AbstractController
      */
     public function find(
         Request $request,
-        SourceQueryService $sq,
+        CSMonitoring $csm,
         ImagesService $img
     )
     {
         $ip = $request->query->get('search');
-
+        
         // get result
-        $sq->Connect($ip);
-        $serverInfo = $sq->getInfo();
-        $serverPlayers = $sq->getPlayers();
+        $serv = parse_url($ip);
+        if(!isset($serv['host'])) {
+            $serv['host'] = $serv['path'];
+            $serv['port'] = 27015;
+        }
+
+        if (!preg_match(
+            '/^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:[.](?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/',
+            $serv['host'])) {
+                throw $this->createNotFoundException();
+        }
+
+        $server = $csm->getServerInfo($serv['host'], $serv['port'], $error);
 
         // set vars
-        $server = [
-            'img_map' => $img->getImage("maps/{$serverInfo['Map']}.jpg"),
+        $server += [
+            'img_map' => $img->getImage("maps/{$server['map']}.jpg"),
         ];
 
         return $this->render('controller/servers/servers/server.html.twig', [
             'title' => 'Server :: '.$ip,
             'server' => $server,
-            'serverInfo' => $serverInfo,
-            'serverPlayers' => $serverPlayers,
             'search' => $ip,
         ]);
     }
