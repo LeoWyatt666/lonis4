@@ -501,16 +501,4 @@ class KreedzController extends AbstractController
             'pagination' => $pagination,
         ]);
     }
-
-    /**
-     * @Route("/longjumps", name="kreedz_longjumps")
-     */
-    public function longjumps()
-    {
-        return $this->render('controller/kreedz/kreedz/longjumps.html.twig', [
-            'title' => 'Kreedz :: Longjumps',
-            'url_ljstats' => "/common/ljstats/index.php",
-            'admin' => ''//".($admin ? '?form_admin=1'
-        ]);
-    }
 }
