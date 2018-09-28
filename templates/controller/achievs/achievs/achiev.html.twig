@@ -12,10 +12,12 @@
 
 <div class="ui divider"></div>
 
+{% set img_achiev = gravatar(achiev.id)~'&d=identicon' %}
+
 <div class="ui divided items">
 	<div class="link item">
 		<div class="ui tiny image">
-			<img src="{{ achiev.img_achiev }}">
+			<img src="{{ img_achiev }}">
 		</div>
 		<div class="content">
 			<div class="header">{{ achiev.name }}</div>
@@ -30,9 +32,13 @@
 
 <div class="ui link five doubling cards pagination-feed">
 	{% for player in pagination %}
-	<a class="card pagination-item" href="{{ player.url_player }}" >
+
+	{% set url_player = url('achievs_player', {id: player.id}) %}
+	{% set img_player = gravatar(player.id)~'&d=robohash' %}
+
+	<a class="card pagination-item" href="{{ url_player }}" >
 		<div class="image">
-			<img class="" src="{{ player.img_player }}" title="{{ player.plname }}" oncontextmenu="return false;">
+			<img class="" src="{{ img_player }}" title="{{ player.plname }}" oncontextmenu="return false;">
 		</div>
 		<div class="content">
 			<span class="description">

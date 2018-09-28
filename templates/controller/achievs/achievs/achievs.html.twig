@@ -12,19 +12,24 @@
 
 <div class="ui divided items pagination-feed">
 	{% for achiev in pagination %}
+
+	{% set completer = achiev.completed|round(2, 'floor') %}
+	{% set url_achiev = url('achiev', {id: achiev.aId}) %}
+	{% set img_achiev = gravatar(achiev.aId)~'&d=identicon' %}
+
 	<div class="link item pagination-item">
 		<div class="ui tiny image">
-			<img src="{{ achiev.img_achiev }}">
+			<img src="{{ img_achiev }} ">
 		</div>
 		<div class="content">
-			<a class="header" href="{{ achiev.url_achiev }}">{{ achiev.name }}</a>
+			<a class="header" href="{{ url_achiev }}">{{ achiev.name }}</a>
 			<div class="description">
 				{{ achiev.desc }}
 			</div>
 			<br>
-			<div class="ui indicating demo progress active" data-percent="{{ achiev.completer }}">
-				<div class="bar" style="transition-duration: 300ms; width: {{ achiev.completer }}%;"></div>
-				<div class="label">{{ achiev.completer }}% Done</div>
+			<div class="ui indicating demo progress active" data-percent="{{ completer }}">
+				<div class="bar" style="transition-duration: 300ms; width: {{ completer }}%;"></div>
+				<div class="label">{{ completer }}% Done</div>
 			</div>
 		</div>
 	</div>

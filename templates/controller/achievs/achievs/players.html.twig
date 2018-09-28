@@ -12,9 +12,13 @@
 
 <div class="ui link five doubling cards pagination-feed">
 	{% for player in pagination %}
-	<a class="card pagination-item" href="{{ player.url_player }}">
+
+	{% set url_player = url('achievs_player', {id: player.id}) %}
+	{% set img_player = gravatar(player.id)~'&d=robohash' %}
+
+	<a class="card pagination-item" href="{{url_player }}">
 		<div class="image">
-			<img class="" src="{{ player.url_image }}" title="{{ player.username }}" oncontextmenu="return false;">
+			<img class="" src="{{ img_player }}" title="{{ player.username }}" oncontextmenu="return false;">
 		</div>
 		<div class="content">
 			<span class="description">

@@ -35,17 +35,6 @@ class AchievsController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $achievs = $pagination->getItems();
-        foreach ($achievs as &$achiev) {
-            $achiev += [
-                'completer' => round($achiev["completed"], 2),
-                //'img_achiev' => $gravatar->getUrl($achiev['aId']),
-                'img_achiev' => $this->achievImg($achiev["aId"]),
-                'url_achiev' => "achievs/{$achiev['aId']}",
-            ];
-        }
-        $pagination->setItems($achievs);
-
         return $this->render('controller/achievs/achievs/achievs.html.twig', [
             'title'         => 'Achievs',
             'pagination'    => $pagination,
@@ -70,25 +59,12 @@ class AchievsController extends AbstractController
             throw $this->createNotFoundException(); 
         }
         
-        $achiev += [
-            'img_achiev' => $this->achievImg($achiev["id"]),
-        ];
-
         $players = $AchievsModel->getAchievPlayers($id);
         $pagination = $paginator->paginate($players, $page, 20);
 
         if($pagination->getPage() > $pagination->getPageCount()) {
             throw $this->createNotFoundException();
         }
-
-        $players = $pagination->getItems();
-        foreach ($players as &$player) {
-            $player += [
-                'img_player' => "images/avatars/{$player['id']}.jpg",
-                'url_player' => "achievs/players/{$player['id']}",
-            ];
-        }
-        $pagination->setItems($players);
 
         return $this->render('controller/achievs/achievs/achiev.html.twig', [
             'title'          => 'Achiev Players',
@@ -106,8 +82,6 @@ class AchievsController extends AbstractController
         AchievsModel $AchievsModel
     )
     {
-        $gravatar = new GravatarApi;
-
         // get request
         $page = $request->query->getInt('page', 1);
 
@@ -118,17 +92,6 @@ class AchievsController extends AbstractController
         if($pagination->getPage() > $pagination->getPageCount()) {
             throw $this->createNotFoundException();
         }
-
-        // set vars
-        $players = $pagination->getItems();
-        foreach ($players as &$player) {
-            $player += [
-                //'url_image' => "images/avatars/{$player['id']}.jpg",
-                'url_image' => $gravatar->getUrl($player['id'], '160').'&d=robohash',
-                'url_player' => "achievs/players/{$player['id']}",
-            ];
-        }
-        $pagination->setItems($players);
 
         // render
         return $this->render('controller/achievs/achievs/players.html.twig', [
@@ -174,11 +137,6 @@ class AchievsController extends AbstractController
                 $achiev["achiev_completed"] = 'achiev_completed';
             }
 
-            $achiev += [
-                'img_achiev' => $this->achievImg($achiev['id']),
-                'url_achiev' => "achievs/{$achiev['id']}",
-            ];
-
             $achiev['unlocked'] = 0;
             //$achiev['unlocked'] = date_format($achiev['unlocked'], "%d.%m.%Y %H:%M");
         }
@@ -188,10 +146,5 @@ class AchievsController extends AbstractController
             'title' => 'Achives Player',
             'pagination'    => $pagination,
         ]);
-    }
-
-    private function achievImg($id)
-    {
-        return "http://gravatar.com/avatar/".md5($id)."?d=identicon";
     }
 }

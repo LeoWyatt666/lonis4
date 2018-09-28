@@ -47,7 +47,14 @@ class ServersController extends AbstractController
 
             // set server info
             $serv = parse_url($server['addres']);
-            $server += $csm->getServerInfo($serv['host'], $serv['port'], $error);
+            $server['info'] = $csm->getServerInfo($serv['host'], $serv['port'], $error);
+            if($error) {
+                $server['info'] = [
+                    'players_count' => 0,
+                    'players_max' => 0,
+                    'map' => '-',
+                ];
+            }
         }
         $pagination->setItems($servers);
 
@@ -76,12 +83,7 @@ class ServersController extends AbstractController
 
         // get result
         $serv = parse_url($server['addres']);
-        $server += $csm->getServerInfo($serv['host'], $serv['port'], $error);
-
-        // set vars
-        $server += [
-            'img_map' => $img->getImage("maps/{$server['map']}.jpg"),
-        ];
+        $server['info'] = $csm->getServerInfo($serv['host'], $serv['port'], $error);
 
         return $this->render('controller/servers/servers/server.html.twig', [
             'title' => 'Server :: '.$server['addres'],
@@ -114,12 +116,7 @@ class ServersController extends AbstractController
                 throw $this->createNotFoundException();
         }
 
-        $server = $csm->getServerInfo($serv['host'], $serv['port'], $error);
-
-        // set vars
-        $server += [
-            'img_map' => $img->getImage("maps/{$server['map']}.jpg"),
-        ];
+        $server['info'] = $csm->getServerInfo($serv['host'], $serv['port'], $error) ?? [];
 
         return $this->render('controller/servers/servers/server.html.twig', [
             'title' => 'Server :: '.$ip,

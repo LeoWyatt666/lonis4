@@ -40,8 +40,8 @@
 			</td>
 			<td>{{ server.modname }}</td>
 			<td><a href="{{ server.url_addres }}"><b>{{ server.addres }}</b></a></td>
-			<td>{{ server.map }}</td>
-			<td>{{ server.players_count }} / {{ server.players_max }}</td>
+			<td>{{ server.info.map }}</td>
+			<td>{{ server.info.players_count }} / {{ server.info.players_max }}</td>
 		</tr>
 		{% endfor %}
 	</tbody>

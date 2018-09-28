@@ -17,9 +17,12 @@
 
 <hr>
 
+{% set img_map = asset(server.info.map ~'.jpg', 'maps') %}
+{% set img_maps_default = asset('noimage.png', 'maps') %}
+
 <div class="ui two column grid">
 	<div class="column center aligned">
-		<img class="map_image" src="{{ server.img_map }}">
+		<img src="{{ img_map }}" onerror="this.src='{{ img_maps_default }}'">
 		
 		<div class="ui segment left aligned">
 			<div class="ui divided list">
@@ -28,7 +31,7 @@
 					<i class="icon tint"></i>
 					<div class="content">
 						<a class="header">Name</a>
-						<div class="description">{{ server.name }}</div>
+						<div class="description">{{ server.info.name }}</div>
 					</div>
 				</div>
 
@@ -36,7 +39,7 @@
 					<i class="icon tint"></i>
 					<div class="content">
 						<a class="header">Map</a>
-						<div class="description">{{ server.map }}</div>
+						<div class="description">{{ server.info.map }}</div>
 					</div>
 				</div>
 
@@ -44,7 +47,7 @@
 					<i class="icon tint"></i>
 					<div class="content">
 						<a class="header">Players</a>
-						<div class="description">{{ server.players_count }} / {{ server.players_max }}</div>
+						<div class="description">{{ server.info.players_count }} / {{ server.info.players_max }}</div>
 					</div>
 				</div>
 				
@@ -61,7 +64,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for player in server.ps %}
+				{% for player in server.info.ps %}
 				<tr>
 					<td>{{ player.n }}</td>
 					<td>{{ player.s }}</td>

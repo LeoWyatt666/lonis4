@@ -12,12 +12,16 @@
 
 <div class="ui divided items pagination-feed">
 	{% for achiev in pagination %}
+
+	{% set url_achiev = url('achiev', {id: achiev.id}) %}
+	{% set img_achiev = gravatar(achiev.id)~'&d=identicon' %}
+
 	<div class="link item pagination-item">
 		<div class="ui tiny image">
-			<img src="{{ achiev.img_achiev }}">
+			<img src="{{ img_achiev }}">
 		</div>
 		<div class="content">
-			<a class="header" href="{{ achiev.url_achiev }}">{{ achiev.name }}</a>
+			<a class="header" href="{{ url_achiev }}">{{ achiev.name }}</a>
 			<div class="description">
 				{{ achiev.desc }}
 			</div>
