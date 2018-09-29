@@ -1,7 +1,0 @@
-# /app/config/config.yml
-
-imports:
-    - { resource: packages/easy_admin.yaml }
-    # - { resource: parameters.yml }
-    # - { resource: security.yml }
-    # - { resource: services.yml }

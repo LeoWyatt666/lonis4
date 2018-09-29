@@ -6,7 +6,7 @@
 parameters:
     locale: 'en'
     geoip2cache: '%geoip2.cache%'
-    images: '%env(APP_SUBDIR)%/public/images/'
+    subdir: '%env(APP_SUBDIR)%'
     app_locales: [en, ru]
 
 services:
