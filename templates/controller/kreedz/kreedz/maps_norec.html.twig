@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -14,7 +14,9 @@
 	{% for map in pagination %}
 	<span class="card pagination-item">
 		<div class="image">
-			<img class="" src="{{ map.img_map }}" title="{{ map.mapname }}" oncontextmenu="return false;">
+			<img  src="{{ asset(map.mapname ~'.jpg', 'maps') }}" 
+				onerror="this.src='{{ asset('noimage.png', 'maps') }}'"
+				title="{{ map.mapname }}">
 		</div>
 		<div class="content">
 			<a class="description">{{ map.mapname }}</a>
@@ -27,6 +29,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}

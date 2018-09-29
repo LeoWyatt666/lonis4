@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -22,7 +22,11 @@
 	<tbody class="pagination-feed">
 		{% for record in pagination %}
 		<tr class="pagination-item">
-			<td><a href="{{ record.url_map }}">{{ record.map }}{{ record.mappath }}</a></td>
+			<td>
+				<a href="{{ url('records_map', {map: record.map}) }}">
+					{{ record.map }}{{ record.mappath }}
+				</a>
+			</td>
 			<td>{{ record.wr_timed }} <b>{{ record.wr_player }}</b> <i class="flag {{ record.wr_country }}" title="{{ record.wr_country }}"></i></td>
 			<td>{{ record.comm_timed }} <b>{{ record.comm_player }}</b></td>
 			<td>{{ record.top_timed }} <b>{{ record.top_player }}</b> </td>
@@ -35,6 +39,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}

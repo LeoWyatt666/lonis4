@@ -56,11 +56,8 @@ class KreedzController extends AbstractController
             $map += [
                 'head' => $head,
                 'date_add' => $date_add,
-                'url_map' => "kreedz/maps/{$map['map']}",
-                'url_player' => "kreedz/players/{$map['player']}",
                 'timed' => $times->timed($map['time'], 5),
                 'color_nogc' => !$map['go_cp'] ? 'green' : 'grey',
-                'color_wpn' => ($map['wname']!='USP' && $map['wname']!='KNIFE') ? 'green' : 'grey',
                 'map_admin' => 0,
             ];
         }
@@ -72,7 +69,6 @@ class KreedzController extends AbstractController
             $rtypes[] = [
                 'type' => $ctype,
                 'caption' => ucfirst($ctype),
-                'url' => "kreedz/last/?type={$ctype}",
                 'active' => $ctype==$type ? 'active' : '',
                 'totals' => $ctype==$type ? $pagination->getTotalItemCount() : 0,
             ];
@@ -115,23 +111,12 @@ class KreedzController extends AbstractController
         // set cup nums
         $cup_num = ($page-1)*$pagination->getItemNumberPerPage();
 
-        // set vars
-        $players = $pagination->getItems();
-        foreach ($players as &$player) {
-            $player += [
-                'url_player' => "kreedz/players/{$player['id']}",
-                'cup_num' => ++$cup_num,
-            ];
-        }
-        $pagination->setItems($players);
-
         // Generate type menu
         $types = $this->types;
         foreach ($types as $ctype) {
             $rtypes[] = [
                 'type' => $ctype,
                 'caption' => ucfirst($ctype),
-                'url' => "kreedz/players/?".http_build_query(['type'=>$ctype, 'search'=>$search]), // 'sort'=>$sort, 
                 'active' => $ctype==$type ? 'active' : '',
                 'totals' => $ctype==$type ? $pagination->getTotalItemCount() : 0,
             ];
@@ -142,7 +127,8 @@ class KreedzController extends AbstractController
             'title' => 'Kreedz :: Players',
             'pagination' => $pagination,
             'rtypes' => $rtypes,
-            'search' => $search
+            'search' => $search,
+            'cup_num' => $cup_num,
         ]);
     }
 
@@ -179,11 +165,8 @@ class KreedzController extends AbstractController
         $maps = $pagination->getItems();
         foreach ($maps as &$map) {
             $map += [
-                'url_map' => "kreedz/maps/{$map['map']}",
-                'url_player' => "kreedz/player/{$map['player']}",
                 'timed' => $times->timed($map['time'], 5),
                 'color_nogc' => !$map['go_cp'] ? 'green' : 'grey',
-                'color_wpn' => ($map['wname']!='USP' && $map['wname']!='KNIFE') ? 'green' : 'grey',
                 'map_admin' => 0,
             ];
         }
@@ -195,7 +178,6 @@ class KreedzController extends AbstractController
             $rtypes[] = [
                 'type' => $ctype,
                 'caption' => ucfirst($ctype),
-                'url' => "kreedz/players/{$id}/?".http_build_query(['type'=>$ctype, 'search'=>$search]),
                 'active' => $ctype==$type ? 'active' : '',
                 'totals' => $ctype==$type ? $pagination->getTotalItemCount() : 0,
             ];
@@ -208,7 +190,6 @@ class KreedzController extends AbstractController
             'rtypes' => $rtypes,
             'player' => $player,
             'search' => $search,
-            'url_norec' => "kreedz/players/{$player['id']}/norec",
         ]);
     }
 
@@ -244,11 +225,8 @@ class KreedzController extends AbstractController
         $maps = $pagination->getItems();
         foreach ($maps as &$map) {
             $map += [
-                'url_map' => "kreedz/map/{$map['mapname']}",
-                'url_player' => "kreedz/player/{$map['player']}",
                 'timed' => $times->timed($map['time'], 5),
                 'color_nogc' => !$map['go_cp'] ? 'green' : 'grey',
-                'color_wpn' => ($map['wname']!='USP' && $map['wname']!='KNIFE') ? 'green' : 'grey',
                 'map_admin' => 0,
             ];
         }
@@ -260,7 +238,6 @@ class KreedzController extends AbstractController
             'pagination' => $pagination,
             'search' => $search,
             'player' => $player,
-            'url_jumped' => "kreedz/players/{$player['id']}",
         ]);
     }
 
@@ -295,11 +272,8 @@ class KreedzController extends AbstractController
         $maps = $pagination->getItems();
         foreach ($maps as &$map) {
             $map += [
-                'url_map' => "kreedz/maps/{$map['map']}",
-                'url_player' => "kreedz/players/{$map['player']}",
                 'timed' => $times->timed($map['time'], 5),
                 'color_nogc' => !$map['go_cp'] ? 'green' : 'grey',
-                'color_wpn' => ($map['wname']!='USP' && $map['wname']!='KNIFE') ? 'green' : 'grey',
             ];
         }
         $pagination->setItems($maps);
@@ -310,7 +284,6 @@ class KreedzController extends AbstractController
             $rtypes[] = [
                 'type' => $ctype,
                 'caption' => ucfirst($ctype),
-                'url' => "kreedz/players/?".http_build_query(['type'=>$ctype, 'search'=>$search]), // 'sort'=>$sort, 
                 'active' => $ctype==$type ? 'active' : '',
                 'totals' => $ctype==$type ? $pagination->getTotalItemCount() : 0,
             ];
@@ -346,15 +319,6 @@ class KreedzController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        // set vars
-        $maps = $pagination->getItems();
-        foreach ($maps as &$map) {
-            $map += [
-                'img_map' => $img->getImage("maps/{$map['mapname']}.jpg"),
-            ];
-        }
-        $pagination->setItems($maps);
-
         // render
         return $this->render('controller/kreedz/kreedz/maps_norec.html.twig', [
             'title' => 'Kreedz :: Maps :: Not Jumped',
@@ -386,17 +350,12 @@ class KreedzController extends AbstractController
 
         // Get Mapinfo
         $mapinfo = $KreedzModel->getMapInfo($map);
-        $mapinfo += [
-            'img_map' => $img->getImage("maps/{$map}.jpg"),
-            'url_map' => "records/map/{$map}",
-        ];
 
         // Map Records
         $maprec = $KreedzModel->getRecords($map);
         $lastcomm = "";
         foreach ($maprec as &$rec) {
             $rec += [
-                'url_player' => "records/players/xj/{$rec['player']}",
                 'uname' => strtoupper($rec['name']),
                 'part' => $rec["comm"]==$lastcomm ? 0 : 1,
                 'timed' => $times->timed($rec["time"], 2),
@@ -418,11 +377,8 @@ class KreedzController extends AbstractController
         $cup_num = ($page-1)*$pagination->getItemNumberPerPage();
         foreach ($players as &$player) {
             $player += [
-                'url_map' => "kreedz/maps/{$player['map']}",
-                'url_player' => "kreedz/players/{$player['player']}",
                 'timed' => $times->timed($player['time'], 5),
                 'color_nogc' => !$player['go_cp'] ? 'green' : 'grey',
-                'color_wpn' => ($player['wname']!='USP' && $player['wname']!='KNIFE') ? 'green' : 'gray',
                 'cup_num' => ++$cup_num,
             ];
         }
@@ -434,7 +390,6 @@ class KreedzController extends AbstractController
             $rtypes[] = [
                 'type' => $ctype,
                 'caption' => ucfirst($ctype),
-                'url' => "kreedz/maps/{$map}/?".http_build_query(['type'=>$ctype]),
                 'active' => $ctype==$type ? 'active' : '',
                 'totals' => $ctype==$type ? $pagination->getTotalItemCount() : 0,
             ];
@@ -486,11 +441,6 @@ class KreedzController extends AbstractController
                 "looserId"      => $duel["player$pl"],
                 "looserName"    => $duel["name$pl"],
                 "looserPoints"  => $duel["result$pl"],
-            ];
-            $duel += [
-                'url_map' => "kreedz/maps/{$duel['map']}",
-                'url_winner' => "kreedz/players/{$duel['winnerId']}",
-                'url_looser' => "kreedz/players/{$duel['looserId']}",
             ];
         }
         $pagination->setItems($duels);

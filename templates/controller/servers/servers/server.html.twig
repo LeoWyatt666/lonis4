@@ -11,18 +11,16 @@
 		</h1>
 	</div>
   	<div class="right aligned column">
-		{% include "controller/servers/layouts/search.html.twig" %}
+		{% include "controller/servers/servers/_search.html.twig" %}
   	</div>
 </div>
 
 <hr>
 
-{% set img_map = asset(server.info.map ~'.jpg', 'maps') %}
-{% set img_maps_default = asset('noimage.png', 'maps') %}
-
 <div class="ui two column grid">
 	<div class="column center aligned">
-		<img src="{{ img_map }}" onerror="this.src='{{ img_maps_default }}'">
+		<img src="{{ asset(server.info.map ~'.jpg', 'maps') }}" 
+			onerror="this.src='{{ asset('noimage.png', 'maps') }}'">
 		
 		<div class="ui segment left aligned">
 			<div class="ui divided list">

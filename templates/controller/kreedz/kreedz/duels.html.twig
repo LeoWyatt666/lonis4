@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -24,13 +24,19 @@
 		{% for duel in pagination %}
 		<tr class="pagination-item">
 			<td scope="row">
-				<a href="{{ duel.url_map }}">{{ duel.map }}</a>
+				<a href="{{ url('kreedz_map', {map: duel.map}) }}">
+					{{ duel.map }}
+				</a>
 			</td>
 			<td>
-				<a href="{{ duel.url_winner }}">{{ duel.winnerName }}</a>
+				<a href="{{ url('kreedz_player', {id: duel.winnerId}) }}">
+					{{ duel.winnerName }}
+				</a>
 			</td>
 			<td>
-				<a href="{{ duel.url_looser }}">{{ duel.looserName }}</a>
+				<a href="{{ url('kreedz_player', {id: duel.looserId}) }}">
+					{{ duel.looserName }}
+				</a>
 			</td>
 			<td>{{ duel.winnerPoints }}</td>
 			<td>{{ duel.looserPoints }}</td>
@@ -43,6 +49,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}

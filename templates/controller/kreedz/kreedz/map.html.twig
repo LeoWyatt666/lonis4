@@ -1,19 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
 
 {% block title %}{{ title }}{% endblock %}
 
 {% block body %}
 
 <h1 class="ui header">
-	{{ title }} <a class="ui button" href="{{ mapinfo.url_map }}">Info</a>
+	{{ title }} 
+	<a class="ui button" href="{{ url('records_map', {map: mapinfo.mapname}) }}">Info</a>
 </h1>
 
 <div class="ui top attached tabular menu">
-	{% for type in rtypes %}
-	<a href="{{ type.url }}" class="item {{ type.active }}">
-		{{ type.caption }} {% if type.totals %}<span class="ui label">{{ type.totals }}</span>{% endif %}
+	{% for rtype in rtypes %}
+	<a href="{{ url('kreedz_map', {map: mapinfo.mapname, type: rtype.type}) }}" class="item {{ rtype.active }}">
+		{{ rtype.caption }} {% if rtype.totals %}<span class="ui label">{{ rtype.totals }}</span>{% endif %}
 	</a>
 	{% endfor %}
 	<div class="right menu">
@@ -47,11 +48,12 @@
 					<td><b><a href="{{ rec.url }}" target="_blank">{{ rec.name|upper }}</a></b></td>
 					{% endif %}
 					<td>
-						<a href="{{ rec.url_player }}">{{ rec.player }}</a> 
+						<a href="{{ url('records_player', {name: rec.player, comm: rec.comm}) }}">
+							{{ rec.player }}
+						</a> 
 						<i class="flag {{ rec.country }}" title="{{ rec.country }}"></i></td>
 					<td>{{ rec.timed }}</td>
-					<td colspan="2">{{ rec.mappath }}</td>
-					<td><div class="wpn wpn-29">&nbsp;</div></td>
+					<td colspan="3">{{ rec.mappath }}</td>
 				{% endfor %}
 				
 			</tr>
@@ -60,11 +62,15 @@
 			{% for player in pagination %}
 			<tr class="pagination-item">
 				<td>{{ player.cup_num }}</td>
-				<td><a href="{{ player.url_player }}">{{ player.username }}</a></td>
+				<td>
+					<a href="{{ url('kreedz_player', {id: player.player}) }}">
+						{{ player.username }}
+					</a>
+				</td>
 				<td>{{ player.timed }}</td>
 				<td><div class="ui {{ player.color_nogc }} horizontal label">{{ player.cp }}</div></td>
 				<td><div class="ui {{ player.color_nogc }} horizontal label">{{ player.go_cp }}</div></td>
-				<td class="{{ player.color_wpn }}"><div class="wpn wpn-{{ player.weapon }}">&nbsp;</div></td>
+				<td><div class="wpn wpn-{{ player.weapon }}">&nbsp;</div></td>
 			</tr>
 			{% endfor %}
 
@@ -76,6 +82,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}

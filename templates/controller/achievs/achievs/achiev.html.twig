@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -12,12 +12,10 @@
 
 <div class="ui divider"></div>
 
-{% set img_achiev = gravatar(achiev.id)~'&d=identicon' %}
-
 <div class="ui divided items">
 	<div class="link item">
 		<div class="ui tiny image">
-			<img src="{{ img_achiev }}">
+			<img src="{{ gravatar(achiev.id)~'&d=identicon' }}">
 		</div>
 		<div class="content">
 			<div class="header">{{ achiev.name }}</div>
@@ -32,13 +30,9 @@
 
 <div class="ui link five doubling cards pagination-feed">
 	{% for player in pagination %}
-
-	{% set url_player = url('achievs_player', {id: player.id}) %}
-	{% set img_player = gravatar(player.id)~'&d=robohash' %}
-
-	<a class="card pagination-item" href="{{ url_player }}" >
+	<a class="card pagination-item" href="{{ url('achievs_player', {id: player.id}) }}" >
 		<div class="image">
-			<img class="" src="{{ img_player }}" title="{{ player.plname }}" oncontextmenu="return false;">
+			<img class="" src="{{ gravatar(player.id)~'&d=robohash' }}" title="{{ player.plname }}" oncontextmenu="return false;">
 		</div>
 		<div class="content">
 			<span class="description">
@@ -55,6 +49,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}

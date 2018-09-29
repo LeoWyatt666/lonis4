@@ -7,13 +7,16 @@
 {% block body %}
 
 <h1 class="page-header" align="center">
-	LJ Records
+	{{ title }}
 </h1>
 
 <center>
 	<div class="ui compact inverted menu">
 		{% for page in pages %}
-			<a class="item {{ page.active }}" href="{{ page.url_page }}">{{ page.fullname }}</a>
+			<a class="item {{ comm == page.name ? 'active' }}" 
+				href="{{ url('records_longjumps', {comm: page.name}) }}">
+				{{ page.fullname }}
+			</a>
 		{% endfor %}
 	</div>
 </center>

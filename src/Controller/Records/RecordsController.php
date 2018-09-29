@@ -7,17 +7,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\KzRecords;
 use App\Service\TimesService;
-use App\Service\ImagesService;
 use App\Model\RecordsModel;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
- * @Route("/records")
+ * @Route("/records", name="records_")
  */
 class RecordsController extends AbstractController
 {
     /**
-     * @Route("/demos/{comm}", name="records_demos")
+     * @Route("/demos/{comm}", name="demos")
      */
     public function demos(
         $comm = 'xj',
@@ -42,9 +41,7 @@ class RecordsController extends AbstractController
         $demos = $pagination->getItems();
         foreach ($demos as &$demo) {
             $demo += [
-                'url_map' => "records/map/{$demo['map']}",
                 'timed' => $times->timed($demo['time'], 2),
-                'url_player' => "records/players/xj/{$demo['player']}",
             ];
         }
         $pagination->setItems($demos);
@@ -53,24 +50,16 @@ class RecordsController extends AbstractController
         $comm_info = $RecordsModel->getComms($comm);
         $comm_list = $RecordsModel->getComms();
 
-        // set vars
-        foreach ($comm_list as &$row) {
-            $row += [
-                'url_comm' => "records/demos/{$row['name']}",
-                'active' => $row['name']==$comm_info['name'] ? 'active' : '',
-                'totals' => $row['name']==$comm_info['name'] ? $pagination->getTotalItemCount() : 0,
-            ];
-        }
-
         return $this->render('controller/records/records/demos.html.twig', [
             'title' => 'Demos',
             'pagination' => $pagination,
             'comm_list' => $comm_list,
+            'comm_info' => $comm_info,
         ]);
     }
 
     /**
-     * @Route("/players/{comm}", name="records_players")
+     * @Route("/players/{comm}", name="players")
      */
     public function players(
         $comm = "xj",
@@ -93,39 +82,23 @@ class RecordsController extends AbstractController
         // set cup nums
         $cup_num = ($page-1)*$pagination->getItemNumberPerPage();
         
-        // set vars
-        $players = $pagination->getItems();
-        foreach ($players as &$player) {
-            $player += [
-                'url_player' => "records/players/{$comm}/{$player['player']}",
-                'cup_num' => ++$cup_num,
-            ];
-        }
-        $pagination->setItems($players);
-
         // Get community data
         $comm_info = $RecordsModel->getComms($comm);
         $comm_list = $RecordsModel->getComms();
-
-        // set vars
-        foreach ($comm_list as &$row) {
-            $row += [
-                'url_comm' => "records/players/{$row['name']}",
-                'active' => $row['name']==$comm_info['name'] ? 'active' : '',
-                'totals' => $row['name']==$comm_info['name'] ? $pagination->getTotalItemCount() : 0,
-            ];
-        }
 
         // render
         return $this->render('controller/records/records/players.html.twig', [
             'title' => 'Records :: Players',
             'pagination' => $pagination,
             'comm_list' => $comm_list,
+            'comm_info' => $comm_info,
+            'comm' => $comm,
+            'cup_num' => $cup_num,
         ]);
     }
 
     /**
-     * @Route("/players/{comm}/{name}", name="records_player")
+     * @Route("/players/{comm}/{name}", name="player")
      */
     public function player(
         $comm = "xj",
@@ -157,7 +130,6 @@ class RecordsController extends AbstractController
         $demos = $pagination->getItems();
         foreach ($demos as &$demo) {
             $demo += [
-                'url_map' => "records/map/{$demo['map']}",
                 'timed' => $times->timed($demo['time'], 2),
             ];
         }
@@ -166,16 +138,6 @@ class RecordsController extends AbstractController
         // Community
         $comm_info = $RecordsModel->getComms($comm);
         $comm_list = $RecordsModel->getPlayerComm($name);
-        //!$comm && isset($comm_list[0]['name']) && $comm = $comm_list[0]['name'];
-
-        // set community vars
-        foreach ($comm_list as &$row) {
-            $row += [
-                'url_comm' => "records/players/{$row['name']}/{$player['player']}",
-                'active' => $row['name']==$comm_info['name'] ? 'active' : '',
-                'totals' => $row['name']==$comm_info['name'] ? $pagination->getTotalItemCount() : 0,
-            ];
-        }
 
         // render
         return $this->render('controller/records/records/player.html.twig', [
@@ -183,11 +145,12 @@ class RecordsController extends AbstractController
             'player' => $player,
             'pagination' => $pagination,
             'comm_list' => $comm_list,
+            'comm_info' => $comm_info,
         ]);
     }
 
     /**
-     * @Route("/maps/{comm}", name="records_maps")
+     * @Route("/maps/{comm}", name="maps")
      */
     public function maps(
         $comm = 'xj',
@@ -207,58 +170,35 @@ class RecordsController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        // set vars
-        $maps = $pagination->getItems();
-        foreach ($maps as &$map) {
-            $map += [
-                "url_download" => str_replace('%map%', $map["mapname"], $map["download"]),
-                'url_map' => "records/map/{$map['mapname']}",
-            ];
-        }
-        $pagination->setItems($maps);
-
         // Get community data
         $comm_info = $RecordsModel->getComms($comm);
         $comm_list = $RecordsModel->getComms();
-
-        // set vars
-        foreach ($comm_list as &$row) {
-            $row += [
-                'url_comm' => "records/maps/{$row['name']}",
-                'active' => $row['name']==$comm_info['name'] ? 'active' : '',
-                'totals' => $row['name']==$comm_info['name'] ? $pagination->getTotalItemCount() : 0,
-            ];
-        }
 
         // render
         return $this->render('controller/records/records/maps.html.twig', [
             'title' => 'Records :: Maps',
             'pagination' => $pagination,
             'comm_list' => $comm_list,
+            'comm_info' => $comm_info,
         ]);
     }
 
     /**
-     * @Route("/map/{map}", name="records_map")
+     * @Route("/map/{map}", name="map")
      */
     public function map(
         $map,
         RecordsModel $RecordsModel,
-        ImagesService $img,
         TimesService $times
     )
     {
         // Get Mapinfo
         $mapinfo = $RecordsModel->getMapInfo($map);
-        $mapinfo += [
-            'img_map' => $img->getImage("maps/{$map}.jpg"),
-        ];
 
         // Map Records
         $maprec = $RecordsModel->getRecords($map);
         foreach ($maprec as &$rec) {
             $rec += [
-                'url_player' => "records/players/xj/{$rec['player']}",
                 'timed' => $times->timed($rec["time"], 2),
             ];
         }
@@ -271,7 +211,7 @@ class RecordsController extends AbstractController
     }
 
     /**
-     * @Route("/longjumps/{comm}", name="records_longjumps")
+     * @Route("/longjumps/{comm}", name="longjumps")
      */
     public function longjumps(
         $comm = 'xj',
@@ -280,12 +220,6 @@ class RecordsController extends AbstractController
     {
         // get pages
         $pages = $RecordsModel->getLongjumpsPage();
-        foreach ($pages as &$page) {
-            $page += [
-                'url_page' => "records/longjumps/{$page['name']}",
-                'active' => $comm==$page['name'] ? 'active' : '',
-            ];
-        }
 
         // Get jumps
         $jumps = $RecordsModel->getLongjumps($comm);
@@ -316,11 +250,12 @@ class RecordsController extends AbstractController
             'title' => 'Records :: Longjumps',
             'pages' => $pages,
             'jumps'  => $jumps,
+            'comm' => $comm,
         ]);
     }
 
     /**
-     * @Route("/compare/{comm}", name="records_compare")
+     * @Route("/compare/{comm}", name="compare")
      */
     public function compare(
         $comm = 'ru',
@@ -345,7 +280,6 @@ class RecordsController extends AbstractController
         $records = $pagination->getItems();
         foreach ($records as &$record) {
             $record += [
-                'url_map' => "records/map/{$record['map']}",
                 'wr_timed' => $times->timed($record["wr_time"], 2),
                 'comm_timed' => $times->timed($record["comm_time"], 2),
                 'top_timed' => $times->timed($record["top_time"], 2),

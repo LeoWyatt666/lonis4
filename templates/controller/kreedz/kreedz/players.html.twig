@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -19,7 +19,9 @@
 
 <div class="ui top attached tabular menu">
 	{% for rtype in rtypes %}
-	<a href="{{ rtype.url }}" class="item {{ rtype.active }}">{{ rtype.caption }}</a>
+	<a href="{{ url('kreedz_last', {type: rtype.type, search: search}) }}" class="item {{ rtype.active }}">
+		{{ rtype.caption }}
+	</a>
 	{% endfor %}
 </div>
 
@@ -35,11 +37,16 @@
 		</thead>
 		<tbody class="pagination-feed">
 			{% for player in pagination %}
+			{% set cup_num = cup_num +1 %}
 			<tr class="pagination-item">
 				<td scope="row" style="text-align: center">
-					{{ player.cup_num }}
+					{{ cup_num }}
 				</td>
-				<td><a href="{{ player.url_player }}">{{ player.username }}</a></td>
+				<td>
+					<a href="{{ url('kreedz_player', {id: player.id}) }}">
+						{{ player.username }}
+					</a>
+				</td>
 				<td>{{ player.all }}</td>
 				<td>{{ player.top }}</td>
 			</tr>
@@ -52,6 +59,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}

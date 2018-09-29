@@ -1,0 +1,15 @@
+{% macro tabs(comm_info, comm_list, pagination, route, params = {}) %}
+<div class="ui top attached tabular menu">
+	{% for comm in comm_list %}
+	<a href="{{ url(route, {comm: comm.name} + params) }}" 
+		class="item {{ comm.name == comm_info.name ? 'active' }}">
+
+		{{ comm.fullname }}
+
+		<span class="ui label">
+			{{ comm.name == comm_info.name ? pagination.getTotalItemCount }}
+		</span>
+	</a>
+	{% endfor %}
+</div>
+{% endmacro %}

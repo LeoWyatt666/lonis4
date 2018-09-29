@@ -12,7 +12,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use App\Library\CSMonitoring;
 
 /**
- * @Route("/servers", name="servers")
+ * @Route("/servers", name="servers_")
  */
 class ServersController extends AbstractController
 {
@@ -40,11 +40,6 @@ class ServersController extends AbstractController
 
         $servers = $pagination->getItems();
         foreach ($servers as &$server) {
-            // set vars
-            $server += [
-                'url_addres' => "servers/{$server['id']}",
-            ];
-
             // set server info
             $serv = parse_url($server['addres']);
             $server['info'] = $csm->getServerInfo($serv['host'], $serv['port'], $error);
@@ -93,7 +88,7 @@ class ServersController extends AbstractController
     }
 
     /**
-     * @Route("/find/", name="servers_find")
+     * @Route("/find/", name="find")
      */
     public function find(
         Request $request,

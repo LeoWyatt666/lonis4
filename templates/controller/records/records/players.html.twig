@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% from 'layouts/cup_num.html.twig' import cup_num %}
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
+{% import 'controller/records/records/_community.html.twig' as community %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -11,14 +12,7 @@
 	{{ title }}
 </h1>
 
-<div class="ui top attached tabular menu">
-	{% for comm in comm_list %}
-	<a href="{{ comm.url_comm }}" class="item {{ comm.active }}">
-		{{ comm.fullname }}
-		{% if comm.totals %}<span class="ui label">{{ comm.totals }}</span>{% endif %}
-	</a>
-	{% endfor %}
-</div>
+{{ community.tabs(comm_info, comm_list, pagination, 'records_players') }}
 
 <div class="ui bottom attached segment">
 	<table class="ui selectable celled table">
@@ -32,11 +26,14 @@
 
 		<tbody class="pagination-feed">
 			{% for player in pagination %}
+			{% set cup_num = cup_num + 1 %}
 			<tr class="pagination-item">
+				<td>{{ cup_num(cup_num) }}</td>
 				<td>
-					{{ cup_num(player.cup_num) }}
+					<a href="{{ url('records_player', {name: player.player, comm: comm}) }}">
+						{{ player.player }}
+					</a>
 				</td>
-				<td><a href="{{ player.url_player }}">{{ player.player }}</a></td>
 				<td>{{ player.count }}</td>
 			</tr>
 			{% endfor %}
@@ -48,6 +45,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}

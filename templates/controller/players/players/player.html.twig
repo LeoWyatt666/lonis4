@@ -8,13 +8,9 @@
 	<p>Player</l></p>
 </h1>
 
-{% set url_kreedz_player = url('kreedz_player', {id: player.id}) %}
-{% set url_achievs_player = url('achievs_player', {id: player.id}) %}
-{% set img_player = gravatar(player.id, '240')~'&d=robohash' %}
-
 <div class="ui centered card">
 	<div class="image">
-		<img src="{{ img_player }}">
+		<img src="{{ gravatar(player.id, '240')~'&d=robohash' }}">
 	</div>
 	<div class="content">
 		<a class="header">{{ player.username }}</a>
@@ -36,12 +32,12 @@
 	</div>
 	<div class="extra content">
 		<p>
-			<a href="{{ url_achievs_player }}" title="View</l>">
+			<a href="{{ url('achievs_player', {id: player.id}) }}" title="View</l>">
 				Fulfilled achievements: {{ player.achievCompleted }}
 			</a>
 		</p>
 		<p>
-			<a href="{{ url_kreedz_player }}" title="View</l>">
+			<a href="{{ url('kreedz_player', {id: player.id}) }}" title="View</l>">
 				Went KZ maps: {{ player.mapCompleted }}
 			</a>
 		</p>

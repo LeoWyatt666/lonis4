@@ -26,7 +26,9 @@
 					<td>{{ rec.name }}</td>
 					<td>{{ rec.mappath }}</td>
 					<td>
-						<a href="{{ rec.url_player }}">{{ rec.player }}</a>
+						<a href="{{ url('records_player', {name: rec.player}) }}">
+							{{ rec.player }}
+						</a>
 						<i class="flag {{ rec.country }}" title="{{ rec.country }}"></i>
 					</td>
 					<td>{{ rec.timed }}</td>
@@ -37,8 +39,8 @@
 
 	</div>
 	<div class="six wide column center aligned">
-	
-		<img  class="map_image" src="{{ mapinfo.img_map }}">
+		<img  src="{{ asset(mapinfo.mapname ~'.jpg', 'maps') }}" 
+			onerror="this.src='{{ asset('noimage.png', 'maps') }}'">
 		<p><div>
 			<b>Challenge</b>: <span class="mapinfo">{{ mapinfo.dname }}</span>
 			<p><i class="icon icon-{{ mapinfo.icon }}" style="color: {{ mapinfo.dcolor }};"></i>

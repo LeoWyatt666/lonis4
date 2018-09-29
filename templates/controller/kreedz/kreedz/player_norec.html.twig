@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -15,7 +15,7 @@
 		Not jumped <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 	</div>
 	<div class="item">
-		<a href="{{ url_jumped }}">Jumped</a>
+		<a href="{{ url('kreedz_player', {id: player.id}) }}">Jumped</a>
 	</div>
 </div>
 
@@ -32,14 +32,23 @@
 				<th>Weapon</th>
 			</tr>
 		</thead>
+
 		<tbody class="pagination-feed">
 			{% for map in pagination %}
 			<tr class="pagination-item">
 				<td>
 					<i class="icon {{ map.icon }} diff-dot" style="color: {{ map.dcolor }}" title="{{ map.dname }}"></i>
-					<a href="{{ map.url_map }}">{{ map.mapname }}</a>
+					<a href="{{ url('kreedz_map', {map: map.mapname}) }}">
+						{{ map.mapname }}
+					</a>
 				</td>
-				<td><a href="{{ map.url_player }}">{{ map.username }}</a></td>
+				<td>
+					{% if map.player %}
+					<a href="{{ url('kreedz_player', {id: map.player}) }}">
+						{{ map.username }}
+					</a>
+					{% endif %}
+				</td>
 				<td>{{ map.timed }}</td>
 				<td><div class="ui {{ map.color_nogc }} horizontal label">{{ map.cp }}</div></td>
 				<td><div class="ui {{ map.color_nogc }} horizontal label">{{ map.go_cp }}</div></td>
@@ -54,6 +63,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}

@@ -57,7 +57,8 @@ class RecordsModel
     {
         return $this->conn->executeQuery(
                 "SELECT `m`.`mapname`, `m`.`type`, `m`.`authors`, `m`.`date_old`,
-                    `c`.`download`, `d`.`dname`, `d`.`dcolor`, `d`.`icon`
+                    `d`.`dname`, `d`.`dcolor`, `d`.`icon`,
+                    REPLACE(`c`.`download`, '%map%', `m`.`mapname`) as download
                 FROM `kz_map` `m`
                     LEFT JOIN `kz_view_records` `r` ON `r`.`map` = `m`.`mapname`
                     LEFT JOIN `kz_comm` `c` ON `c`.`name`=`r`.`comm`
@@ -74,7 +75,7 @@ class RecordsModel
     {
         return $this->conn->executeQuery(
                 "SELECT `id`, `map`, `mappath`, `time`, `player`, `country`
-				FROM kz_records WHERE `comm` = ?",
+				FROM kz_records WHERE `comm` = ? AND `time` IS NOT NULL",
                 [$comm]
             )
             ->fetchAll();
@@ -119,7 +120,7 @@ class RecordsModel
     public function getPlayerDemos($name, $comm)
     {
         return $this->conn->executeQuery(
-                "SELECT * FROM kz_records WHERE `player`=? AND `comm`=?",
+                "SELECT * FROM kz_records WHERE `player`=? AND `comm`=? AND `time` IS NOT NULL",
                 [$name, $comm]
             )
             ->fetchAll();
@@ -161,7 +162,7 @@ class RecordsModel
     {
         return $this->conn->executeQuery(
                 "SELECT * FROM `kz_records` `r`, `kz_comm` `c`
-                WHERE `map` = ? AND `name` = `comm`
+                WHERE `map` = ? AND `name` = `comm` AND `time` IS NOT NULL
                 ORDER BY `sort`, `mappath`",
                 [$map]
             )

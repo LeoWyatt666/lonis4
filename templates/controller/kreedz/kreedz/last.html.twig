@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% from 'layouts/infinite_scroll.html.twig' import InfiniteScroll_render %}
+{% import 'layouts/infinite_scroll.html.twig' as iscroll %}
 
 {% block title %}{{ title }}{% endblock %}
 
@@ -12,7 +12,9 @@
 
 <div class="ui top attached tabular menu">
 	{% for rtype in rtypes %}
-	<a href="{{ rtype.url }}" class="item {{ rtype.active }}">{{ rtype.caption }}</a>
+	<a href="{{ url('kreedz_last', {type: rtype.type}) }}" class="item {{ rtype.active }}">
+		{{ rtype.caption }}
+	</a>
 	{% endfor %}
 </div>
 
@@ -34,13 +36,19 @@
 			<tr class="pagination-item">
 				<td>
 					<i class="icon icon-{{ map.icon }} diff-dot" style="color: {{ map.dcolor }}" title="{{ map.dname }}"></i>
-					<a href="{{ map.url_map }}">{{ map.map }}</a>
+					<a href="{{ url('kreedz_map', {map: map.map}) }}">
+						{{ map.map }}
+					</a>
 				</td>
-				<td><a href="{{ map.url_player }}">{{ map.username }}</a></td>
+				<td>
+					<a href="{{ url('kreedz_player', {id: map.player}) }}">
+						{{ map.username }}
+					</a>
+				</td>
 				<td>{{ map.timed }}</td>
 				<td><div class="ui {{ map.color_nogc }} horizontal label">{{ map.cp }}</div></td>
 				<td><div class="ui {{ map.color_nogc }} horizontal label">{{ map.go_cp }}</div></td>
-				<td class="{{ map.color_wpn }}"><div class="wpn wpn-{{ map.weapon }}">&nbsp;</div></td>
+				<td><div class="wpn wpn-{{ map.weapon }}">&nbsp;</div></td>
 			</tr>
 			{% endfor %}
 		</tbody>
@@ -51,6 +59,6 @@
     {{ knp_pagination_render(pagination) }}
 </div>
 
-{{ InfiniteScroll_render() }}
+{{ iscroll.render() }}
 
 {% endblock %}
