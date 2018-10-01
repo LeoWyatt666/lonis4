@@ -16,4 +16,5 @@ return [
     Ornicar\GravatarBundle\OrnicarGravatarBundle::class => ['all' => true],
     Knojector\SteamAuthenticationBundle\KnojectorSteamAuthenticationBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
 ];
