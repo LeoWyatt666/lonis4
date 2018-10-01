@@ -7,7 +7,7 @@ Header set X-XSS-Protection: "1; mode=block"
     Deny from all
 </Files>
 
-<FilesMatch ".(htaccess|htpasswd|ini|phps|fla|psd|log|sh|yaml)$">
+<FilesMatch ".(htaccess|htpasswd|ini|phps|fla|psd|log|sh|yaml|json|lock)$">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
