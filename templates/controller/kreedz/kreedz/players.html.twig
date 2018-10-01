@@ -17,6 +17,14 @@
 	</div>
 </div>
 
+{% if pagination is empty %}
+
+<h3 align="center">
+	Players not found
+</h3>
+
+{% else %}
+
 <div class="ui top attached tabular menu">
 	{% for rtype in rtypes %}
 	<a href="{{ url('kreedz_last', {type: rtype.type, search: search}) }}" class="item {{ rtype.active }}">
@@ -60,5 +68,7 @@
 </div>
 
 {{ iscroll.render() }}
+
+{% endif %}
 
 {% endblock %}

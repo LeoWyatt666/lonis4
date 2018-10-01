@@ -7,6 +7,11 @@ Header set X-XSS-Protection: "1; mode=block"
     Deny from all
 </Files>
 
+<FilesMatch ".(htaccess|htpasswd|ini|phps|fla|psd|log|sh|yaml)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
 <IfModule mod_rewrite.c>
     Options -MultiViews
     RewriteEngine On

@@ -11,6 +11,14 @@
 	{{ title }}
 </h1>
 
+{% if pagination is empty %}
+
+<h3 align="center">
+	Demos not found
+</h3>
+
+{% else %}
+
 {{ community.tabs(comm_info, comm_list, pagination, 'records_demos') }}
 
 <div class="ui bottom attached segment">
@@ -47,5 +55,7 @@
 </div>
 
 {{ iscroll.render() }}
+
+{% endif %}
 
 {% endblock %}

@@ -10,6 +10,14 @@
 	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 </h1>
 
+{% if pagination is empty %}
+
+<h3 align="center">
+	Duels not found
+</h3>
+
+{% else %}
+
 <table class="ui selectable celled table">
 	<thead>
 		<tr>
@@ -50,5 +58,7 @@
 </div>
 
 {{ iscroll.render() }}
+
+{% endif %}
 
 {% endblock %}

@@ -10,6 +10,15 @@
 	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 </h1>
 
+
+{% if pagination is empty %}
+
+<h3 align="center">
+	Achievs not found
+</h3>
+
+{% else %}
+
 <div class="ui divided items pagination-feed">
 	{% for achiev in pagination %}
 	
@@ -39,5 +48,7 @@
 </div>
 
 {{ iscroll.render() }}
+
+{% endif %}
 
 {% endblock %}

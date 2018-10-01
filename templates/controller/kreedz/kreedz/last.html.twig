@@ -10,6 +10,14 @@
 	{{ title }}
 </h1>
 
+{% if pagination is defined %}
+
+<h3 align="center">
+	Records not found
+</h3>
+
+{% else %}
+
 <div class="ui top attached tabular menu">
 	{% for rtype in rtypes %}
 	<a href="{{ url('kreedz_last', {type: rtype.type}) }}" class="item {{ rtype.active }}">
@@ -60,5 +68,7 @@
 </div>
 
 {{ iscroll.render() }}
+
+{% endif %}
 
 {% endblock %}

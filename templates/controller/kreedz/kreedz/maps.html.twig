@@ -17,6 +17,14 @@
 	</div>
 </div>
 
+{% if pagination is empty %}
+
+<h3 align="center">
+	Maps not found
+</h3>
+
+{% else %}
+
 <div class="ui top attached tabular menu">
 	{% for rtype in rtypes %}
 	<a href="{{ url('kreedz_maps', {type: rtype.type, search: search}) }}" class="item {{ rtype.active }}">{{ rtype.caption }}</a>
@@ -63,5 +71,7 @@
 </div>
 
 {{ iscroll.render() }}
+
+{% endif %}
 
 {% endblock %}

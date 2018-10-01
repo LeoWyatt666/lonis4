@@ -10,6 +10,15 @@
 	{{ title }} <span class="ui label">{{ pagination.getTotalItemCount }}</span>
 </h1>
 
+
+{% if pagination is empty %}
+
+<h3 align="center">
+	Players not found
+</h3>
+
+{% else %}
+
 <div class="ui link five doubling cards pagination-feed">
 	{% for player in pagination %}
 	<a class="card pagination-item" href="{{ url('achievs_player', {id: player.id}) }}">
@@ -31,5 +40,7 @@
 </div>
 
 {{ iscroll.render() }}
+
+{% endif %}
 
 {% endblock %}

@@ -39,3 +39,9 @@ button {
     text-align: center;
     margin-top: 10px;
 }
+
+@media (min-width: 990px) {
+    #hamburger-link {
+        display: none;
+    }
+}

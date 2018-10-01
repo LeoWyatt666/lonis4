@@ -19,6 +19,14 @@
 
 <div class="ui divider"></div>
 
+{% if pagination is empty %}
+
+<h3 align="center">
+	Players not found
+</h3>
+
+{% else %}
+
 <table>
 <th>
 {# sorting of properties based on query components #}
@@ -52,5 +60,7 @@
 </div>
 
 {{ iscroll.render() }}
+
+{% endif %}
 
 {% endblock %}
