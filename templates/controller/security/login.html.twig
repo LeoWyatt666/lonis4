@@ -53,7 +53,9 @@
         </div>
 	</div>
 </div>
+{% endblock %}
 
+{% block javascripts %}
 <script>
 $(document).ready(function() {
     $.ajax({
@@ -67,8 +69,8 @@ $(document).ready(function() {
         on: 'blur',
         inline: true,
         fields: {
-            identity: {
-                identifier: 'identity',
+            _username: {
+                identifier: '_username',
                 rules: [
                 {
                     type: 'empty',
@@ -97,5 +99,4 @@ $(document).ready(function() {
     });
 } );
 </script>
-
 {% endblock %}

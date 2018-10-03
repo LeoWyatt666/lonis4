@@ -25,9 +25,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	{% block stylesheets %}
-		<link rel="stylesheet" href="{{ asset('build/app.css') }}">
-    {% endblock %}
+	<link rel="stylesheet" href="{{ asset('build/app.css') }}">
+	{% block stylesheets %}{% endblock %}
 </head>
 
 <link rel="canonical" href="{{ currentPath }}" />
@@ -51,9 +50,8 @@
 		<i class="icon icon-circle-up" style="font-size: 4em; color: rgba( 80, 80, 80, 0.5);"></i>
 	</div>
 
-    {% block javascripts %}
-		<script src="{{ asset('build/app.js') }}"></script>
-    {% endblock %}
+	<script src="{{ asset('build/app.js') }}"></script>
+    {% block javascripts %}{% endblock %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
