@@ -29,7 +29,7 @@ sudo apt-get update && sudo apt-get install yarn
 
 1. Clone github project `lonis4`
 ```bash
-git clone https://github.com/LeoWyatt666/lonis4.git
+git clone
 ```
 2. Edit `.env`. MySql and SteamAPI(here https://steamcommunity.com/dev/apikey)
 ```bash
