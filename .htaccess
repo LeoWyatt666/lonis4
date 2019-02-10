@@ -15,14 +15,7 @@ Header set X-XSS-Protection: "1; mode=block"
 <IfModule mod_rewrite.c>
     Options -MultiViews
     RewriteEngine On
+    RewriteRule .* - [E=APP_SUBDIR:/lonis4]
     RewriteCond %{REQUEST_FILENAME} !-f
-    # RewriteRule ^(.*)$ index.php [QSA,L]
-    RewriteCond $1 !^lonis4/public/
-    RewriteRule (.*) /lonis4/public/index.php [QSA,L]
-</IfModule>
-
-<IfModule !mod_rewrite.c>
-    <IfModule mod_alias.c>
-        RedirectMatch 302 ^/lonis4/$ /lonis4/index.php/
-    </IfModule>
+    RewriteRule (.*) %{ENV:APP_SUBDIR}/public/index.php [QSA,L]
 </IfModule>
