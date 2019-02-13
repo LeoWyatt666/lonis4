@@ -1,21 +1,7 @@
-Header set X-Content-Type-Options: nosniff
-Header set X-Frame-Options: DENY
-Header set X-XSS-Protection: "1; mode=block"
-
-<Files .*>
-    Order Allow,Deny
-    Deny from all
-</Files>
-
-<FilesMatch ".(htaccess|htpasswd|ini|phps|fla|psd|log|sh|yaml|json|lock)$">
-    Order Allow,Deny
-    Deny from all
-</FilesMatch>
-
 <IfModule mod_rewrite.c>
     Options -MultiViews
     RewriteEngine On
     RewriteRule .* - [E=APP_SUBDIR:/lonis4]
-    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !%{ENV:APP_SUBDIR}/public/.*
     RewriteRule (.*) %{ENV:APP_SUBDIR}/public/index.php [QSA,L]
 </IfModule>
