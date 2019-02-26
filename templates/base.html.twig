@@ -2,6 +2,7 @@
 <html class="no-js" lang="{language}" prefix="og: http://ogp.me/ns#" xmlns="http://www.w3.org/1999/xhtml">
 
 {% set currentPath = app.request.uri %}
+{% set status_code = status_code|default('') %}
 
 <head>
 	<title>Lonis :: {% block title %}{% endblock %}</title>
