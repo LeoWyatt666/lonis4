@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\AcAchievs;
 use App\Model\AchievsModel;
 use Knp\Component\Pager\PaginatorInterface;
-use Ornicar\GravatarBundle\GravatarApi;
+use Pyrrah\GravatarBundle\GravatarApi;
 
 /**
  * @Route("/achievs")

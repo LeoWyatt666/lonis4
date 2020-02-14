@@ -4,19 +4,19 @@ namespace App\Service;
 use GeoIp2\Database\Reader;
 use GeoIp2\Exception\AddressNotFoundException;
 
-class GeoIp2Service
+class GeoIp2Service 
 {
-    public $geoip;
+    public $reader;
 
-    public function __construct($db) 
+    public function __construct($path) 
     {
-        $this->geoip = new Reader($db);
+        $this->reader = new Reader($path);
     }
 
     public function city($ip)
     {
         try {
-            return $this->geoip->city($ip ?: '127.0.0.1');
+            return $this->reader->city($ip ?: '127.0.0.1');
         } catch (AddressNotFoundException $e) {
             return false;
         }

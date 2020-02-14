@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $path = $this->params->get('kernel.project_dir').'/install/';
+        $path = $this->params->get('kernel.project_dir').'/data/';
         $files = [
             'fixtures.sql',
         ];

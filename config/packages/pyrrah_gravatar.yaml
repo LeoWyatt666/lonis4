@@ -1,0 +1,5 @@
+pyrrah_gravatar:
+  rating: g
+  size: 160
+  default: mm
+  secure: true

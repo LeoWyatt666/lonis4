@@ -42,7 +42,7 @@ class PlayersController extends AbstractController
 
         // set data
         foreach ($pagination->getItems() as &$player) {
-            $player->geoip = $geoip->city($player->getLastIp());
+            $player->geoip = $geoip->reader->city($player->getLastIp());
         }
         
         // render
@@ -65,7 +65,7 @@ class PlayersController extends AbstractController
         // set result
         $player->lastTime = date('d.m.Y G:i:s', $player->getLastTime());
         $player->onlineTimeElasped = $times->time_elasped($player->getOnlineTime());
-        $player->geoip = $geoip->city($player->getLastIp());
+        $player->geoip = $geoip->reader->city($player->getLastIp());
 
         $player->achievCompleted = '-';
         $player->mapCompleted = '-';

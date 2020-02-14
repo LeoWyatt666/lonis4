@@ -5,7 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\CsPlayers;
-use Ornicar\GravatarBundle\GravatarApi;
+use Pyrrah\GravatarBundle\GravatarApi;
 
 class ProfileController extends AbstractController
 {
