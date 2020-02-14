@@ -6,7 +6,6 @@
     "ext-ctype": "*",
     "ext-iconv": "*",
     "doctrine/doctrine-fixtures-bundle": "*",
-    "easycorp/easy-log-handler": "*",
     "gpslab/geoip2": "*",
     "knojector/steam-authentication-bundle": "dev-master",
     "knplabs/knp-paginator-bundle": "*",
@@ -14,7 +13,6 @@
     "sensio/framework-extra-bundle": "*",
     "symfony/apache-pack": "*",
     "symfony/asset": "*",
-    "symfony/cache": "4.*",
     "symfony/console": "*",
     "symfony/debug-bundle": "*",
     "symfony/dependency-injection": "*",
@@ -23,18 +21,18 @@
     "symfony/framework-bundle": "*",
     "symfony/monolog-bundle": "*",
     "symfony/orm-pack": "*",
-    "symfony/profiler-pack": "*",
     "symfony/property-access": "*",
     "symfony/security-bundle": "*",
     "symfony/translation": "*",
     "symfony/twig-bundle": "*",
     "symfony/validator": "*",
-    "symfony/var-dumper": "*",
-    "symfony/webpack-encore-pack": "*",
+    "symfony/webpack-encore-bundle": "*",
     "symfony/yaml": "*",
     "twig/twig": "~2.0"
   },
   "require-dev": {
+    "symfony/profiler-pack": "*",
+    "symfony/var-dumper": "*",
     "symfony/dotenv": "*",
     "symfony/maker-bundle": "^1.7"
   },
@@ -75,7 +73,7 @@
   "extra": {
     "symfony": {
       "allow-contrib": false,
-      "require": "4.*"
+      "require": "4.4.*"
     }
   }
 }
